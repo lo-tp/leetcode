@@ -10,5 +10,6 @@ npm-debug.log
 yarn-error.log
 *.swo
 *.swp
+*.pyc
 .ackrc
 test.py
