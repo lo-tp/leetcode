@@ -61,4 +61,4 @@ class Solution(object):
                 return sum/2.0
 
 s=Solution()
-print s.findMedianSortedArrays([10001], [10000])
+print s.findMedianSortedArrays([3], [-2,-1])
