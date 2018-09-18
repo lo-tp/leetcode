@@ -41,3 +41,39 @@ class Solution(object):
                 end+=1
             startIndex+=1
         return ret
+    # Manacher's algorithm
+    def countSubstringsWithManacher(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        processedString='#'+ '#'.join(list(s))+'#'
+        palindromicLength=[0]*len(processedString)
+        index=0
+        rightIndex=0
+        centerIndex=0
+        size=len(processedString)
+        ret=0
+        while index<size:
+            mirrorIndex=2*centerIndex-index
+            if mirrorIndex>=0:
+                if palindromicLength[mirrorIndex]<rightIndex-index:
+                    palindromicLength[index]=palindromicLength[mirrorIndex]
+                elif palindromicLength[mirrorIndex]>rightIndex-index:
+                    palindromicLength[index]=rightIndex-index
+                else:
+                    palindromicLength[index]=palindromicLength[mirrorIndex]
+
+            leftEdge=index-palindromicLength[index]-1
+            rightEdge=index+palindromicLength[index]+1
+            while leftEdge>=0 and rightEdge<size and processedString[leftEdge]==processedString[rightEdge]:
+                palindromicLength[index]+=1
+                leftEdge-=1
+                rightEdge+=1
+
+            if index+palindromicLength[index]>rightIndex:
+                rightIndex=index+palindromicLength[index]
+                centerIndex=index
+            index+=1
+
+        return reduce(lambda accu, x: accu+(x+1)/2 ,palindromicLength,  0);
