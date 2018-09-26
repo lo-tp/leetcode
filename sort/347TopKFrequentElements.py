@@ -1,3 +1,17 @@
+def heapify(nums, compare):
+    size=len(nums)
+    index=(size-2)/2
+    while index>=0:
+        minIndex=index*2+2
+        leftIndex=minIndex-1
+        if minIndex>=size or compare(nums[leftIndex],nums[minIndex])<0:
+            minIndex=leftIndex
+        if compare(nums[index],nums[minIndex])>0:
+            tmp=nums[index]
+            nums[index]=nums[minIndex]
+            nums[minIndex]=tmp
+        index-=1
+
 class Solution(object):
     def mg(self, numbers):
         size=len(numbers)
@@ -48,48 +62,27 @@ class Solution(object):
         records=[ (records[i], i) for i in numbers]
         self.mg(records)
         return [i[1] for i in records[0:k]]
-    def heap(self, arr, compare):
-        size=len(arr)
-        index=(size-2)/2
-        while index>=0:
-            lIndex=index*2+1
-            rIndex=index*2+2
-            minIndex=lIndex
-            if rIndex<size and compare(arr[lIndex], arr[rIndex])>0:
-                minIndex=rIndex
-            if minIndex<size and compare(arr[index], arr[minIndex])>0:
-                tmp=arr[minIndex]
-                arr[minIndex]=arr[index]
-                arr[index]=tmp
-            index-=1
-            
     def topKFrequent1(self, nums, k):
-        """
-        :type nums: List[int]
-        :type k: int
-        :rtype: List[int]
-        """
         records=dict()
-        numbers=[]
+        result=[]
         for i in nums:
             if i in records:
                 records[i]+=1
             else:
+                result.append(i)
                 records[i]=1
-                numbers.append(i)
-        numbers=[(records[i], i) for i in numbers]
-        size=len(numbers)
-        if size>k:
-            tmp=numbers[:k+1]
-            index=k+1
-            self.heap(tmp, lambda x,y:x[0]-y[0])
-            while index<size:
-                tmp[0]=numbers[index]
-                self.heap(tmp, lambda x,y:x[0]-y[0])
-                index+=1
-            print tmp
-            print numbers
-            return [i[1] for i in tmp[1:]]
-        return [i[1] for i in numbers]
+        size=len(result)
+        if size!=k:
+            result=[(i,records[i]) for i in result]
+            leftPart=result[:k]
+            rightPart=result[k:]
+            heapify(leftPart, lambda x,y:x[1]-y[1])
+            for i in rightPart:
+                if i[1]>leftPart[0][1]:
+                    leftPart[0]=i
+                    heapify(leftPart, lambda x,y:x[1]-y[1])
+            result=[ i[0] for i in leftPart]
+        return result
+
 s=Solution()
 print s.topKFrequent([1,1,1,2,2,3],2)
