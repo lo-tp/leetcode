@@ -6,21 +6,19 @@ class Solution(object):
         """
         if not head:
             return None
+        quick=head
         slow=head
-        quick=head.next
-        shouldSlowGo=True
-        while quick and quick!=slow:
-            quick=quick.next
-            if quick:
-                quick=quick.next
-            else:
-                return None
-            slow=slow.next
-        if not quick:
-            return None
-        slow=head
-        quick=quick.next
-        while quick!=slow:
+        while quick and quick.next:
             quick=quick.next.next
             slow=slow.next
-        return quick
+            if quick==slow:
+                break;
+        if quick and quick.next:
+            slow=head
+            while slow!=quick:
+                slow=slow.next
+                quick=quick.next
+                if(slow==quick):
+                    break;
+            return slow
+        return None
