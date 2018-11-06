@@ -1,4 +1,12 @@
+# https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/discuss/75942/4-line-Python-solution-52-ms
+
 class Solution(object):
+    def maxProfit1(self, prices):
+        cooldown, hold, toBuy = -maxint, -maxint, 0
+        for p in prices:
+            cooldown, hold, toBuy = hold+p, max(hold, toBuy-p), max(cooldown, toBuy)
+        return max(cooldown, hold, toBuy)
+
     def maxProfit(self, prices):
         size=len(prices)
         buy=[0]*size
