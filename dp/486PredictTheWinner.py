@@ -25,6 +25,17 @@ class Solution(object):
         size=len(nums)+1
         self.dp=[[0 for k in xrange(0, size)]for i in xrange(0, size)]
         return self.calculateData(nums, 0, len(nums)-1)>=0
+    def PredictTheWinnerWithDP(self, nums):
+        size=len(nums)
+        dp=[[0 for k in xrange(0, size)]for i in xrange(0, size)]
+        for interval in xrange(0,size):
+            for startPos in xrange(0, size-interval):
+                endPos=startPos+interval
+                if endPos==startPos:
+                    dp[endPos][endPos]=nums[startPos]
+                else:
+                    dp[startPos][endPos]=max(nums[startPos]-dp[startPos+1][endPos], nums[endPos]-dp[startPos][endPos-1])
+        return dp[0][size-1]>=0
 
 s=Solution()
 print s.PredictTheWinner([1, 5, 2])
