@@ -1,6 +1,1 @@
-# Leet Code
-1. [467 Humming Distance](https://leetcode.com/problems/hamming-distance/description/) (Bitwise)
-1. [657 JudgeRouteCircle](https://leetcode.com/problems/judge-route-circle/) (Other)
-1. [617 Merge Two Binary Trees](https://leetcode.com/problems/merge-two-binary-trees/description/) (BinaryTrees)
-1. [561 Array Partition I](https://leetcode.com/problems/array-partition-i/description/) (Other)
-1. [476 Number Complement](https://leetcode.com/problems/number-complement/description/) (Bitwise)
+This is a repo for my leetcode progress
