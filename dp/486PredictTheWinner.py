@@ -18,3 +18,12 @@ class Solution(object):
         size=len(nums)
         self.dp={}
         return self.getScore(nums,0,len(nums)-1)>=0
+
+    def PredictTheWinnerWithoutRecursion(self, nums):
+        sz=len(nums)
+        dp=[[nums[i] if i==k else 0 for i in xrange(0, sz)] for k in xrange(0,sz)]
+        for interval in xrange(1, sz):
+            for start in xrange(0, sz-interval):
+                end=start+interval
+                dp[start][end]=max(nums[start]-dp[start+1][end], nums[end]-dp[start][end-1])
+        return dp[0][sz-1]>=0 if sz else true
