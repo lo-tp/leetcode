@@ -27,3 +27,12 @@ class Solution(object):
                 end=start+interval
                 dp[start][end]=max(nums[start]-dp[start+1][end], nums[end]-dp[start][end-1])
         return dp[0][sz-1]>=0 if sz else true
+
+    def PredictTheWinnerWithoutRecursionUseLessSpace(self, nums):
+        sz=len(nums)
+        dp=nums[:]
+        for interval in xrange(1,sz):
+            for startPos in xrange(0, sz-interval):
+                endPos=startPos+interval
+                dp[startPos]=max(nums[endPos]-dp[startPos], nums[startPos]-dp[startPos+1])
+        return dp[0]>=0 if sz >0 else True
