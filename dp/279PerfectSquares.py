@@ -11,8 +11,7 @@ class Solution(object):
             index+=1
         index=1
         while index<=n:
-            tmp=map(lambda x:dp[index-x]+1, filter(lambda x:x<=index,squares))
-            dp[index]=min(tmp)
+            dp[index]=min(map(lambda x:dp[index-x], filter(lambda x:x<=index,squares)))+1
             index+=1
         return dp[n]
 
