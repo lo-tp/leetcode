@@ -16,20 +16,18 @@ class Solution(object):
                 r-=1
         return res
     def trap(self, height):
-        startIndex=0
         sz=len(height)
-        if sz==0:
-            return 0
         ret=0
-        leftHeight=height[0]
-        rightDp=[0]*sz
-        rightHeight=height[sz-1]
-        for i in reversed(xrange(1, sz-1)):
-            rightHeight=max(rightHeight, height[i])
-            rightDp[i]=rightHeight
-
-        for i in xrange(1,sz-1):
-            leftHeight=max(leftHeight, height[i])
-            rightHeight=rightDp[i]
-            ret+=(min(leftHeight, rightHeight)-height[i])
+        if sz:
+            rightHMax=height[-1]
+            rightHs=[0]*sz
+            leftHMax=height[0]
+            for i in reversed(xrange(0, sz)):
+                rightHMax=max(rightHMax, height[i])
+                rightHs[i]=rightHMax
+            for i in xrange(0, sz):
+                if leftHMax>=height[i] and rightHs[i]>=height[i]:
+                    ret+=(min(leftHMax, rightHs[i])-height[i])
+                else:
+                    leftHMax=max(height[i], leftHMax)
         return ret
