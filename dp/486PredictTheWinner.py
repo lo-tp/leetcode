@@ -26,7 +26,7 @@ class Solution(object):
             for start in xrange(0, sz-interval):
                 end=start+interval
                 dp[start][end]=max(nums[start]-dp[start+1][end], nums[end]-dp[start][end-1])
-        return dp[0][sz-1]>=0 if sz else true
+        return dp[0][sz-1]>=0
 
     def PredictTheWinnerWithoutRecursionUseLessSpace(self, nums):
         sz=len(nums)
