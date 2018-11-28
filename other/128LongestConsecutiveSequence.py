@@ -20,17 +20,17 @@ def qc(nums, start, end):
 
 class Solution(object):
     def longestConsecutive1(self, nums):
-        res, sz, data = 0, len(nums), set(nums)
+        data, res, sz = set(nums), 0, len(nums)
         if sz:
             res = 1
-        for i in nums:
-            currentLongest = 1
-            if i-1 not in data:
-                while i+1 in data:
-                    currentLongest += 1
-                    i += 1
-            res = max(currentLongest, res)
+            for i in nums:
+                if i-1 not in data:
+                    k = i+1
+                    while k in nums:
+                        k += 1
+                    res = max(res, k-i)
         return res
+
     def longestConsecutive(self, nums):
         res, currentLongest, index, sz = 1, 1, 1, len(nums)
         if sz:
