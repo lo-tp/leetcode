@@ -8,6 +8,24 @@ def calculateCoordinates(start, width):
 
 
 class Solution(object):
+    def maximalSquareWithDP(self, matrix):
+        height, res = len(matrix), 0
+        if height:
+            width = len(matrix[0])
+            dp = [0 if k == '0' else 1 for k in matrix[0]]
+            res = max(dp+[res])
+            for i in xrange(1, height):
+                prev = 1 if matrix[i][0] == '1' else 0
+                for j in xrange(1, width):
+                    if matrix[i][j] == '1':
+                        dp[j-1], prev = prev, min(dp[j], dp[j-1], prev)+1
+                    else:
+                        dp[j-1], prev = prev, 0
+
+                dp[width-1] = prev
+                res = max(dp+[res])
+        return res*res
+
     def maximalSquareBF(self, matrix):
         res = 0
         vWidth = len(matrix)
