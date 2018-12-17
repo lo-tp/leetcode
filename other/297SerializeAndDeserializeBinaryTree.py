@@ -34,3 +34,42 @@ class Codec:
                 tmp[i].left = tmp[i*2+1]
                 tmp[i].right = tmp[i*2+2]
         return tmp[0]
+    def serialize(self, root):
+        res = []
+        while root:
+            if root.left:
+                tmp = root.left
+                while tmp.right and tmp.right != root:
+                    tmp = tmp.right
+                if tmp.right:
+                    tmp.right = None
+                    root = root.right
+                    res.append(None)
+                else:
+                    res.append(root.val)
+                    tmp.right = root
+                    root = root.left
+            else:
+                res.append(root.val)
+                res.append(None)
+                root = root.right
+                if not root:
+                    res.append(None)
+        return json.dumps(res)
+
+    def deserialize(self, data):
+        tmp = map(lambda x: {'node': TreeNode(x)} if x != None else {'node': x}, json.loads(data))
+        if tmp:
+            stack = [tmp[0]]
+            for i in tmp[1:]:
+                k = stack[-1]
+                if 'l' in k:
+                    k['node'].right = i['node']
+                    stack.pop()
+                else:
+                    k['node'].left = i['node']
+                    k['l'] = True
+                if i['node']:
+                    stack.append(i)
+            return tmp[0]['node']
+        return None
