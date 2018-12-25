@@ -34,42 +34,40 @@ class Codec:
                 tmp[i].left = tmp[i*2+1]
                 tmp[i].right = tmp[i*2+2]
         return tmp[0]
+
     def serialize(self, root):
-        res = []
+        data = []
         while root:
             if root.left:
-                tmp = root.left
-                while tmp.right and tmp.right != root:
-                    tmp = tmp.right
-                if tmp.right:
-                    tmp.right = None
+                prev = root.left
+                while prev.right and prev.right != root:
+                    prev = prev.right
+                if prev.right:
                     root = root.right
-                    res.append(None)
+                    data.append(None)
+                    prev.right = None
                 else:
-                    res.append(root.val)
-                    tmp.right = root
+                    prev.right = root
+                    data.append(root.val)
                     root = root.left
             else:
-                res.append(root.val)
-                res.append(None)
+                data.append(root.val)
+                data.append(None)
                 root = root.right
-                if not root:
-                    res.append(None)
-        return json.dumps(res)
+        data.append(None)
+        return json.dumps(data)
 
     def deserialize(self, data):
-        tmp = map(lambda x: {'node': TreeNode(x)} if x != None else {'node': x}, json.loads(data))
-        if tmp:
-            stack = [tmp[0]]
-            for i in tmp[1:]:
-                k = stack[-1]
-                if 'l' in k:
-                    k['node'].right = i['node']
-                    stack.pop()
-                else:
-                    k['node'].left = i['node']
-                    k['l'] = True
-                if i['node']:
-                    stack.append(i)
-            return tmp[0]['node']
-        return None
+        arr = [TreeNode(i) if i is not None else i for i in json.loads(data)]
+        arr = [{'node': i} for i in arr]
+        stack = [arr[0]]
+        for i in arr[1:]:
+            if 'flag' in stack[-1]:
+                stack[-1]['node'].right = i['node']
+                stack.pop()
+            else:
+                stack[-1]['node'].left = i['node']
+                stack[-1]['flag'] = 1
+            if i['node']:
+                stack.append(i)
+        return arr[0]['node']
