@@ -25,6 +25,16 @@ def mg(arr):
 
 
 class Solution(object):
+    def leastInterval1(self, tasks, n):
+        offset, data = ord('A'), [0]*26
+        for i in tasks:
+            data[ord(i)-ord('A')] += 1
+        mg(data)
+        columnSz = data[0]-1
+        idleSlots = columnSz*n
+        for i in data[1:]:
+            idleSlots -= min(columnSz, i)
+        return idleSlots+len(tasks) if idleSlots > 0 else len(tasks)
     def leastInterval(self, tasks, n):
         offset, data = ord('A'), [0]*26
         for i in tasks:
