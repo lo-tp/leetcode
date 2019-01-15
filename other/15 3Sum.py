@@ -20,6 +20,35 @@ def qc(arr, start, end):
 
 
 class Solution(object):
+    def threeSum1(self, nums):
+        res, sz = [], len(nums)
+        if sz >= 3:
+            temp = []
+            i = 0
+            qc(nums, 0, sz-1)
+            while i < sz-2:
+                l = i+1
+                r = sz-1
+                while l < r:
+                    s = nums[i]+nums[l]+nums[r]
+                    if s < 0:
+                        l += 1
+                    elif s > 0:
+                        r -= 1
+                    else:
+                        res.append([nums[i], nums[l], nums[r]])
+                        print [nums[i], nums[l], nums[r]]
+                        l += 1
+                        r -= 1
+                        while l < r and nums[l] == nums[l-1]:
+                            l += 1
+                        while l < r and nums[r] == nums[r+1]:
+                            r -= 1
+                i += 1
+                while i < sz-2 and nums[i] == nums[i-1]:
+                    i += 1
+        return res
+
     def threeSum(self, nums):
         res, sz = [], len(nums)
         if sz >= 3:
