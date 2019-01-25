@@ -13,3 +13,17 @@ class Solution(object):
             index += 1
             lastIndex = sz-res
         return res
+    def lengthOfLongestSubstring(self, s):
+        res, sz, firstIndex = 0, len(s), 0
+        firstLimit = sz
+        while firstIndex < firstLimit:
+            i = firstIndex
+            data = {}
+            while i < sz and s[i] not in data:
+                data[s[i]] = i
+                i += 1
+            res = max(res, i-firstIndex)
+            firstLimit = sz-res
+            if i < sz:
+                firstIndex = data[s[i]]+1
+        return res
