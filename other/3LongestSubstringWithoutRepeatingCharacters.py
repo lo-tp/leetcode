@@ -27,3 +27,12 @@ class Solution(object):
             if i < sz:
                 firstIndex = data[s[i]]+1
         return res
+    def lengthOfLongestSubstringBest(self, s):
+        data, ans, l, sz = {},  0, 0, len(s)
+        for r in xrange(0, sz):
+            if s[r] in data and data[s[r]] >= l:
+                ans = max(r-l, ans)
+                l = data[s[r]]+1
+            data[s[r]] = r
+        ans = max(sz-l, ans)
+        return ans
