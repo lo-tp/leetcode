@@ -9,21 +9,20 @@ def calculateCoordinates(start, width):
 
 class Solution(object):
     def maximalSquareWithDP(self, matrix):
-        height, res = len(matrix), 0
-        if height:
-            width = len(matrix[0])
-            dp = [0 if k == '0' else 1 for k in matrix[0]]
-            res = max(dp+[res])
-            for i in xrange(1, height):
-                prev = 1 if matrix[i][0] == '1' else 0
-                for j in xrange(1, width):
-                    if matrix[i][j] == '1':
-                        dp[j-1], prev = prev, min(dp[j], dp[j-1], prev)+1
-                    else:
-                        dp[j-1], prev = prev, 0
-
-                dp[width-1] = prev
-                res = max(dp+[res])
+        res = 0
+        if len(matrix):
+            rowSz = len(matrix[0])
+            if rowSz:
+                dp = [0]*rowSz
+                for row in matrix:
+                    prev = 1 if row[0] == '1' else 0
+                    for i in xrange(1, rowSz):
+                        if row[i] == '1':
+                            prev, dp[i-1] = min(dp[i-1], dp[i], prev)+1, prev
+                        else:
+                            prev, dp[i-1] = 0, prev
+                    dp[-1] = prev
+                    res = max(max(dp), res)
         return res*res
 
     def maximalSquareBF(self, matrix):
