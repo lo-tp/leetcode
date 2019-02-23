@@ -9,3 +9,6 @@ Monoqueue can be used to get the extremum in parts of an array.
 ### Sort
 Binary Search
 - 4 Median of Two Sorted Arrays
+
+### DP
+- 152 Maximum Product Subarray
