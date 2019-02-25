@@ -12,3 +12,6 @@ Binary Search
 
 ### DP
 - 152 Maximum Product Subarray
+
+### Tranversal
+- 79 Word Search: how to prune useless branches is importanct to find the solution
