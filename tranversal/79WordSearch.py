@@ -23,6 +23,32 @@ class Solution(object):
                 columnIndex += 1
         return False
 
+    def existWithoutRecursion(self, board, word):
+        wordSz, columnSz = len(word), len(board)
+        if columnSz:
+            rowSz = len(board[0])
+            if rowSz:
+                stack = []
+                for column in xrange(0, columnSz):
+                    for row in xrange(0, rowSz):
+                        stack.append((column, row, 0, False))
+                while stack:
+                    (v, h, i, flag) = stack.pop()
+                    if i == wordSz:
+                        return True
+                    # When the last element is true, then we should revert the modification we made to the data
+                    elif flag:
+                        board[v][h] = word[i]
+                    elif v < columnSz and v >= 0 and h < rowSz and h >= 0 and board[v][h] == word[i]:
+                        stack.append((v, h, i, True))
+                        i += 1
+                        board[v][h] = None
+                        stack.append((v-1, h, i, False))
+                        stack.append((v, h-1, i, False))
+                        stack.append((v, h+1, i, False))
+                        stack.append((v+1, h, i, False))
+                return False
+
 
 s = Solution()
 print s.findMedianSortedArrays([], [1])
