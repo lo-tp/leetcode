@@ -17,3 +17,6 @@ Binary Search
 
 ### Tranversal
 - 79 Word Search: how to prune useless branches is importanct to find the solution
+
+### Tranversal
+- 53 Maximum Subarray
