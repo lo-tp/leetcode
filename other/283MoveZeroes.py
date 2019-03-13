@@ -1,3 +1,31 @@
+class Heap():
+    def __init__(self):
+        self.data = []
+
+    def push(self, n):
+        self.data.append(n)
+        self.sort()
+
+    def sort(self):
+        sz = len(self.data)
+        index = (sz-2)/2
+        while index >= 0:
+            minIndex = index*2+1
+            rightIndex = minIndex+1
+            if rightIndex < sz and self.data[rightIndex] < self.data[minIndex]:
+                minIndex = rightIndex
+            if self.data[minIndex] < self.data[index]:
+                self.data[minIndex], self.data[index] = self.data[index], self.data[minIndex]
+            index -= 1
+
+    def popAndReplace(self, n):
+        res = self.data[0]
+        self.data[0] = n
+        self.sort()
+        return res
+
+    def sz(self):
+        return len(self.data)
 class Solution(object):
     def moveZeroes(self, nums):
         """
@@ -17,3 +45,12 @@ class Solution(object):
                 nums[k]=nums[i]^nums[k]
                 nums[i]=nums[i]^nums[k]
             i+=1
+    def moveZeroesWithHeap(self, nums):
+        hp = Heap()
+        for i in xrange(0, len(nums)):
+            if nums[i]:
+                if hp.sz():
+                    tmp = hp.popAndReplace(i)
+                    nums[tmp], nums[i] = nums[i], nums[tmp]
+            else:
+                hp.push(i)
