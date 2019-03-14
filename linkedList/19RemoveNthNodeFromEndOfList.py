@@ -1,4 +1,15 @@
 class Solution(object):
+    def removeNthFromEndUsingLessRAM(self, head, n):
+        tmp, data = head, [head]
+        while tmp:
+            data.append(tmp.next)
+            tmp = tmp.next
+        sz = len(head)
+        if n == sz:
+            head = head.next
+        else:
+            data[sz-n-1].next = data[sz-n].next
+        return head
     def removeNthFromEnd(self, head, n):
         data, i, k = {}, 1, head
         while k:
