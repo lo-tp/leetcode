@@ -1,3 +1,6 @@
+from Queue import PriorityQueue
+
+
 def heapify(lists):
     sz = len(lists)
     index = (sz-2)/2
@@ -11,7 +14,7 @@ def heapify(lists):
 
 
 class Solution(object):
-    def mergeKLists(self, lists):
+    def mergeKListsButTLE(self, lists):
         lists = filter(lambda l: l, lists)
         tmp = ListNode(None)
         prevHead = tmp
@@ -25,3 +28,17 @@ class Solution(object):
                 if k:
                     lists[0] = k
         return prevHead.next
+
+    def mergeKLists(self, lists):
+        pq = PriorityQueue()
+        prev = tmp = ListNode(None)
+        for i in lists:
+            if i:
+                pq.put((i.val, i))
+        while not pq.empty():
+            (_, node) = pq.get()
+            tmp.next = node
+            tmp = tmp.next
+            if tmp.next:
+                pq.put((tmp.next.val, tmp.next))
+        return prev.next
