@@ -13,6 +13,9 @@ Binary Search
 - 33  Search in Rotated Sorted Array
 - 81  Search in Rotated Sorted Array II
 
+Quick Sort
+- 75 Sort Colors
+
 ### DP
 - 152 Maximum Product Subarray
 
