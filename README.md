@@ -15,6 +15,7 @@ Binary Search
 
 Quick Sort
 - 75 Sort Colors
+- 56 Merge Intervals
 
 ### DP
 - 152 Maximum Product Subarray

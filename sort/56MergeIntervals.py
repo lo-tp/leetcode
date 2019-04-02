@@ -19,8 +19,30 @@ def sort(arr):
         end -= 1
 
 
+def compare(a, b):
+    if a.start < b.start or (a.start == b.start and a.end < b.end):
+        return -1
+    elif a.start == b.start and a.end == b. end:
+        return 0
+    return 1
+
+
 class Solution(object):
     def merge(self, intervals):
+        if intervals:
+            i, sz, res = 0, len(intervals), []
+            list.sort(cmp=compare)
+            while i < sz:
+                w = intervals[i].end
+                e = i+1
+                while e < sz and w >= intervals[e].start:
+                    w = max(w, intervals[e].end)
+                    e += 1
+                res.append(Interval(intervals[i].start, w))
+                i = e
+            return res
+        return intervals
+    def mergeTLE(self, intervals):
         if intervals:
             i, sz, res = 0, len(intervals), []
             sort(intervals)
