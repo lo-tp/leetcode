@@ -1,5 +1,5 @@
 class Solution(object):
-    def minDistance(self, word1, word2):
+    def minDistanceTLE(self, word1, word2):
         s1, s2, sz1, sz2 = [[(-1, -1)]], [], len(word1), len(word2)
         while s1:
             for prevMatch in s1:
@@ -22,3 +22,17 @@ class Solution(object):
             sum += (max(sz1-match[-1][0], sz2-match[-1][1])-1)
             res = min(res, sum)
         return res
+    def minDistance(self, word1, word2):
+        sz1, sz2 = len(word1), len(word2)
+        dp = [[0]*(sz2+1) for i in range(sz1+1)]
+        for i in xrange(1, sz1+1):
+            dp[i][0] = i
+        for i in xrange(1, sz2+1):
+            dp[0][i] = i
+        for i in xrange(1, sz1+1):
+            for k in xrange(1, sz2+1):
+                if word1[i-1] == word2[k-1]:
+                    dp[i][k] = dp[i-1][k-1]
+                else:
+                    dp[i][k] = min(dp[i-1][k-1], dp[i-1][k], dp[i][k-1])+1
+        return dp[sz1][sz2]
