@@ -1,4 +1,24 @@
 class Solution(object):
+    def buildTreeNonRecursion(self, preorder, inorder):
+        dumbNode = TreeNode(0)
+        stack = [(0, 0, len(preorder), dumbNode, False)]
+        while stack:
+            inStart, preStart, size, parentNode, isRight = stack.pop()
+            if size:
+                inEnd = inStart+size-1
+                while inOrder[inEnd] != preorder[preStart]:
+                    inEnd -= 1
+                rightSize = inStart+size-1-inEnd
+                leftSize = size-rightSize-1
+                newNode = TreeNode(preorder[preStart])
+                if isRight:
+                    parentNode.right = newNode
+                else:
+                    parentNode.left = newNode
+                stack.append((inStart, preStart+1, leftSize, newNode, False))
+                stack.append((inStart+leftSize+1, preStart +
+                              leftSize+1, rightSize, newNode, True))
+        return dumbNode.left
     def build(self, inStart, preStart, size):
         print preStart, inStart
         ret = TreeNode(self.preOrder[preStart])
