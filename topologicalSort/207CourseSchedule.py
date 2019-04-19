@@ -13,6 +13,20 @@ def heapify(arr, sz, dict):
 
 
 class Solution(object):
+    def canFinishBetter(self, numCourses, prerequisites):
+        d, data = [], {}
+        for i in xrange(0, numCourses):
+            data[i] = [0, []]
+        for after, prev in prerequisites:
+            data[after][0] += 1
+            data[prev][1].append(after)
+        d = filter(lambda x: not data[x][0], xrange(0, numCourses))
+        for i in d:
+            for after in data[i][1]:
+                data[after][0] -= 1
+                if not data[after][0]:
+                    d.append(after)
+        return len(d) == numCourses
     def canFinish(self, numCourses, prerequisites):
         dp, dict = [], {}
         for i in xrange(0, numCourses):
