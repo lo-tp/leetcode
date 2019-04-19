@@ -21,6 +21,9 @@ Merge Sort
 - 148 Sort List
 - 56 Merge Intervals
 
+Topological Sort
+- 207 Course Schedule
+
 ### DP
 - 152 Maximum Product Subarray
 - 84 Largest Rectangle in Histogram
