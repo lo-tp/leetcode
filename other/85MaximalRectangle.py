@@ -2,6 +2,29 @@ from sys import maxint
 
 
 class Solution(object):
+    def maximalRectangleBest(self, matrix):
+        res, c_sz = 0, len(matrix)
+        if c_sz:
+            r_sz = len(matrix[0])
+            if r_sz:
+                dp = [0]*(c_sz+1)
+                for row in xrange(0, r_sz):
+                    for column in range(0, c_sz):
+                        if matrix[column][row] == '1':
+                            dp[column] += 1
+                        else:
+                            dp[column] = 0
+                    stack = [(dp[0], -1)]
+                    for index, height in enumerate(dp[1:]):
+                        if stack and stack[-1][0] >= height:
+                            prevIndex = None
+                            while stack and stack[-1][0] >= height:
+                                h, prevIndex = stack.pop()
+                                res = max(res, (index-prevIndex)*h)
+                            stack.append((height, prevIndex))
+                        else:
+                            stack.append((height, index))
+        return res
     def maximalRectangleBetter(self, matrix):
         res, columnSz = 0, len(matrix)
         if columnSz:
