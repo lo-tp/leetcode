@@ -38,3 +38,4 @@ Topological Sort
 ### Binary Tree:
 - 105 Construct Binary Tree from Preorder and Inorder Traversal
 - 98 Validate Binary Search Tree
+- 114 Flatten Binary Tree to Linked List
