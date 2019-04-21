@@ -14,3 +14,18 @@ def flatten(root, right):
 class Solution(object):
     def flatten(self, root):
         root = flatten(root, None)
+    def flattenNonRecursive(self, root):
+        if root:
+            stack, tmp = [], root
+            while True:
+                if tmp.left:
+                    if tmp.right:
+                        stack.append(tmp.right)
+                    tmp.right = tmp.left
+                    tmp.left = None
+                if tmp.right:
+                    tmp = tmp.right
+                elif stack:
+                    tmp.right = stack.pop()
+                else:
+                    break
