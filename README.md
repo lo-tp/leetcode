@@ -12,6 +12,7 @@ Binary Search
 - 23  Merge k Sorted Lists
 - 33  Search in Rotated Sorted Array
 - 81  Search in Rotated Sorted Array II
+- 124 Binary Tree Maximum Path Sum
 
 Quick Sort
 - 75 Sort Colors
