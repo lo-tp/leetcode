@@ -40,3 +40,5 @@ Topological Sort
 - 105 Construct Binary Tree from Preorder and Inorder Traversal
 - 98 Validate Binary Search Tree
 - 114 Flatten Binary Tree to Linked List
+- BFS
+  - 116 Populating Next Right Pointers in Each Node
