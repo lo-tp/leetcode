@@ -27,4 +27,15 @@ class Solution(object):
         for i in xrange(0, height(root)-1):
             traverse(root, i)
         return root
+    def connectNonRecursice(self, root):
+        pre = root
+        while pre and pre.left:
+            head = pre
+            while head:
+                head.left.next = head.right
+                if head.next:
+                    head.right.next = head.next.left
+                head = head.next
+            pre = pre.left
+        return root
 
