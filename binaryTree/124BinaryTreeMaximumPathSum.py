@@ -52,5 +52,30 @@ class Solution(object):
                     tem += max(left_max, right_max)
                 tmp = tem
                 stack.pop()
+    def maxPathSumBest(self, root):
+        tmp, res, stack = -maxint, -maxint, [[None, root]]
+        while stack:
+            left_max, cur = stack[-1]
+            if not cur:
+                tmp = -maxint
+                stack.pop()
+            elif left_max == None:
+                stack[-1][0] = 'a'
+                stack.append([None, cur.left])
+            elif left_max == 'a':
+                stack[-1][0] = tmp
+                stack.append([None, cur.right])
+            else:
+                tem = temp = cur.val
+                if left_max > 0:
+                    tem += left_max
+                elif tmp > 0:
+                    tem += tmp
+                res = max(res, tem)
+                if left_max > 0 or tmp > 0:
+                    temp += max(left_max, tmp)
+                tmp = temp
+                stack.pop()
+        return res
 
         return te
