@@ -11,3 +11,14 @@ class Solution(object):
             for index, _ in stack:
                 res[index+1] = 0
         return res
+
+    def dailyTemperaturesLessSpace(self, T):
+        res, size = [], len(T)
+        if size:
+            stack, res = [0], [0]*size
+            for current in xrange(1, size):
+                while stack and T[stack[-1]] < T[current]:
+                    prev_index = stack.pop()
+                    res[prev_index] = current-prev_index
+                stack.append(current)
+        return res
