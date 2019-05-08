@@ -1,4 +1,60 @@
+def calculateIndex(index, size):
+    return size-index-1
+
+
+def doNothing(index, _):
+    return index
+
+
+def removeOneType(original, size, remove_num, closing, data):
+    res, str, target, opposite, handleIndex, stack = [], original, ')', '(', doNothing, [
+        (0, 0, remove_num, x) for x in data]
+
+    if not closing:
+        str, target, opposite, handleIndex = original[::-
+                                                      1], '(', ')', calculateIndex
+
+    while stack:
+        index, opposite_num, remaining_num, removed = stack.pop()
+        if not remaining_num:
+            res.append(removed)
+        if index < size:
+            if str[index] == target:
+                if opposite_num:
+                    stack.append(
+                        (index+1, opposite_num-1, remaining_num, removed))
+                if remaining_num:
+                    new_removed = removed[:]
+                    new_removed[handleIndex(index, size)] = ''
+                    stack.append(
+                        (index+1, opposite_num, remaining_num-1, new_removed))
+            elif str[index] == opposite:
+                stack.append((index+1, opposite_num+1, remaining_num, removed))
+            else:
+                stack.append((index+1, opposite_num, remaining_num, removed))
+
+    return [json.loads(d) for d in list(set([json.dumps(k) for k in res]))]
+
+
 class Solution(object):
+    def removeInvalidParenthesesBest(self, s):
+        opening_num, closing_num = 0, 0
+        for i in s:
+            if i == '(':
+                opening_num += 1
+            elif i == ')':
+                if opening_num:
+                    opening_num -= 1
+                else:
+                    closing_num += 1
+        size = len(s)
+        removed_closing = removeOneType(s, size, closing_num, True, [list(s)])
+        # print removed_closing
+        removed_opening = removeOneType(
+            s, size, opening_num, False, removed_closing)
+
+        return [''.join(k) for k in list(set([''.join(k) for k in removed_opening]))]
+
     def removeInvalidParentheses(self, s):
         size, left_to_remove, right_to_remove = len(s), 0, 0
         for i in s:
