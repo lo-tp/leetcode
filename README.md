@@ -54,5 +54,6 @@ Topological Sort
 ### Sliding Window
 - 76 Minimum Window Substring
 - 209 Minimum Size Subarray Sum
-209MinimumSizeSubarraySum.py
+- 567 Permutation in String
+
 
