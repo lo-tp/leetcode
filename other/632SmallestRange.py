@@ -1,4 +1,5 @@
 from sys import maxint
+import heapq
 
 
 class Heap():
@@ -197,4 +198,26 @@ class Solution(object):
                 heap.add((nums[outter_index][inner_index],
                           outter_index, inner_index))
                 min_num = min(min_num, nums[outter_index][inner_index])
+
+
+
+class Solution(object):
+    def smallestRangeWithBuiltInHeap(self, nums):
+        nums = [k for k in nums if len(k)]
+        start, end = 0, maxint
+        if len(nums):
+            heap = [(x[0], index, 0)
+                    for index, x in enumerate(nums)]
+            max_num = max([x[0] for x in heap])
+            heapq.heapify(heap)
+            while True:
+                min_num, outter_index, inner_index = heapq.heappop(heap)
+                if max_num-min_num < end-start:
+                    start, end = min_num, max_num
+                inner_index += 1
+                if inner_index == len(nums[outter_index]):
+                    return [start, end]
+                heapq.heappush(heap, (nums[outter_index][inner_index],
+                                      outter_index, inner_index))
+                max_num = max(max_num, nums[outter_index][inner_index])
 
