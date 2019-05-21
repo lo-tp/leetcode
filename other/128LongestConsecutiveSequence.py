@@ -45,3 +45,27 @@ class Solution(object):
                 index += 1
             print nums
         return res
+    def longestConsecutive(self, nums):
+        res, left, right = 0, {}, {}
+        if nums:
+            res = 1
+            for num in nums:
+                if num not in left and num not in right:
+                    left_record, right_record = right.pop(
+                        num-1, None), left.pop(num+1, None)
+                    new_record = [num, num]
+                    if left_record and right_record:
+                        new_record = [left_record[0], right_record[1]]
+                    elif left_record:
+                        new_record = [left_record[0], num]
+                    elif right_record:
+                        new_record = [num, right_record[1]]
+                    if left_record:
+                        left.pop(left_record[0])
+                    if right_record:
+                        right.pop(right_record[1])
+                    left[new_record[0]] = new_record
+                    right[new_record[1]] = new_record
+                    res = max(res, 1+new_record[1]-new_record[0])
+        return res
+
