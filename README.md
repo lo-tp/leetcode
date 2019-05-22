@@ -28,7 +28,7 @@ Topological Sort
 
 Heap Sort
 - 692 Top K Frequent Words
-692TopKFrequentWords
+692TopKFrequentWords.py
 
 ### DP
 - 152 Maximum Product Subarray
@@ -49,6 +49,8 @@ Heap Sort
 - 98 Validate Binary Search Tree
 - 114 Flatten Binary Tree to Linked List
 - 117 Populating Next Right Pointers in Each Node II
+- 173 Binary Search Tree Iterator
+173BinarySearchTreeIterator.py
 - BFS
   - 116 Populating Next Right Pointers in Each Node
 
