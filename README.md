@@ -26,6 +26,10 @@ Merge Sort
 Topological Sort
 - 207 Course Schedule
 
+Heap Sort
+- 692 Top K Frequent Words
+692TopKFrequentWords
+
 ### DP
 - 152 Maximum Product Subarray
 - 84 Largest Rectangle in Histogram
