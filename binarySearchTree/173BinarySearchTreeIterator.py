@@ -24,8 +24,27 @@ class BSTIterator(object):
                 break
         return ret
 
-
-
     def hasNext(self):
         return self.root
 
+    // with stack
+    def __init__(self, root):
+        self.stack = []
+        while root:
+            self.stack.append(root)
+            root = root.left
+
+    def next(self):
+        """
+        @return the next smallest number
+        :rtype: int
+        """
+        root = tmp = self.stack.pop()
+        tmp = tmp.right
+        while tmp:
+            self.stack.append(tmp)
+            tmp = tmp.left
+        return root.val
+
+    def hasNext(self):
+        return self.stack
