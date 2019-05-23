@@ -62,4 +62,7 @@ Heap Sort
 - 209 Minimum Size Subarray Sum
 - 567 Permutation in String
 
+### Greedy
+- 948 Bag of Tokens
+
 
