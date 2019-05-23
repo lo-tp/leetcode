@@ -1,8 +1,35 @@
 from sys import maxint
 from collections import Counter
 
-
 class Solution(object):
+    def minWindowBest(self, source, target):
+        head, tail, source_size, target_size = 0, maxint, len(
+            source), len(target)
+        if source_size >= target_size:
+            left, right,  data = 0,  0, Counter(
+                target),
+            remaining_num = len(data.keys())
+            while True:
+                while remaining_num and right < source_size:
+                    char = source[right]
+                    if char in data:
+                        data[char] -= 1
+                        if not data[char]:
+                            remaining_num -= 1
+                    right += 1
+                if remaining_num:
+                    break
+                while not remaining_num and left < right:
+                    char = source[left]
+                    if char in data:
+                        if not data[char]:
+                            remaining_num += 1
+                        data[char] += 1
+                    left += 1
+                if right-left+1 < tail-head:
+                    head, tail = left-1, right
+        return '' if tail == maxint else source[head:tail]
+
     def minWindowBetter(self, source, target):
         source_size, target_size, start, end, start_index, end_index = len(
             source), len(target), 0, 0, 0, maxint
