@@ -2,6 +2,33 @@ from collections import Counter
 
 
 class Solution(object):
+    def findAnagramsBetter(self, s, p):
+        start, end, size, res, data, first_position = 0, 0, len(
+            s), [], Counter(p), {}
+        remaining_num, found_num, to_find_data = len(
+            data.keys()), 0, data.copy()
+        while end < size:
+            char = s[end]
+            if char in data:
+                if not to_find_data[char]:
+                    start = end = first_position[char]+1
+                    first_position, found_num, to_find_data = {}, 0, data.copy()
+                else:
+                    if data[char] == to_find_data[char]:
+                        first_position[char] = end
+                    to_find_data[char] -= 1
+                    if not to_find_data[char]:
+                        found_num += 1
+                        if found_num == remaining_num:
+                            res.append(start)
+                            to_find_data[s[start]] += 1
+                            found_num -= 1
+                            start += 1
+                    end += 1
+            else:
+                end += 1
+                start, first_position, found_num, to_find_data = end, {}, 0, data.copy()
+        return res
     def findAnagrams(self, s, p):
         size, last_start, res, start, data = len(
             s), len(s)-len(p), [], 0, Counter(p)
