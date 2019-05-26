@@ -2,6 +2,37 @@ from collections import Counter
 
 
 class Solution(object):
+    def findAnagramsRight(self, s, p):
+        start, end, res, data, size = 0, 0, [], Counter(p), len(s)
+        first_pos, remaining_num, found_num, found_data = {}, len(
+            data.keys()), 0, data.copy()
+        while end < size:
+            char = s[end]
+            if char not in data:
+                end += 1
+                start = end
+                first_pos, found_num, found_data = {}, 0, data.copy()
+            elif not found_data[char]:
+                start = end = first_pos[char] + \
+                    1 if char in first_pos else start+1
+                first_pos, found_num, found_data = {}, 0, data.copy()
+            else:
+                if found_data[char] == data[char]:
+                    first_pos[char] = end
+                found_data[char] -= 1
+                if not found_data[char]:
+                    found_num += 1
+                    if found_num == remaining_num:
+                        res.append(start)
+                        found_data[s[start]] += 1
+                        first_pos.pop(s[start], None)
+                        start += 1
+                        found_num -= 1
+                end += 1
+        return res
+    // test case below can prove this solution wrong
+    // "aabaaaaa", "aab"
+
     def findAnagramsBetter(self, s, p):
         start, end, size, res, data, first_position = 0, 0, len(
             s), [], Counter(p), {}
@@ -29,6 +60,7 @@ class Solution(object):
                 end += 1
                 start, first_position, found_num, to_find_data = end, {}, 0, data.copy()
         return res
+
     def findAnagrams(self, s, p):
         size, last_start, res, start, data = len(
             s), len(s)-len(p), [], 0, Counter(p)
@@ -61,4 +93,3 @@ class Solution(object):
         if not match_num:
             res.append(start)
         return res
-
