@@ -1,4 +1,19 @@
 class Solution(object):
+    def minSwapsCouplesBetter(self, row):
+        res, pos = 0, row[:]
+        for index, val in enumerate(row):
+            pos[val] = index
+        for index in xrange(0, len(row), 2):
+            next_val = row[index] ^ 1
+            if row[index+1] != next_val:
+                res += 1
+                tmp_index = pos[next_val]
+                row[index+1], row[pos[next_val]
+                                  ] = row[pos[next_val]], row[index+1]
+                # pos[next_val], pos[row[pos[next_val]]] = index+1, pos[next_val]
+                pos[row[pos[next_val]]], pos[next_val] = pos[next_val], index+1
+        return res
+
     def minSwapsCouples(self, row):
         no_swap, res, pos, to_swap, size = set(), 0, {}, set(), len(row)
         for index in xrange(0, size, 2):
