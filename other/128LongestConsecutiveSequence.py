@@ -68,4 +68,20 @@ class Solution(object):
                     right[new_record[1]] = new_record
                     res = max(res, 1+new_record[1]-new_record[0])
         return res
+    def longestConsecutiveBetter(self, nums):
+        res, left, right = 0, {}, {}
+        for num in nums:
+            start, end, left_num, right_num = num, num, num-1, num+1
+            if not num in left and not num in right:
+                if left_num in right and right_num in left:
+                    start, end = right[left_num], left[right_num]
+                    left[num] = num
+                elif left_num in right:
+                    start = right[left_num]
+                elif right_num in left:
+                    end = left[right_num]
+                left[start] = end
+                right[end] = start
+                res = max(end+1-start, res)
+        return res
 
