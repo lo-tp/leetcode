@@ -69,5 +69,6 @@ Heap Sort
 
 ### Cyclic Swapping
 - 268 Missing Number
+- 41 First Missing Positive
 
 
