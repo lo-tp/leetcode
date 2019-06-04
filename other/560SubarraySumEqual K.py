@@ -1,4 +1,16 @@
+from collections import defaultdict
+
+
 class Solution(object):
+    def subarraySumBetter(self, nums, k):
+        res, sum, data = 0, 0, defaultdict(lambda : 0)
+        data[0]=1
+        for num in nums:
+            sum += num
+            dif = sum-k
+            res += data[dif]
+            data[sum] += 1
+        return res
     def subarraySum(self, nums, k):
         res, sum, data = 0, 0, {0: 1}
         for i in nums:
