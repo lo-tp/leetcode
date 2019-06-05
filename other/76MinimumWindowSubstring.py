@@ -2,6 +2,32 @@ from sys import maxint
 from collections import Counter
 
 class Solution(object):
+    def minWindowEasyToUnderstand(self, source, target):
+        res, source_size, target_size = '', len(source), len(target)
+        if source_size >= target_size:
+            head, tail, start, end, data = 0, maxint, 0, 0, Counter(target)
+            data_size, found_size, found = len(
+                data.keys()), 0, defaultdict(lambda: 0)
+            while end < source_size:
+                char = source[end]
+                if char in data:
+                    found[char] += 1
+                    if found[char] == data[char]:
+                        found_size += 1
+                        if found_size == data_size:
+                            while found_size == data_size:
+                                while source[start] not in data:
+                                    start += 1
+                                if found[source[start]] == data[source[start]]:
+                                    found_size -= 1
+                                found[source[start]] -= 1
+                                start += 1
+                            if end-start+1 < tail-head:
+                                tail, head = end, start-1
+                end += 1
+            if tail != maxint:
+                res = source[head:tail+1]
+        return res
     def minWindowBest(self, source, target):
         head, tail, source_size, target_size = 0, maxint, len(
             source), len(target)
