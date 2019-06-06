@@ -43,3 +43,41 @@ class Solution(object):
                 dq.append((next_index, level+1))
         return 0
 
+def getGraphBetter(wordList):
+    size, graph, data, data1 = len(wordList[0]), defaultdict(
+        lambda: []), defaultdict(lambda: []), defaultdict(lambda: [])
+    for i in wordList:
+        word = list(i)
+        for index in xrange(0, size):
+            tmp = word[index]
+            word[index] = ' '
+            symbol = ''.join(word)
+            word[index] = tmp
+            data[i].append(symbol)
+            data1[symbol].append(i)
+
+    for i in wordList:
+        tmp = []
+        for symbol in data[i]:
+            tmp.extend(data1[symbol])
+        graph[i] = list(set(tmp))
+
+    return graph
+
+
+class SolutionBetter(object):
+    def ladderLength(self, beginWord, endWord, wordList):
+        if endWord in wordList:
+            wordList.append(beginWord)
+            graph, visited, queue = getGraph(
+                wordList), {}, deque()
+            queue.append((beginWord, 1))
+            while queue:
+                word, level = queue.popleft()
+                if word == endWord:
+                    return level
+                if word not in visited:
+                    visited[word] = True
+                    level += 1
+                    queue.extend([(w, level) for w in graph[word]])
+        return 0
