@@ -81,3 +81,35 @@ class SolutionBetter(object):
                     level += 1
                     queue.extend([(w, level) for w in graph[word]])
         return 0
+    def ladderLengthBidirectional(self, beginWord, endWord, wordList):
+        res=maxint
+        if endWord in wordList:
+            wordList.append(beginWord)
+            graph, visited_1, queue_1,visited_2, queue_2 = getGraph(
+                wordList), {}, deque(),{}, deque()
+            queue_1.append((beginWord, 1))
+            queue_2.append((endWord, 1))
+            while res==maxint and (queue_1 or queue_2):
+                tmp_queue=deque()
+                while queue_1:
+                    word, level = queue_1.popleft()
+                    if word in visited_2:
+                        res=min(res, level+visited_2[word]-1)
+                    if word not in visited_1:
+                        visited_1[word]=level
+                        level+=1
+                        for w in graph[word]:
+                            tmp_queue.append((w, level))
+                queue_1=tmp_queue
+                tmp_queue=deque()
+                while queue_2:
+                    word, level = queue_2.popleft()
+                    if word in visited_1:
+                        res=min(res, level+visited_1[word]-1)
+                    if word not in visited_2:
+                        visited_2[word]=level
+                        level+=1
+                        for w in graph[word]:
+                            tmp_queue.append((w, level))
+                queue_2=tmp_queue
+        return 0 if res==maxint else res
