@@ -72,5 +72,6 @@ Heap Sort
 - 41 First Missing Positive
 
 ### Graph
--127 Word Ladder
+- 127 Word Ladder
+- 743 Network Delay Time
 
