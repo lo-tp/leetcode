@@ -32,3 +32,18 @@ class Solution(object):
                     for dest, price1 in graph[node]:
                         stack.append((dest, step+1, price+price1))
         return -1 if res == maxint else res
+    def findCheapestPriceBest(self, n, flights, src, dst, K):
+        graph, stack, res = [[]
+                             for i in xrange(0, n)], [(0, 0,  src)], [maxint]*n
+        K += 1
+        for source, dest, price in flights:
+            graph[source].append((dest, price))
+        while stack:
+            p, steps, index = heapq.heappop(stack)
+            if steps <= K and p < res[dst]:
+                res[index] = p
+                if steps < K:
+                    steps += 1
+                    for inner_index, price in [i for i in graph[index] if res[i[0]] == maxint]:
+                        heapq.heappush(stack, (p+price, steps, inner_index))
+        return -1 if res[dst] == maxint else res[dst]
