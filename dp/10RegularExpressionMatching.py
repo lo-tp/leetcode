@@ -1,4 +1,21 @@
 class Solution(object):
+    def isMatchNonRecursiveBetter(self, s, p):
+        s_size, p_size = len(s), len(p)
+        dp = [[False for i in xrange(0, s_size+1)]
+              for k in xrange(0, p_size+1)]
+        dp[p_size][s_size] = True
+        for p_index in xrange(p_size-1, -1, -1):
+            for s_index in xrange(s_size, -1, -1):
+                ret = False
+                current_match = s_index < s_size and p[p_index] in {
+                    '.', s[s_index]}
+                if p_index+1 < p_size and p[p_index+1] == '*':
+                    ret = (dp[p_index+2][s_index]
+                           or (current_match and dp[p_index][s_index+1]))
+                else:
+                    ret = current_match and dp[p_index+1][s_index+1]
+                dp[p_index][s_index] = ret
+        return dp[0][0]
     def isMatchNonRecursive(self, str, pattern):
         str_size, pattern_size = len(str), len(pattern)
         dp = [[False for i in xrange(str_size+1)]
