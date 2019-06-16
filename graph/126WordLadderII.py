@@ -49,3 +49,28 @@ class Solution(object):
                 if not res:
                     stack = tmp
         return [[wordList[index] for index in indexes] for indexes in res]
+    def findLaddersBetter(self, beginWord, endWord, wordList):
+        res = []
+        if endWord in wordList:
+            wordList.append(beginWord)
+            wordList = list(set(wordList))
+            graph, visited = makeGraph(wordList), [False]*len(wordList)
+            begin_index, end_index = wordList.index(
+                beginWord), wordList.index(endWord)
+            stack = [[begin_index]]
+            while stack:
+                tmp = []
+                while stack:
+                    path = stack.pop()
+                    visited[path[-1]] = True
+                    if path[-1] == end_index:
+                        res.append(path)
+                    else:
+                        for next_index in [i for i in graph[path[-1]] if not visited[i]]:
+                            new_path = path[:]
+                            new_path.append(next_index)
+                            tmp.append(new_path)
+                if not res:
+                    stack = tmp
+        return [[wordList[index] for index in indexes] for indexes in res]
+
