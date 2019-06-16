@@ -14,3 +14,18 @@ class Solution(object):
                 index += 1
             return index+1
         return 1
+    def firstMissingPositiveBetter(self, nums):
+        nums.append(-1)
+        index, size = 0, len(nums)
+        while index < size:
+            if nums[index] > 0 and nums[index] != index:
+                tmp = nums[index]
+                while tmp >= 0 and tmp < size and nums[tmp] != tmp:
+                    tem = nums[tmp]
+                    nums[tmp] = tmp
+                    tmp = tem
+            index += 1
+        for i in xrange(1, size):
+            if i != nums[i]:
+                return i
+        return size if size else 1
