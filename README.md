@@ -37,6 +37,7 @@ Heap Sort
 - 139 Word Break
 - 10 Regular Expression Matching
 - 377 Combination Sum IV
+- 491 Increasing Subsequences
 
 
 ### Tranversal
