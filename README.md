@@ -38,6 +38,7 @@ Heap Sort
 - 10 Regular Expression Matching
 - 377 Combination Sum IV
 - 491 Increasing Subsequences
+- 646 Maximum Length of Pair Chain
 
 
 ### Tranversal
@@ -66,6 +67,7 @@ Heap Sort
 
 ### Greedy
 - 948 Bag of Tokens
+- 646 Maximum Length of Pair Chain
 
 
 ### Cyclic Swapping
