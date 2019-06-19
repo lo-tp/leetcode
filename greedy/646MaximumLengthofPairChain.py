@@ -1,4 +1,11 @@
 class Solution(object):
+    def findLongestChainGreedy(self, pairs):
+        pairs,res,minimum=sorted(pairs, key=lambda d:d[1]), 0, -maxint
+        for head, tail in pairs:
+            if head>minimum:
+                res+=1
+                minimum=tail
+        return res
     def findLongestChainDP(self, pairs):
         pairs.sort()
         size = len(pairs)
