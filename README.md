@@ -59,6 +59,7 @@ Heap Sort
 
 ### Linked List
 - 234 Palindrome Linked List
+- 203 Remove Linked List Elements
 
 ### Sliding Window
 - 76 Minimum Window Substring
