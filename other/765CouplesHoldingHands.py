@@ -1,4 +1,25 @@
+class UF():
+    def __init__(self, size):
+        self.count, self.parent = size, [i for i in xrange(0, size)]
+
+    def find(self, num):
+        while self.parent[num] != num:
+            num = self.parent[num]
+        return num
+
+    def merge(self, i, j):
+        parent_i, parent_j = self.find(i), self.find(j)
+        if parent_i != parent_j:
+            self.parent[parent_i] = parent_j
+            self.count -= 1
+
 class Solution(object):
+    def minSwapsCouplesDoneWithUnionFind(self, row):
+        size = len(row)/2
+        uf = UF(size)
+        for i in xrange(0, size):
+            uf.merge(row[i*2]/2, row[i*2+1]/2)
+        return size - uf.count
     def minSwapsCouplesBetter(self, row):
         res, pos = 0, row[:]
         for index, val in enumerate(row):
