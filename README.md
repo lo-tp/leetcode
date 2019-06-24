@@ -56,6 +56,7 @@ Heap Sort
 173BinarySearchTreeIterator.py
 - BFS
   - 116 Populating Next Right Pointers in Each Node
+  - 623AddOneRowtoTree
 
 ### Linked List
 - 234 Palindrome Linked List
