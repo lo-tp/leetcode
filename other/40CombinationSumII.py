@@ -16,6 +16,26 @@ def qc(arr, start, end):
 
 
 class Solution(object):
+    def combinationSum2Better(self, candidates, target):
+        res = []
+        if candidates:
+            candidates.sort()
+            stack = []
+            stack.append((0, 0, []))
+            while stack:
+                sum, first_index, path = stack.pop()
+                if sum == target:
+                    res.append(path)
+                elif sum < target:
+                    prev = 0
+                    for index, num in enumerate(candidates[first_index:]):
+                        if not index or num != prev:
+                            prev = num
+                            new_path = path[:]
+                            new_path.append(num)
+                            stack.append(
+                                (sum+num, first_index+index+1, new_path))
+        return res
     def combinationSum2(self, candidates, target):
         visited, res = {}, []
         if candidates:
