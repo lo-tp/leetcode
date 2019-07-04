@@ -26,7 +26,20 @@ class UF():
 
 
 class Solution(object):
-    def findCircleNum(self, M):
+    def findCircleNumBFS(self, M):
+        res, size = 0, len(M)
+        stack, visited = [i for i in xrange(0, size)], [False]*size
+        while stack:
+            index = stack.pop()
+            if not visited[index]:
+                res += 1
+                tmp = [index]
+                while tmp:
+                    i = tmp.pop()
+                    visited[i] = True
+                    tmp.extend([k for k in xrange(0, size)
+                                if not visited[k] and M[i][k]])
+        return res    def findCircleNum(self, M):
         size = len(M)
         uf = UF(size)
         for column_index in xrange(0, size):
