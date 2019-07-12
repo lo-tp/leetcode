@@ -39,6 +39,7 @@ Heap Sort
 - 377 Combination Sum IV
 - 491 Increasing Subsequences
 - 646 Maximum Length of Pair Chain
+- 1027 Longest Arithmetic Sequence
 
 
 ### Tranversal
