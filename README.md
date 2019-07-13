@@ -71,6 +71,8 @@ Heap Sort
 ### Greedy
 - 948 Bag of Tokens
 - 646 Maximum Length of Pair Chain
+- 870 Advantage Shuffle
+870AdvantageShuffle.py
 
 
 ### Cyclic Swapping
