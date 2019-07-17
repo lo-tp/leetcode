@@ -1,3 +1,17 @@
+class MyCalendarTwoBetter(object):
+
+    def __init__(self):
+        self.single = []
+        self.double = []
+
+    def book(self, start, end):
+        for s, e in self.double:
+            if s < end and e > start:
+                return True
+        for s, e in self.single:
+            if s < end and e > start:
+                self.double.append(max(start, s), min(end, e))
+        self.single.append((start, end))
 def convert(s, e, h, t):
     if s <= h and e > h and e < t:
         return (h, e)
