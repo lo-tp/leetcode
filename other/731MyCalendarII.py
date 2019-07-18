@@ -1,3 +1,38 @@
+from collections import defaultdict
+
+
+class TreeMap():
+    def __init__(self, default_val):
+        self.data = default(lambda: default_val)
+
+    def keys(self):
+        return self.data.keys().sort()
+
+    def get(self, key):
+        return self.data[key]
+
+    def set(self, key, val):
+        self.data[key] = val
+
+
+class MyCalendarTwoWithTreeMap(object):
+
+    def __init__(self):
+        self.tm = TreeMap(0)
+
+    def book(self, start, end):
+        tm = self.tm
+        tm.set(start, tm.get(start)+1)
+        tm.set(end, tm.get(end)-1)
+        active = 0
+        for key in tm.keys():
+            active += tm.get(key)
+            if active > 2:
+                tm.set(start, tm.get(start)-1)
+                tm.set(end, tm.get(end)+1)
+                return False
+        return True
+
 class MyCalendarTwoBetter(object):
 
     def __init__(self):
