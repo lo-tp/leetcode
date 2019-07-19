@@ -77,3 +77,20 @@ class MyCalendarTwo(object):
                 self.double.append((h, t))
         self.original.append((start, end))
         return True
+
+class MyCalendarTwoConcise(object):
+
+    def __init__(self):
+        self.single, self.double = [], []
+
+    def book(self, start, end):
+        for s, e in self.double:
+            h, t = max(start, s), min(end, e)
+            if h < t:
+                return False
+        for s, e in self.single:
+            h, t = max(start, s), min(end, e)
+            if h < t:
+                self.double.append((h, t))
+        self.single.append((start, end))
+        return True
