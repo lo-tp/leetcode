@@ -15,18 +15,20 @@ Binary Search
 - 124 Binary Tree Maximum Path Sum
 - 240 Search a 2D Matrix II
 
-Quick Sort
+### Quick Sort
 - 75 Sort Colors
 - 56 Merge Intervals
 
-Merge Sort
+### Merge Sort
 - 148 Sort List
 - 56 Merge Intervals
 
-Topological Sort
+### Topological Sort
 - 207 Course Schedule
+- 210 Course Schedule II
+210CourseScheduleII.py
 
-Heap Sort
+### Heap Sort
 - 692 Top K Frequent Words
 692TopKFrequentWords.py
 
