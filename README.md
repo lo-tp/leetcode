@@ -44,6 +44,7 @@ Binary Search
 - 1027 Longest Arithmetic Sequence
 - 123 Best Time to Buy and Sell Stock III
 - 188 Best Time to Buy and Sell Stock IV
+- 689 Maximum Sum of 3 Non-Overlapping Subarrays
 
 
 ### Tranversal
