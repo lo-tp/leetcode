@@ -45,6 +45,7 @@ Binary Search
 - 123 Best Time to Buy and Sell Stock III
 - 188 Best Time to Buy and Sell Stock IV
 - 689 Maximum Sum of 3 Non-Overlapping Subarrays
+- 823 Binary Trees With Factors
 
 
 ### Tranversal
