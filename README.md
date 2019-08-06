@@ -18,6 +18,7 @@ Binary Search
 ### Quick Sort
 - 75 Sort Colors
 - 56 Merge Intervals
+- 962 Maximum Width Ramp
 
 ### Merge Sort
 - 148 Sort List
