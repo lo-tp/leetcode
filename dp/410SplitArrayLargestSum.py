@@ -1,4 +1,25 @@
 class Solution(object):
+    def splitArrayWithBinarySearch(self, nums, m):
+        l, r = 0, 0
+        for num in nums:
+            l = max(num, l)
+            r += num
+        while l <= r:
+            mid = l+(r-l)/2
+            count, tmp = 1, 0
+            for num in nums:
+                tmp += num
+                if tmp > mid:
+                    count += 1
+                    tmp = num
+                    if count > m:
+                        break
+            if count > m:
+                l = mid+1
+            else:
+                r = mid-1
+        return l
+
     def splitArray(self, nums, m):
         size = len(nums)
         dp = [[0 for _ in xrange(0, m)] for _ in xrange(0, size)]
