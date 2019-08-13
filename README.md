@@ -7,6 +7,7 @@ Monoqueue can be used to get the extremum in parts of an array.
 - 239 Sliding Window Maximum
 
 ### Sort
+- 826. Most Profit Assigning Work
 Binary Search
 - 4   Median of Two Sorted Arrays
 - 23  Merge k Sorted Lists
