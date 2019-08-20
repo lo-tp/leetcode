@@ -15,6 +15,7 @@ Binary Search
 - 81  Search in Rotated Sorted Array II
 - 124 Binary Tree Maximum Path Sum
 - 240 Search a 2D Matrix II
+- 540 Single Element in a Sorted Array
 
 ### Quick Sort
 - 75 Sort Colors
