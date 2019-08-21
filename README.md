@@ -50,6 +50,8 @@ Binary Search
 - 689 Maximum Sum of 3 Non-Overlapping Subarrays
 - 823 Binary Trees With Factors
 - 410 Split Array Largest Sum
+- 494 Target Sum
+494TargetSum.py
 
 
 ### Tranversal
