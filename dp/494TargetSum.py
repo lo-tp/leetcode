@@ -1,4 +1,22 @@
 class Solution(object):
+    def findTargetSumWays(self, nums, S):
+        size, total = len(nums), sum(nums)
+        upper_limit = total*2+1
+        if S > total or S < -total:
+            return 0
+        dp = [[0]*(upper_limit) for _ in xrange(0, size)]
+        dp[0][total-nums[0]] += 1
+        dp[0][nums[0]+total] += 1
+        for i in xrange(1, size):
+            for j in xrange(0, upper_limit):
+                if j+nums[i] < upper_limit:
+                    dp[i][j] += dp[i-1][j+nums[i]]
+                if j-nums[i] > -1:
+                    dp[i][j] += dp[i-1][j-nums[i]]
+        return dp[size-1][S+total]
+
+
+
     def calculate(self, index, sum):
         if sum < 0 or sum > 2000:
             return 0
