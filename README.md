@@ -55,6 +55,9 @@ Binary Search
 494TargetSum.py
 
 
+### Prie
+- 820 Short Encoding of Words
+
 ### Tranversal
 - 79 Word Search: how to prune useless branches is importanct to find the solution
 - 53 Maximum Subarray
