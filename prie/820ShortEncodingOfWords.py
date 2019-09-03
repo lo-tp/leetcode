@@ -32,3 +32,9 @@ class Solution(object):
             prie.add(word)
         return prie.get_length()
 
+    def minimumLengthEncodingTLE(self, words):
+        res, tmp = 0, sorted(words, key=lambda w: -len(w))
+        while tmp:
+            res += len(tmp[0])+1
+            tmp = filter(lambda w: not w in tmp[0], tmp)
+        return res
