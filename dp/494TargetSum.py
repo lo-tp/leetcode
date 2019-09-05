@@ -52,3 +52,23 @@ class Solution(object):
                 stack.append((index-1, residue+nums[index]))
                 stack.append((index-1, residue-nums[index]))
         return res
+
+    def findTargetSumWaysOptimizedBySet(self, nums, S):
+        if S > 1000 or S < -1000:
+            return 0
+        size = len(nums)
+        data, dp = set(), [[0]*2001 for _ in xrange(0, size)]
+        dp[0][1000+nums[0]] += 1
+        dp[0][1000-nums[0]] += 1
+        data.add(1000+nums[0])
+        data.add(1000-nums[0])
+        for i in xrange(1, size):
+            positive = [(k-nums[i], k) for k in data if k-nums[i] > -1]
+            negative = [(k+nums[i], k) for k in data if k+nums[i] < 2001]
+            for j, k in positive:
+                dp[i][j] += dp[i-1][k]
+                data.add(j)
+            for j, k in negative:
+                dp[i][j] += dp[i-1][k]
+                data.add(j)
+        return dp[size-1][S+1000]
