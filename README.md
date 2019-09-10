@@ -75,6 +75,8 @@ Binary Search
 - BFS
   - 116 Populating Next Right Pointers in Each Node
   - 623AddOneRowtoTree
+- DFS
+  - 1022. Sum of Root To Leaf Binary Numbers
 
 ### Linked List
 - 234 Palindrome Linked List
