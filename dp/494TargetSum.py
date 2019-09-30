@@ -15,8 +15,6 @@ class Solution(object):
                     dp[i][j] += dp[i-1][j-nums[i]]
         return dp[size-1][S+total]
 
-
-
     def calculate(self, index, sum):
         if sum < 0 or sum > 2000:
             return 0
@@ -72,3 +70,14 @@ class Solution(object):
                 dp[i][j] += dp[i-1][k]
                 data.add(j)
         return dp[size-1][S+1000]
+
+    def findTargetSumWaysDoneWithDict(self, nums, S):
+        tmp = {0: 1}
+        for num in nums:
+            tem = defaultdict(lambda: 0)
+            for prev in tmp:
+                t, te = prev-num, prev+num
+                tem[t] += tmp[prev]
+                tem[te] += tmp[prev]
+            tmp = tem
+        return tmp[S]
