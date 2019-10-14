@@ -36,6 +36,8 @@ Binary Search
 692TopKFrequentWords.py
 
 ### DP
+- 1074 Number of Submatrices That Sum to Target
+1074NumberOfSubmatricesThatSumToTarget.py
 - 1015 Smallest Integer Divisible by K
 - 152 Maximum Product Subarray
 - 84 Largest Rectangle in Histogram
