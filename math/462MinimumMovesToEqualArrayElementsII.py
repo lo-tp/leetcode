@@ -18,4 +18,7 @@ class Solution(object):
         num, size = data[-1]
         res = min(res, (num*l_size-l_sum)+(r_sum-r_size*num))
         return res
-
+    def minMoves2Better(self, nums):
+        size = len(nums)
+        nums.sort()
+        return sum([abs(k-nums[size/2]) for k in nums])
