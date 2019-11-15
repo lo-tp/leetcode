@@ -28,3 +28,18 @@ class Solution(object):
                 stack.append((index, g, p))
         return res % mod
 
+    def profitableSchemesTLE(self, G, P, group, profit):
+        res, size = 0, len(group)
+        stack = [(0, 0)]
+        for i in xrange(0, size):
+            if group[i] <= G:
+                tmp = []
+                for g, p in stack:
+                    if g+group[i] <= G:
+                        tmp.append((g+group[i], p+profit[i]))
+                        if tmp[-1][1] >= P:
+                            res += 1
+                stack.extend(tmp)
+        return res
+
+
