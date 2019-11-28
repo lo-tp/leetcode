@@ -15,6 +15,22 @@ class Solution(object):
         if b & (1 << 31):
             return - (2 ** 32-b)
         return b
+    def singleNumberBetter(self, nums):
+        a, b, bits = 0, 0, [1 << i for i in xrange(0, 32)]
+        for num in nums:
+            for bit in bits:
+                if bit & num:
+                    if a & bit:
+                        a ^= bit
+                    elif b & bit:
+                        a ^= bit
+                        b ^= bit
+                    else:
+                        b ^= bit
+        tmp = 1 << 32
+        if b & bits[-1]:
+            return -(~b+1)
+        return b
 
     def singleNumberNoNegativeSupport(self, nums):
         a, b = 0, 0
