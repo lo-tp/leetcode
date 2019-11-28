@@ -114,3 +114,6 @@ Binary Search
 
 ### Bitwise
 - 137 Single Number II
+
+### String
+- 1044. Longest Duplicate Substring
