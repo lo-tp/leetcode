@@ -117,3 +117,4 @@ Binary Search
 
 ### String
 - 1044. Longest Duplicate Substring
+- 686 Repeated String Match
