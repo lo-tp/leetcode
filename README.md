@@ -116,5 +116,6 @@ Binary Search
 - 137 Single Number II
 
 ### String
+- 686. Repeated String Match
 - 1044. Longest Duplicate Substring
 - 686 Repeated String Match
