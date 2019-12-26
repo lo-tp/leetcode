@@ -104,6 +104,7 @@ Binary Search
 - 743 Network Delay Time
 - 787 Cheapest Flights Within K Stops
 - 126 Word Ladder II
+- 685 Redundant Connection II
 
 ### Union Find
 - 547 Friend Circles
