@@ -105,6 +105,8 @@ Binary Search
 - 787 Cheapest Flights Within K Stops
 - 126 Word Ladder II
 - 685 Redundant Connection II
+- 684 Redundant Connection 
+
 
 ### Union Find
 - 547 Friend Circles
