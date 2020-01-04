@@ -2,6 +2,7 @@ from collections import defaultdict
 class DisjointSet():
     def __init__(self, size):
         self.rep = [i for i in xrange(0, size)]
+        self.rank = [1 for i in xrange(0, size)]
 
     def find(self, t):
         stack = []
@@ -13,9 +14,16 @@ class DisjointSet():
             self.rep[i] = t
         return t
 
-    def union(self, a, b):
-        rep_a, rep_b = self.find(a), self.find(b)
-        self.rep[rep_a] = self.rep[rep_b]
+    def union(self, x, y):
+        rep_x, rep_y = self.find(x), self.find(y)
+        rank_x, rank_y = self.rank[rep_x], self.rank[rep_y]
+        if rep_x == rep_y:
+            return
+        elif rank_x == rank_y:
+            self.rank[rep_x] += 1
+        elif rank_x < rank_y:
+            rep_x, rep_y = rep_y, rep_x
+        self.rep[rep_y] = rep_x
 class Solution(object):
     def findRedundantDirectedConnectionTLE(self, edges):
         appearance, num = set(), 0
