@@ -1,4 +1,14 @@
 class Solution(object):
+    def beautifulArrayBetter(self, N):
+        res = [1]
+        while len(res) < N:
+            tmp = []
+            for i in res:
+                tmp.append(i*2-1)
+            for i in res:
+                tmp.append(i*2)
+            res = tmp
+        return [i for i in res if i <= N]
     def beautifulArray(self, N):
         stack, i = [], N
         while i > 1:
