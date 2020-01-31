@@ -65,6 +65,31 @@ class Solution(object):
             if rep_a == rep_b:
                 return [src, dest]
             rep.union(rep_a, rep_b)
+    def findRedundantDirectedConnectionDoneBetter(self, edges):
+        sz = len(edges)
+        tem, tmp, parent = None, None, [0 for _ in xrange(0, sz+1)]
+        for src, dest in edges:
+            if parent[dest]:
+                tmp, tem = dest, src
+            else:
+                parent[dest] = src
+        if tmp:
+            uf = DisjointSet(sz+1)
+            for i in xrange(1, sz+1):
+                if parent[i]:
+                    uf.union(i, parent[i])
+            t = uf.find(1)
+            for i in xrange(2, sz+1):
+                if uf.find(i) != t:
+                    return [parent[tmp], tmp]
+            return [tem, tmp]
+        else:
+            seen = set()
+            for src, dest in edges:
+                if dest in seen:
+                    return [src, dest]
+                seen.add(src)
+
 
     def findRedundantDirectedConnection(self, edges):
         special_node, N = 0, len(edges)
