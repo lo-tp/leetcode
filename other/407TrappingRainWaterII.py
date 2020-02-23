@@ -1,3 +1,4 @@
+
 class Solution(object):
     def trapRainWater(self, H):
         v_sz, res = len(H), 0
@@ -50,3 +51,39 @@ class Solution(object):
         # print res
         return res
 
+    def trapRainWater(self, H):
+        res, v_sz = 0, len(H)
+        if v_sz:
+            h_sz = len(H[0])
+            if h_sz:
+                t, self.data = -1, []
+                for h in xrange(0, h_sz):
+                    self.data.append((H[0][h], 0, h))
+                    self.data.append((H[v_sz-1][h], v_sz-1, h))
+                    H[0][h] = -1
+                    H[v_sz-1][h] = -1
+                for v in xrange(1, v_sz-1):
+                    self.data.append((H[v][0], v, 0))
+                    self.data.append((H[v][h_sz-1], v, h_sz-1))
+                    H[v][0] = -1
+                    H[v][h_sz-1] = -1
+                heapify(self.data)
+                while self.data:
+                    i, v, h = heappop(self.data)
+                    if i < t:
+                        res += t-i
+                    else:
+                        t = i
+                    if v+1 < v_sz and H[v+1][h] != -1:
+                        heappush(self.data, (H[v+1][h], v+1, h))
+                        H[v+1][h] = -1
+                    if h+1 < h_sz and H[v][h+1] != -1:
+                        heappush(self.data, (H[v][h+1], v, h+1))
+                        H[v][h+1] = -1
+                    if v-1 > -1 and H[v-1][h] != -1:
+                        heappush(self.data, (H[v-1][h], v-1, h))
+                        H[v-1][h] = -1
+                    if h-1 > -1 and H[v][h-1] != -1:
+                        heappush(self.data, (H[v][h-1], v, h-1))
+                        H[v][h-1] = -1
+        return res
