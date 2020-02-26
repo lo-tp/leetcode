@@ -1,3 +1,4 @@
+from heapq import heappush, heapify, heappop
 
 class Solution(object):
     def trapRainWater(self, H):
