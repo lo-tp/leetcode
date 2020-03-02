@@ -13,3 +13,20 @@ class Solution(object):
                 else:
                     res += val
         return res
+    def sumNumbersInOrderDfs(self, root):
+        res, stack = 0, []
+        while root or stack:
+            if root:
+                if root.left:
+                    root.left.val += root.val*10
+                stack.append(root)
+                root = root.left
+            else:
+                root = stack.pop()
+                if not root.left and not root.right:
+                    res += root.val
+                if root.right:
+                    root.right.val += root.val*10
+                root = root.right
+        return res
+
