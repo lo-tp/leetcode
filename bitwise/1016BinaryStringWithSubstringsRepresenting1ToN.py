@@ -1,21 +1,22 @@
 class Solution(object):
     def queryString(self, S, N):
-        if N > 2000:
+        if N >= 2048:
             return False
-        seen, sz = set(), N.bit_length()
-        for i in xrange(1, sz+1):
-            t, tem, res = 0, 2**(i-1), 0
-            for j in xrange(0, i-1):
-                res *= 2
-                if S[j] == '1':
-                    res += 1
-            for j in xrange(i-1, len(S)):
-                res *= 2
-                if S[j] == '1':
-                    res += 1
-                if res and res <= N:
-                    seen.add(res)
-                if S[t] == '1':
-                    res -= tem
-                t += 1
+        seen, t, te = set(), N.bit_length(), len(S)
+        if t <= te:
+            for i in xrange(1, t+1):
+                k, tem, temp = 0, 0, 2**(i-1)
+                for j in xrange(0, i-1):
+                    tem *= 2
+                    if S[j] == '1':
+                        tem += 1
+                for j in xrange(i-1, te):
+                    tem *= 2
+                    if S[j] == '1':
+                        tem += 1
+                    if tem and tem <= N:
+                        seen.add(tem)
+                    if S[k] == '1':
+                        tem -= temp
+                    k += 1
         return len(seen) == N
