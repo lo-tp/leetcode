@@ -20,3 +20,19 @@ class Solution(object):
                         tem -= temp
                     k += 1
         return len(seen) == N
+
+    def queryString(self, S, N):
+        if N >= 2048:
+            return False
+        dp, seen, sz_s = [(0, i) for i in xrange(0, len(S))], set(),  len(S)
+        for _ in xrange(0, N.bit_length()):
+            tmp = []
+            for cur, j in dp:
+                if j < sz_s:
+                    cur *= 2
+                    cur += 1 if S[j] == '1' else 0
+                    if cur and cur <= N:
+                        seen.add(cur)
+                    tmp.append((cur, j+1))
+            dp = tmp
+        return len(seen) == N
