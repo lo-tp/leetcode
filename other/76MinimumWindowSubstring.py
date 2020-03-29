@@ -2,6 +2,27 @@ from sys import maxint
 from collections import Counter
 
 class Solution(object):
+    def minWindowBetter(self, s, t):
+        slow, sz_s, sz_t, data = 0, len(s), len(t), Counter(t)
+        res, min_length = '', maxint
+        for fast in xrange(0, sz_s):
+            if s[fast] in data:
+                if data[s[fast]] > 0:
+                    sz_t -= 1
+                data[s[fast]] -= 1
+            if not sz_t:
+                while s[slow] not in data or data[s[slow]]:
+                    if s[slow] in data:
+                        data[s[slow]] += 1
+                    slow += 1
+                sz_t += 1
+                data[s[slow]] += 1
+                te = fast-slow+2
+                if te < min_length:
+                    min_length = te
+                    res = s[slow: fast+1]
+                slow += 1
+        return res
     def minWindowEasyToUnderstand(self, source, target):
         res, source_size, target_size = '', len(source), len(target)
         if source_size >= target_size:
