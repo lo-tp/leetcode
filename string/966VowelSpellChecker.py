@@ -1,3 +1,4 @@
+from re import sub
 vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']
 ord_a = ord('A')
 
@@ -58,4 +59,26 @@ class Solution(object):
             if t:
                 t.sort()
                 res[i] = t[0][1]
+        return res
+
+    def spellchecker(self, wordlist, queries):
+        match, match_ignore_capitalization, match_ignore_vowel = set(wordlist), {
+        }, {}
+        res = ['' for i in queries]
+        for i in wordlist:
+            t = i.lower()
+            match_ignore_capitalization.setdefault(t, i)
+            t = sub(r'[aeiou]', '-', t)
+            match_ignore_vowel.setdefault(t, i)
+        for i, j in enumerate(queries):
+            if j in match:
+                res[i] = j
+                continue
+            j = j.lower()
+            if j in match_ignore_capitalization:
+                res[i] = match_ignore_capitalization[j]
+                continue
+            j = sub(r'[aeiou]', '-', j)
+            if j in match_ignore_vowel:
+                res[i] = match_ignore_vowel[j]
         return res
