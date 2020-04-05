@@ -15,3 +15,12 @@ class Solution(object):
             return [1, c-a-2]
         else:
             return [2, c-a-2]
+    def numMovesStonesBetter(self, a, b, c):
+        data = [a, b, c]
+        data.sort()
+        if data[-1]-data[0] == 3:
+            return [1, 1]
+        elif data[-1]-data[0] == 2:
+            return [0, 0]
+        else:
+            return [2, data[-1]-data[0]-2]
