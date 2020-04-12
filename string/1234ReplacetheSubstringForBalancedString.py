@@ -1,4 +1,4 @@
-from collections import Counter, defaultdict
+from collections import Counter
 
 
 class Solution(object):
@@ -27,5 +27,16 @@ class Solution(object):
                         break
                 if flag:
                     res = min(res, r-l+1)
+        return res
+
+    def balancedString(self, s):
+        sz, count, l = len(s), Counter(s), 0
+        res, t = sz, sz/4
+        for r in xrange(0, sz):
+            count[s[r]] -= 1
+            while l < sz and max(count.values()) <= t:
+                res = min(res, r-l+1)
+                count[s[l]] += 1
+                l += 1
         return res
 
