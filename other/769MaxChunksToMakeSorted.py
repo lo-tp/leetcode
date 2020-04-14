@@ -12,3 +12,11 @@ class Solution(object):
                 res += 1
         return res
 
+    def maxChunksToSortedBetter(self, arr):
+        t, res = 0, 0
+        for i, j in enumerate(arr):
+            if i != j:
+                t = max(j, t)
+            if i >= t:
+                res += 1
+        return res
