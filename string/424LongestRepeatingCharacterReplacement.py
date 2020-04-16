@@ -1,4 +1,17 @@
 class Solution(object):
+    def characterReplacementBetter(self, s, k):
+        maximum, l, sz, ord_a, data = 0, 0, len(
+            s), ord('A'), [0 for _ in xrange(0, 26)]
+        for r in xrange(0, sz):
+            t = ord(s[r])-ord_a
+            data[t] += 1
+            maximum = max(maximum, data[t])
+            if r-l+1-maximum > k:
+                t = ord(s[l])-ord_a
+                data[t] -= 1
+                l += 1
+        return min(maximum+k, sz)
+
     def characterReplacement(self, original, k):
         s, res, sz, data = 0, 0, len(original), [0]*26
         max_count, ord_a = 0, ord('A')
