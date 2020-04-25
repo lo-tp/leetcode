@@ -95,3 +95,25 @@ class Solution(object):
                 res += str(i)*data[i]
         return sub('^0+', '0', res)
 
+    def largestMultipleOfThreeBetter(self, digits):
+        k, res, count, t = 0, '', Counter(digits), sum(digits) % 3
+        if t:
+            k = 2
+            for i in [2, 5, 8] if t == 2 else [1, 4, 7]:
+                if i in count:
+                    count[i] -= 1
+                    k = 0
+                    break
+            if k:
+                for i in [1, 4, 7] if t == 2 else [2, 5, 8]:
+                    for _ in xrange(0, 2):
+                        if t and i in count and count[i]:
+                            k -= 1
+                            count[i] -= 1
+        if not k:
+            for i in xrange(9, -1, -1):
+                if i in count and count[i]:
+                    res += str(i)*count[i]
+        return sub('^0+$', '0', res)
+
+
