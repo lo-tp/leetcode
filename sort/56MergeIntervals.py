@@ -55,3 +55,17 @@ class Solution(object):
                 i = e
             return res
         return intervals
+    def mergeBetter(self, intervals):
+        res = []
+        if intervals:
+            tmp = sorted(intervals)
+            t = tmp[0][1]
+            res.append(tmp[0])
+            for start, end in tmp:
+                if start > t:
+                    res[-1][1] = t
+                    res.append([start, 0])
+                t = max(t, end)
+            res[-1][1] = t
+        return res
+
