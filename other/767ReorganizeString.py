@@ -1,4 +1,5 @@
 from collections import Counter
+from heapq import heapify, heappop, heappush
 
 
 class Solution(object):
@@ -26,4 +27,20 @@ class Solution(object):
                 res += data[0][0]
         return res
 
-
+    def reorganizeString(self, S):
+        sz, res, data = len(S), '', [(-i[1], i[0]) for i in
+                                     Counter(S).items()]
+        heapify(data)
+        if -data[0][0] <= (sz+1)/2:
+            while len(data) > 1:
+                count1, letter1 = heappop(data)
+                count2, letter2 = heappop(data)
+                t = '{}{}'.format(letter1, letter2)
+                for i in xrange(0, -count2):
+                    res += t
+                count1 -= count2
+                if count1:
+                    heappush(data, (count1, letter1))
+            if data:
+                res += data[0][1]
+        return res
