@@ -15,6 +15,7 @@ class Solution(object):
             return [1, c-a-2]
         else:
             return [2, c-a-2]
+
     def numMovesStonesBetter(self, a, b, c):
         data = [a, b, c]
         data.sort()
@@ -24,3 +25,12 @@ class Solution(object):
             return [0, 0]
         else:
             return [2, data[-1]-data[0]-2]
+
+    def numMovesStones(self, a, b, c):
+        a, b, c = sorted([a, b, c])
+        mini = 2
+        if a+1 == b and b+1 == c:
+            mini = 0
+        elif a >= b-2 or b >= c-2:
+            mini = 1
+        return [mini, c-a-2]
