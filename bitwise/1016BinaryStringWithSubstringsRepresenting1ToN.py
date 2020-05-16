@@ -36,3 +36,19 @@ class Solution(object):
                     tmp.append((cur, j+1))
             dp = tmp
         return len(seen) == N
+
+class Solution(object):
+    def queryString(self, S, N):
+        if N > 2023:
+            return False
+        seen, sz, n_sz = set(), len(S), N.bit_length()
+        for i in xrange(0, sz):
+            t = 0
+            for j in xrange(i, min(sz, i+n_sz)):
+                t *= 2
+                t += 1 if S[j] == '1' else 0
+                if t > N:
+                    break
+                if t:
+                    seen.add(t)
+        return len(seen) == N
