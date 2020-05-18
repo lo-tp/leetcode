@@ -31,3 +31,10 @@ class Solution(object):
                         tmp.append((tem, j))
             data = tmp
         return len(seen)
+    def subarrayBitwiseORsDoneBetter(self, A):
+        seen = set([0])
+        res = set()
+        for i in A:
+            seen = {j | i for j in seen} | {i}
+            res |= seen
+        return len(res)
