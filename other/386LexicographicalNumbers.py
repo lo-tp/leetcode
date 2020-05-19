@@ -34,5 +34,14 @@ class Solution(object):
         res = [str(i) for i in xrange(1, n+1)]
         qc(res, 0, n-1)
         return [int(i) for i in res]
-
-
+    def lexicalOrder(self, n):
+        i, stack, n, res = 1, [], n+1, []
+        while i < n or stack:
+            if i < n:
+                res.append(i)
+                stack.append(i)
+                i *= 10
+            else:
+                i = stack.pop()+1
+                i = i if i % 10 else n
+        return res
