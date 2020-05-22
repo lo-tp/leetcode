@@ -1,5 +1,4 @@
 from collections import defaultdict
-from copy import copy
 
 
 class Solution(object):
