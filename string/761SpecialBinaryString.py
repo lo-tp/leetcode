@@ -1,5 +1,5 @@
 class Solution(object):
-    def makeLargestSpecial(self, S):
+    def makeLargestSpecialTLE(self, S):
         res = ''
 
         seen, stack = set(), [S]
@@ -45,3 +45,12 @@ class Solution(object):
                                 stack.append(tmp)
         return res
 
+    def makeLargestSpecial(self, S):
+        data = []
+        count, l = 0, 0
+        for r, val in enumerate(S):
+            count += 1 if val == '1' else -1
+            if not count:
+                data.append('1{}0'.format(self.makeLargestSpecial(S[l+1:r])))
+                l = r+1
+        return ''.join(sorted(data)[::-1])
