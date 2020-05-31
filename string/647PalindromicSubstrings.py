@@ -77,3 +77,21 @@ class Solution(object):
             index+=1
 
         return reduce(lambda accu, x: accu+(x+1)/2 ,palindromicLength,  0);
+    def countSubstrings(self, s):
+        sz, res, stack = len(s), 0, []
+        if sz:
+            for i in xrange(0, sz-1):
+                if s[i] == s[i+1]:
+                    stack.append((i, i+1))
+                stack.append((i, i))
+            stack.append((sz-1, sz-1))
+            while stack:
+                res += len(stack)
+                t = []
+                for l, r in stack:
+                    l -= 1
+                    r += 1
+                    if l > -1 and r < sz and s[l] == s[r]:
+                        t.append((l, r))
+                stack = t
+        return res
