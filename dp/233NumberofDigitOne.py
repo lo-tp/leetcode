@@ -42,3 +42,17 @@ class Solution(object):
             else:
                 res += 1
         return res
+    def countDigitOne(self, n):
+        res = 0
+        if n > 0:
+            ord0 = ord('0')
+            while n >= 10:
+                te, t = list(str(n)), int(log10(n))
+                tmp = ord(te[0])-ord0
+                res += tmp*t*(10**(t-1))
+                te[0] = '0'
+                n = int(''.join(te))
+                res += 10**t if tmp > 1 else n+1
+            if n:
+                res += 1
+        return res
