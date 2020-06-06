@@ -42,3 +42,14 @@ class Solution(object):
                 k += 1
             maximum = max(maximum, k)
         return '{}{}'.format(S[maximum+1:][::-1], S)
+
+    def shortestPalindrome(self, S):
+        maximum, rev, table, sz, k = 0, S[::-1], getTable(S), len(S), -1
+        for i in xrange(0, sz):
+            while k != -1 and S[k+1] != rev[i]:
+                # print k, i
+                k = table[k]
+            if S[k+1] == rev[i]:
+                k += 1
+            maximum = max(maximum, k)
+        return '{}{}'.format(rev[:sz-k-1], S)
