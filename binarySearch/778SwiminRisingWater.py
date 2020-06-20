@@ -1,3 +1,4 @@
+from heapq import heappop, heappush
 class Solution(object):
     def swimInWater(self, grid):
         sz = len(grid)
@@ -22,3 +23,15 @@ class Solution(object):
                 l = m+1
         return res
 
+    def swimInWater(self, grid):
+        res, sz, seen, heap = 0, len(grid), set(), [(grid[0][0], 0, 0)]
+        while True:
+            val, i, j = heappop(heap)
+            res = max(res, val)
+            if i == sz-1 and j == sz-1:
+                break
+            seen.add(val)
+            for t, te in [(i+1, j), (i-1, j), (i, j+1), (i, j-1)]:
+                if t > -1 and t < sz and te > -1 and te < sz and grid[t][te] not in seen:
+                    heappush(heap, (grid[t][te], t, te))
+        return res
