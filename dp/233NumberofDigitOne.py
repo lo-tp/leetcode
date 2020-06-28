@@ -56,3 +56,17 @@ class Solution(object):
             if n:
                 res += 1
         return res
+    def countDigitOne(self, n):
+        res = 0
+        while n > 9:
+            t = list('{}'.format(n))
+            m, te = int(t[0]), len(t)-1
+            res += m*te*(10**(te-1))
+            n = int(''.join(t[1:]))
+            if m == 1:
+                res += n+1
+            else:
+                res += 10**te
+        if n > 0:
+            res += 1
+        return res
