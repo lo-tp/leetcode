@@ -1,7 +1,7 @@
 from collections import deque
 
 class Solution(object):
-    def longestSubarray(self, nums, limit):
+    def longestSubarrayTLE(self, nums, limit):
         minimum, maximum, l, res = nums[0], nums[0], 0, 0
         for r in xrange(0, len(nums)):
             maximum = max(maximum, nums[r])
@@ -33,3 +33,18 @@ class Solution(object):
                 l += 1
             res = max(res, r-l+1)
         return res
+
+    def longestSubarray(self, nums, limit):
+        res, l, max_h, min_h = 1, 0, [], []
+        for r in xrange(0, len(nums)):
+            heappush(max_h, (-nums[r], r))
+            heappush(min_h, (nums[r], r))
+            while -max_h[0][0]-min_h[0][0] > limit:
+                while max_h[0][1] <= l:
+                    heappop(max_h)
+                while min_h[0][1] <= l:
+                    heappop(min_h)
+                l += 1
+            res = max(res, r-l+1)
+        return res
+
