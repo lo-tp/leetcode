@@ -19,4 +19,12 @@ class Solution(object):
             non_sub = max(0, non_sub)+arr[i]
             res = max(res, sub, non_sub)
         return res
+    def maximumSum(self, arr):
+        res, sub, non_sub = arr[0], -arr[0], -1
+        for j, i in enumerate(arr):
+            sub = max(non_sub, sub+i)
+            non_sub = max(0, non_sub)+i
+            if j:
+                res = max(res, sub, non_sub)
+        return res
 
