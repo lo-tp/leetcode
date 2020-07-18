@@ -25,3 +25,27 @@ class Solution(object):
         before.next.next = after
         before.next = t
         return head
+    def reverseBetween(self, head, m, n):
+        if not head.next:
+            return head
+        if m == 1:
+            t, te = head, head.next
+            for i in xrange(1, n):
+                tem = te.next
+                te.next = t
+                t, te = te, tem
+            head.next = te
+            return t
+        t = head
+        for i in xrange(2, m):
+            t = t.next
+        before = t
+        t, te = before.next, before.next.next
+        for _ in xrange(m, n):
+            tem = te.next
+            te.next = t
+            t, te = te, tem
+        before.next.next = te
+        before.next = t
+        return head
+
