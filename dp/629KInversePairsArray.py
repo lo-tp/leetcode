@@ -1,5 +1,5 @@
 class Solution(object):
-    def kInversePairs(self, n, k):
+    def kInversePairsWA(self, n, k):
         if not k:
             return 1
         if k >= n:
@@ -12,7 +12,8 @@ class Solution(object):
                 for w in xrange(0, min(i-1, j)+1):
                     dp[i][j] += dp[i-1][w]
         return dp[n-1][k] % (10 ** 9+7)
-    def kInversePairs(self, n, k):
+
+    def kInversePairsTLE(self, n, k):
         dp = [[0 for _ in xrange(0, k+1)] for _ in xrange(0, n)]
         dp[0][0] = 1
         for i in xrange(1, n):
@@ -21,3 +22,20 @@ class Solution(object):
                 for m in xrange(0, min(i+1, j+1)):
                     dp[i][j] += dp[i-1][j-m]
         return dp[n-1][k]
+
+    def kInversePairs(self, n, k):
+        if not k:
+            return 1
+        dp = [[0 for _ in xrange(0, k+1)] for _ in xrange(0, n)]
+        for i in xrange(0, k+1):
+            dp[0][i] = 1
+        for i in xrange(1, n):
+            dp[i][0] = 1
+            for m in xrange(1,  k+1):
+                dp[i][m] = dp[i][m-1]
+                if i >= m:
+                    dp[i][m] += dp[i-1][m]
+                else:
+                    dp[i][m] += dp[i-1][m]-dp[i-1][m-i-1]
+        return dp[n-1][k]-dp[n-1][k-1]
+
