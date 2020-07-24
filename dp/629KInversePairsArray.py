@@ -37,5 +37,20 @@ class Solution(object):
                     dp[i][m] += dp[i-1][m]
                 else:
                     dp[i][m] += dp[i-1][m]-dp[i-1][m-i-1]
-        return dp[n-1][k]-dp[n-1][k-1]
+        return (dp[n-1][k]-dp[n-1][k-1]) % (10**9+7)
+
+    def kInversePairs(self, n, k):
+        if not k:
+            return 1
+        dp = [1 for _ in xrange(0, k+1)]
+        for i in xrange(1, n):
+            tem = [1]
+            for m in xrange(1,  k+1):
+                tem.append(tem[-1])
+                if i >= m:
+                    tem[-1] += dp[m]
+                else:
+                    tem[-1] += dp[m]-dp[m-i-1]
+            dp = tem
+        return (dp[k]-dp[k-1]) % (10**9+7)
 
