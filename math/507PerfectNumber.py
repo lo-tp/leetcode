@@ -3,7 +3,7 @@ from math import sqrt
 
 class Solution(object):
     def checkPerfectNumber(self, num):
-        if num < 0:
+        if num <= 0:
             return False
         t = 1
         te = int(sqrt(num))
