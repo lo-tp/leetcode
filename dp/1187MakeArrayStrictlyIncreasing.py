@@ -45,3 +45,16 @@ class Solution(object):
         if dp:
             return min(dp.values())
         return -1
+    def makeArrayIncreasing(self, arr1, arr2):
+        arr2.sort()
+        sz, dp = len(arr2), {-maxint: 0}
+        for i in arr1:
+            tmp = defaultdict(lambda: max)
+            for key, val in dp.items():
+                if i > key:
+                    tmp[i] = min(val, tmp[i])
+                t = bisect_right(arr2, key)
+                if t < sz:
+                    tmp[arr2[t]] = min(val+1, tmp[arr2[t]])
+            dp = tmp
+        return min(dp.values()) if dp else -1
