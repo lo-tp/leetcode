@@ -1,3 +1,5 @@
+from collections import deque
+
 class Solution(object):
     def longestSubarray(self, nums, limit):
         minimum, maximum, l, res = nums[0], nums[0], 0, 0
@@ -12,4 +14,22 @@ class Solution(object):
                     if maximum-minimum <= limit:
                         break
             res = max(r-l+1, res)
+        return res
+
+    def longestSubarray(self, nums, limit):
+        res, min_q, max_q, l = 0, deque(), deque(), 0
+        for r in xrange(0, len(nums)):
+            while min_q and min_q[-1] > nums[r]:
+                min_q.pop()
+            while max_q and max_q[-1] < nums[r]:
+                max_q.pop()
+            min_q.append(nums[r])
+            max_q.append(nums[r])
+            while max_q[0]-min_q[0] > limit:
+                if max_q[0] == nums[l]:
+                    max_q.popleft()
+                elif min_q[0] == nums[l]:
+                    min_q.popleft()
+                l += 1
+            res = max(res, r-l+1)
         return res
