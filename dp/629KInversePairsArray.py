@@ -64,4 +64,16 @@ class Solution(object):
                 tem.append(tem[-1])
                 tem[-1] += dp[m] if i >= m else (dp[m]-dp[m-i-1])
             dp = tem
+
         return (dp[k]-dp[k-1]) % (10**9+7)
+
+    def kInversePairs(self, n, k):
+        dp = [[0 for _ in xrange(0, k+1)]for _ in xrange(0, n+1)]
+        dp[1][0] = 1
+        for i in xrange(2, n+1):
+            dp[i][0] = 1
+            for j in xrange(1, min(k, (n*n+n)/2)+1):
+                dp[i][j] = dp[i][j-1]+dp[i-1][j]
+                if j > i-1:
+                    dp[i][j] -= dp[i-1][j-i]
+        return dp[n][k] % (10**9+7)
