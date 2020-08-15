@@ -76,4 +76,19 @@ class Solution(object):
                 dp[i][j] = dp[i][j-1]+dp[i-1][j]
                 if j > i-1:
                     dp[i][j] -= dp[i-1][j-i]
+
         return dp[n][k] % (10**9+7)
+
+    def kInversePairs(self, n, k):
+        if n < 1:
+            return 1
+        dp = [0 for _ in xrange(0, k+1)]
+        dp[0] = 1
+        for i in xrange(2, n+1):
+            tmp = dp[:]
+            for j in xrange(1, min(k, (n*n+n)/2)+1):
+                tmp[j] = tmp[j-1]+dp[j]
+                if j > i-1:
+                    tmp[j] -= dp[j-i]
+            dp = tmp
+        return dp[k] % (10**9+7)
