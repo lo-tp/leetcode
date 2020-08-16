@@ -92,3 +92,14 @@ class Solution(object):
                     tmp[j] -= dp[j-i]
             dp = tmp
         return dp[k] % (10**9+7)
+
+    def kInversePairs(self, n, k):
+        if not k:
+            return 1
+        dp = [1 for _ in xrange(0, k+1)]
+        for i in xrange(1, n+1):
+            tmp = dp[:]
+            for j in xrange(1, k+1):
+                tmp[j] = dp[j]-(0 if j < i else dp[j-i])+tmp[j-1]
+            dp = tmp
+        return (dp[k]-dp[k-1]) % (10**9+7)
