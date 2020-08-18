@@ -26,3 +26,22 @@ class Solution(object):
                         if v+1 < v_sz:
                             dp[v+1][h] += dp[v][h]
         return 0 if g[-1][-1] else dp[-1][-1]
+
+    def uniquePathsWithObstacles(self, g):
+        if g[0][0] or g[-1][-1]:
+            return 0
+        v_sz, h_sz = len(g), len(g[0])
+        t, dp = 1, []
+        for i in g[0]:
+            if i:
+                t = 0
+            dp.append(t)
+
+        for v in xrange(1, v_sz):
+            tmp = dp[:]
+            if g[v][0]:
+                tmp[0] = 0
+            for h in xrange(1, h_sz):
+                tmp[h] += -tmp[h] if g[v][h] else tmp[h-1]
+            dp = tmp
+        return dp[-1]
