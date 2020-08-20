@@ -17,3 +17,28 @@ class Solution(object):
                 c = current+d[t][te]
                 stack.append((t, te, max(c, 1), minimum-(0 if c > 0 else c-1)))
         return res
+
+    def calculateMinimumHP(self, d):
+        v_sz, h_sz, dp = len(d), len(
+            d[0]), None
+
+        for v in xrange(0, v_sz):
+            tmp = []
+            if not v:
+                tmp.append((1+max(0, d[0][0]), 1-min(d[0][0], 0)))
+            for h in xrange(0, h_sz):
+                s = 1
+                m = maxint
+                if v:
+                    t = dp[h][0]+d[v][h]
+                    s = max(t, s)
+                    m = dp[h][1]+(1-t if t <= 0 else 0)
+                if h:
+                    t = tmp[-1][0]+d[v][h]
+                    s = max(t, s)
+                    m = min(tmp[-1][1]+(1-t if t <= 0 else 0), m)
+                if v or h:
+                    tmp.append((s, m))
+            dp = tmp
+        return dp[-1][1]
+
