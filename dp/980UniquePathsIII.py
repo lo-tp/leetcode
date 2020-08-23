@@ -56,3 +56,40 @@ class Solution(object):
                 path.append((v, h))
                 stack.append(((v, h), new_path, new_visited))
         return res
+    def uniquePathsIII(self, grid):
+        self.v_sz, self.h_sz, num, self.grid = len(grid), len(grid[0]), 0, grid
+        start_v, start_h = None, None
+        for v in xrange(0, self.v_sz):
+            for h in xrange(0, self.h_sz):
+                if grid[v][h] != -1:
+                    num += 1
+                if grid[v][h] == 1:
+                    start_v, start_h = v, h
+
+        return self.dfs(num, start_v, start_h)
+
+    def dfs(self, num, v, h):
+        num -= 1
+        if self.grid[v][h] == -1:
+            return 0
+        if self.grid[v][h] == 2:
+            return 0 if num else 1
+
+        res, self.grid[v][h] = 0, -1
+        v += 1
+        if v < self.v_sz:
+            res += self.dfs(num, v, h)
+        v -= 2
+        if v > -1:
+            res += self.dfs(num, v, h)
+        v += 1
+        h += 1
+        if h < self.h_sz:
+            res += self.dfs(num, v, h)
+        h -= 2
+        if h > -1:
+            res += self.dfs(num, v, h)
+        h += 1
+        self.grid[v][h] = 0
+        return res
+
