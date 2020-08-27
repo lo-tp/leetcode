@@ -1,4 +1,4 @@
-class Solution(object):
+jlass Solution(object):
     def find(self, columnIndex, rowIndex, index):
         if index == len(self.word):
             return True
@@ -48,6 +48,28 @@ class Solution(object):
                         stack.append((v, h+1, i, False))
                         stack.append((v+1, h, i, False))
                 return False
+    def exist(self, board, word):
+        sz, v_sz, h_sz = len(word), len(board), len(board[0])
+        for v in xrange(0, v_sz):
+            for h in xrange(0, h_sz):
+                stack = [(v, h, 0, False)]
+                while stack:
+                    i, j, index, flag = stack.pop()
+                    if index == sz:
+                        return True
+                    if i < 0 or i >= v_sz or j < 0 or j >= h_sz:
+                        continue
+                    if flag:
+                        board[i][j] = word[index]
+                    elif board[i][j] == word[index]:
+                        stack.append((i, j, index, True))
+                        board[i][j] = '  '
+                        index += 1
+                        stack.append((i+1, j, index, False))
+                        stack.append((i-1, j, index, False))
+                        stack.append((i, j-1, index, False))
+                        stack.append((i, j+1, index, False))
+        return False
 
 
 s = Solution()
