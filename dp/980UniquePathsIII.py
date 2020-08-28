@@ -130,3 +130,31 @@ class Solution(object):
             if h > -1:
                 stack.append((False, num, v, h))
         return res
+    def uniquePathsIII(self, grid):
+        sz, v_sz, h_sz, res, stack = 0, len(
+            grid), len(grid[0]), 0, [[0, 0, False, 0]]
+        for v in xrange(0, v_sz):
+            for h in xrange(0, h_sz):
+                if grid[v][h] == -1:
+                    continue
+                sz += 1
+                if grid[v][h] == 1:
+                    stack[0][0] = v
+                    stack[0][1] = h
+        while stack:
+            v, h, flag, t = stack.pop()
+            if v < 0 or v >= v_sz or h < 0 or h >= h_sz:
+                continue
+            t += 1
+            if grid[v][h] == 2:
+                if t == sz:
+                    res += 1
+                continue
+            if flag:
+                grid[v][h] = 0
+            elif grid[v][h] != -1:
+                grid[v][h] = -1
+                stack.append((v, h, True, t))
+                stack.extend([(i, j, False, t)
+                              for i, j in [(v+1, h), (v-1, h), (v, h+1), (v, h-1)]])
+        return res
