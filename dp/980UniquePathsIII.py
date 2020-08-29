@@ -56,6 +56,7 @@ class Solution(object):
                 path.append((v, h))
                 stack.append(((v, h), new_path, new_visited))
         return res
+
     def uniquePathsIII(self, grid):
         self.v_sz, self.h_sz, num, self.grid = len(grid), len(grid[0]), 0, grid
         start_v, start_h = None, None
@@ -130,6 +131,7 @@ class Solution(object):
             if h > -1:
                 stack.append((False, num, v, h))
         return res
+
     def uniquePathsIII(self, grid):
         sz, v_sz, h_sz, res, stack = 0, len(
             grid), len(grid[0]), 0, [[0, 0, False, 0]]
@@ -157,4 +159,34 @@ class Solution(object):
                 stack.append((v, h, True, t))
                 stack.extend([(i, j, False, t)
                               for i, j in [(v+1, h), (v-1, h), (v, h+1), (v, h-1)]])
+        return res
+
+    def uniquePathsIII(self, grid):
+        v_sz, h_sz, stack, t, res = len(grid), len(grid[0]), [], 0, 0
+        for v in xrange(0, v_sz):
+            for h in xrange(0, h_sz):
+                if grid[v][h] == -1:
+                    continue
+                elif grid[v][h] == 1:
+                    stack.append((v, h, False))
+                t += 1
+        while stack:
+            v, h, flag = stack.pop()
+            if v < 0 or v >= v_sz or h < 0 or h >= h_sz:
+                continue
+            if grid[v][h] == -1:
+                if flag:
+                    grid[v][h] = 0
+                    t += 1
+                continue
+            t -= 1
+            if grid[v][h] == 2:
+                if not t:
+                    res += 1
+                t += 1
+                continue
+            grid[v][h] = -1
+            stack.append((v, h, True))
+            stack.extend([(i, j, False)
+                          for i, j in [(v+1, h), (v-1, h), (v, h+1), (v, h-1)]])
         return res
