@@ -37,3 +37,32 @@ class Solution(object):
                             break
 
         return res
+    def findWords(self, board, words):
+        res, v_sz = [], len(board)
+        if v_sz:
+            h_sz = len(board[0])
+            if h_sz:
+                trie = {}
+                for w in words:
+                    t = trie
+                    for m in w:
+                        t = t.setdefault(m, {})
+                    t['-'] = w
+                for i in xrange(0, v_sz):
+                    for j in xrange(0, h_sz):
+                        if board[i][j] in trie:
+                            stack = [(i, j, trie, False, board[i][j])]
+                            while stack:
+                                v, h, node, flag, val = stack.pop()
+                                if flag:
+                                    board[v][h] = val
+                                    continue
+                                stack.append((v, h, node, True, val))
+                                node = node[val]
+                                t = node.pop('-', False)
+                                if t:
+                                    res.append(t)
+                                stack.extend([(w, m, node, False, board[w][m]) for w, m in [
+                                             (v+1, h), (v-1, h), (v, h+1), (v, h-1)] if w >= 0 and w < v_sz and m >= 0 and m < h_sz and board[w][m] in node])
+                                board[v][h] = '*'
+        return res
