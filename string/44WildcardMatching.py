@@ -42,3 +42,21 @@ class Solution(object):
                 stack.append((i+1, j+1))
         return False
 
+    def isMatch(self, s, p):
+        t, dp, sz_s, sz_p = True, [True], len(s), len(p)
+        for i in xrange(0, sz_p):
+            if p[i] != '*':
+                t = False
+            dp.append(t)
+        for i in xrange(0, sz_s):
+            tmp = [p != '' and p[0] == '*']
+            for j in xrange(1,  sz_p+1):
+                if p[j-1] == '?':
+                    tmp.append(dp[j-1])
+                elif p[j-1] == '*':
+                    tmp.append(dp[j] or tmp[-1])
+                else:
+                    tmp.append(s[i] == p[j-1] and dp[j-1])
+            dp = tmp
+        return dp[-1]
+
