@@ -60,3 +60,21 @@ class Solution(object):
             dp = tmp
         return dp[-1]
 
+    def isMatch(self, s, p):
+        t, dp, sz_p = True, [True], len(p)+1
+        for i in p:
+            if i != '*':
+                t = False
+            dp.append(t)
+        tmp = dp[:]
+        for i in s:
+            tmp[0] = p != '' and p[0] == '*'
+            for j in xrange(1, sz_p):
+                if p[j-1] == '?':
+                    tmp[j] = dp[j-1]
+                elif p[j-1] == '*':
+                    tmp[j] = dp[j] or tmp[j-1]
+                else:
+                    tmp[j] = p[j-1] == i and dp[j-1]
+            tmp, dp = dp, tmp
+        return dp[-1]
