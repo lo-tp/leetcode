@@ -103,3 +103,13 @@ class Solution(object):
                 tmp[j] = dp[j]-(0 if j < i else dp[j-i])+tmp[j-1]
             dp = tmp
         return (dp[k]-dp[k-1]) % (10**9+7)
+    def kInversePairs(self, n, k):
+        tmp, dp = [0]*(k+1), [0]*(k+1)
+        tmp[0] = dp[0] = 1
+        for i in xrange(1, n+1):
+            for j in xrange(1, min(k, (i*i-i)/2)+1):
+                tmp[j] = tmp[j-1]+dp[j]-(0 if j < i else dp[j-i])
+            tmp, dp = dp, tmp
+        return dp[-1] % (10**9+7)
+
+
