@@ -190,3 +190,28 @@ class Solution(object):
             stack.extend([(i, j, False)
                           for i, j in [(v+1, h), (v-1, h), (v, h+1), (v, h-1)]])
         return res
+    def uniquePathsIII(self, g):
+        v_sz, h_sz, stack, res, t = len(g), len(g[0]), [], 0, 0
+        for v in xrange(0, v_sz):
+            for h in xrange(0, h_sz):
+                if g[v][h] == -1:
+                    continue
+                if g[v][h] == 1:
+                    stack.append((v, h, False))
+                t += 1
+        while stack:
+            v, h, flag = stack.pop()
+            if flag:
+                g[v][h] = 0
+                t += 1
+            elif g[v][h] == 2:
+                if t == 1:
+                    res += 1
+            else:
+                t -= 1
+                g[v][h] = -1
+                stack.append((v, h, True))
+                stack.extend([(i, j, False) for i, j in [(v+1, h), (v-1, h), (v, h+1), (v, h-1)]
+                              if i < v_sz and i >= 0 and j < h_sz and j >= 0 and g[i][j] != -1])
+        return res
+
