@@ -37,3 +37,46 @@ class Solution(object):
                     stack.append((s, i, False))
                     stack.append((i+1, e, False))
         return data[(0, sz-1)]
+
+    def partition(self, str):
+        stack, data = [(str, False)], {}
+        while stack:
+            s, flag = stack.pop()
+            if s not in data:
+                if flag:
+                    data[s] = []
+                    for i in xrange(1, len(s)+1):
+                        prefix, surfix = s[:i], s[i:]
+                        if prefix == prefix[::-1]:
+                            for i in data[surfix]:
+                                data[s].append([prefix]+i)
+                            if not surfix:
+                                data[s].append([prefix])
+                else:
+                    stack.append((s, True))
+                    for i in xrange(1, len(s)+1):
+                        p = s[:i]
+                        if p == p[::-1]:
+                            stack.append((s[i:], False))
+        return data[str]
+
+    def partition(self, s):
+        data, stack = {}, [(s, False)]
+        while stack:
+            str, flag = stack.pop()
+            if flag:
+                data[str] = []
+                for i in xrange(1, len(str)):
+                    prefix, surfix = str[:i], str[i:]
+                    if prefix == prefix[::-1]:
+                        for j in data[surfix]:
+                            data[str].append([prefix]+j)
+                if str == str[::-1]:
+                    data[str].append([str])
+            else:
+                stack.append((str, True))
+                for i in xrange(1, len(str)):
+                    prefix, surfix = str[:i], str[i:]
+                    if prefix == prefix[::-1] and surfix not in data:
+                        stack.append((surfix, False))
+        return data[s]
