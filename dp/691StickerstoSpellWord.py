@@ -46,3 +46,34 @@ class Solution(object):
                     if dp[now] == -1 or dp[now] > dp[state]+1:
                         dp[now] = dp[state]+1
         return dp[-1]
+    def minStickers(self, s, target):
+        empty_count, t_count, sz = Counter(), Counter(
+            target), len(target)
+        s = [Counter(i) & t_count for i in s]
+        for i in xrange(0, len(s)):
+            for j in xrange(0, len(s)):
+                if i != j and s[i] & s[j] == s[j]:
+                    s[j] = empty_count
+        s, target, dp, binary_nums = [sorted(i.elements()) for i in s if i], sorted(
+            target), [-1]*(2**sz), [2**i for i in xrange(0, sz)]
+        dp[0] = 0
+        for i in xrange(0, 2**sz):
+            if dp[i] != -1:
+                for w in s:
+                    now = i
+                    t, te = 0, 0
+                    sz_w = len(w)
+                    while t < sz and te < sz_w:
+                        if w[te] < target[t]:
+                            te += 1
+                        elif w[te] > target[t]:
+                            t += 1
+                        else:
+                            if not (now & binary_nums[t]):
+                                now |= binary_nums[t]
+                                te += 1
+                            t += 1
+                    if dp[now] == -1 or dp[now] > dp[i]+1:
+                        dp[now] = dp[i]+1
+        return dp[-1]
+
