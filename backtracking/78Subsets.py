@@ -18,3 +18,14 @@ class Solution(object):
             self.size=len(nums)
             self.calculate([], 0)
         return self.ret
+    def subsets(self, nums):
+        sz, res = len(nums), [[]]
+        stack = [[i] for i in xrange(0, sz)]
+        while stack:
+            t = stack.pop()
+            res.append([nums[i] for i in t])
+            for i in xrange(t[-1]+1, sz):
+                j = t[:]
+                j.append(i)
+                stack.append(j)
+        return res
