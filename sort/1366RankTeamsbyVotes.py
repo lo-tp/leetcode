@@ -93,3 +93,45 @@ class Solution(object):
                 qc(arr, start, e)
         qc(res, 0, sz-1)
         return ''.join(res)
+    def rankTeams(self, votes):
+        ord_A, scores, res = ord('A'), [[0 for _ in xrange(
+            0, 26)] for _ in votes[0]], list(votes[0])
+        sz = len(votes[0])
+        mapping = {}
+        for i in 'ABCDEFGHIJKLMNOPQRSTUVWXYZ':
+            mapping[i] = ord(i)-ord_A
+
+        for vote in votes:
+            for index, letter in enumerate(vote):
+                scores[index][mapping[letter]] += 1
+
+        def compare(a, b):
+            if a == b:
+                return 0
+            a_index, b_index = mapping[a], mapping[b]
+            for score in scores:
+                if score[a_index] > score[b_index]:
+                    return -1
+                elif score[a_index] < score[b_index]:
+                    return 1
+            return -1 if a_index < b_index else 1
+
+        stack = [(0, sz-1)]
+
+        while stack:
+            start, end = stack.pop()
+            s, e, m = start, end, res[start+(end-start)/2]
+            while s <= e:
+                while compare(res[s], m) == -1:
+                    s += 1
+                while compare(res[e], m) == 1:
+                    e -= 1
+                if s <= e:
+                    res[s], res[e] = res[e], res[s]
+                    s += 1
+                    e -= 1
+            if s < end:
+                stack.append((s, end))
+            if start < e:
+                stack.append((start, e))
+        return ''.join(res)
