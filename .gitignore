@@ -13,3 +13,4 @@ yarn-error.log
 *.pyc
 .ackrc
 test.py
+.vim/
