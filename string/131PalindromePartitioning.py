@@ -80,3 +80,27 @@ class Solution(object):
                     if prefix == prefix[::-1] and surfix not in data:
                         stack.append((surfix, False))
         return data[s]
+    def partition(self, s):
+        data, sz = [[] for _ in s], len(s)
+        stack = [(i, False) for i in xrange(0, sz)]
+        while stack:
+            index, flag = stack.pop()
+            if flag:
+                for i in xrange(index+1, sz):
+                    prefix = s[index:i]
+                    if prefix == prefix[::-1]:
+                        for j in data[i]:
+                            t = [prefix]
+                            t.extend(j)
+                            data[index].append(t)
+                prefix = s[index:]
+                if prefix == prefix[::-1]:
+                    data[index].append([prefix])
+            else:
+                if not data[index]:
+                    stack.append((index, True))
+                    for i in xrange(index+1, sz-1):
+                        prefix = s[index:i]
+                        if prefix == prefix[::-1]:
+                            stack.append((i, False))
+        return data[0]
