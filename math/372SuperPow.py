@@ -14,3 +14,19 @@ class Solution(object):
             res = (res*(a**b.pop()) % mod)%mod
             a = (a**10) % mod
         return res
+    def superPow(self, a, b):
+        if not a:
+            return 0
+        mod = 1337
+
+        def getPowMod(c, d):
+            if d < 3:
+                return (c**d) % mod
+            return ((getPowMod(c, d-1) % mod)*c) % mod if d % 2 else ((getPowMod(c, d/2) % mod)**2) % mod
+
+        a, res = a % mod, 1
+        while b:
+            res = res*(getPowMod(a, b.pop())) % mod
+            a = getPowMod(a, 10)
+        return res
+
