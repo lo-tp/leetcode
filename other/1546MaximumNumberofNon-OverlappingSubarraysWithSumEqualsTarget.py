@@ -26,11 +26,19 @@ class Solution(object):
                     te[j][1].append(data[i])
         t.sort()
         while t and t[-1][0] > 0:
-            # print('---')
-            # print(t)
-            # print(te)
             _, overlapped = t.pop()
             for i in overlapped:
                 te[tem[i]][0] -= 1
             t.sort()
         return len(t)
+    def maxNonOverlapping(self, nums, target):
+        t, res, data = 0, 0, {0}
+        for num in nums:
+            t += num
+            if t-target in data:
+                res += 1
+                t = 0
+                data = {0}
+            else:
+                data.add(t)
+        return res
