@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 
 class Solution(object):
@@ -49,3 +49,13 @@ def customSortString(self, S, T):
                 stack.append((start, e))
         return ''.join(string)
 
+    def customSortString(self, S, T):
+        data = Counter(T)
+        res = ''
+        for s in S:
+            if s in data:
+                res += s*data[s]
+                del data[s]
+        for key, val in data.items():
+            res += key*val
+        return res
