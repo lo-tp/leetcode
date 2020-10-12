@@ -10,18 +10,17 @@ def kSum(nums, target, k):
             if visited:
                 if len(current) == w:
                     l, r, t = current[-1]+1, sz-1, target-total
-                    while l <= r:
+                    while l < r:
                         te = nums[l]+nums[r]
                         if te < t:
                             l += 1
                         elif te > t:
                             r -= 1
                         else:
-                            if l != r:
-                                tem = [nums[i] for i in current]
-                                tem.append(nums[l])
-                                tem.append(nums[r])
-                                res.append(tem)
+                            tem = [nums[i] for i in current]
+                            tem.append(nums[l])
+                            tem.append(nums[r])
+                            res.append(tem)
                             l += 1
                             while l < sz and nums[l] == nums[l-1]:
                                 l += 1
