@@ -74,3 +74,13 @@ class Solution(object):
                     tmp[h] = min(tmp[h], max(1, tmp[h+1]-d[v][h]))
                 dp = tmp
         return dp[0]
+    def calculateMinimumHP(self, p):
+        v_sz, h_sz = len(p), len(p[0])
+        dp, tmp = [maxint]*h_sz, [1]*h_sz
+        dp[-1] = 1
+        for v in range(v_sz-1, -1, -1):
+            tmp[-1] = max(dp[-1]-p[v][-1], 1)
+            for h in range(h_sz-2, -1, -1):
+                tmp[h] = max(min(dp[h], tmp[h+1])-p[v][h], 1)
+            tmp, dp = dp, tmp
+        return dp[0]
