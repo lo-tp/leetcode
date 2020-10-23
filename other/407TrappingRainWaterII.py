@@ -1,5 +1,6 @@
 from heapq import heappush, heapify, heappop
 
+
 class Solution(object):
     def trapRainWater(self, H):
         v_sz, res = len(H), 0
@@ -87,4 +88,29 @@ class Solution(object):
                     if h-1 > -1 and H[v][h-1] != -1:
                         heappush(self.data, (H[v][h-1], v, h-1))
                         H[v][h-1] = -1
+        return res
+
+    def trapRainWater(self, H):
+        seen, res, min_height, data, v_sz, h_sz = set(), 0, 0, [], len(H), len(H[0])
+        if v_sz > 2 and h_sz > 2:
+            for h in range(0, h_sz):
+                heappush(data, (H[0][h], 0, h))
+                heappush(data, (H[v_sz-1][h], v_sz-1, h))
+                seen.add((0, h))
+                seen.add((v_sz-1, h))
+            for v in range(1, v_sz-1):
+                heappush(data, (H[v][0], v, 0))
+                heappush(data, (H[v][h_sz-1], v, h_sz-1))
+                seen.add((v, 0))
+                seen.add((v, h_sz-1))
+            while data:
+                height, v, h = heappop(data)
+                if height < min_height:
+                    res += min_height-height
+                else:
+                    min_height = height
+                for i, j in [(v+1, h), (v-1, h), (v, h+1), (v, h-1)]:
+                    if 0 <= i < v_sz and 0 <= j < h_sz and (i, j) not in seen:
+                        heappush(data, (H[i][j], i, j))
+                        seen.add((i, j))
         return res
