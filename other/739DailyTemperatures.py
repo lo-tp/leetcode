@@ -22,3 +22,13 @@ class Solution(object):
                     res[prev_index] = current-prev_index
                 stack.append(current)
         return res
+    def dailyTemperatures(self, T):
+        res, stack = [0 for i in T], []
+        for i in range(len(T)-1, -1, -1):
+            while stack and T[stack[-1]] <= T[i]:
+                stack.pop()
+            if stack:
+                res[i] = stack[-1]-i
+            stack.append(i)
+        return res
+
