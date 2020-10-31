@@ -40,3 +40,24 @@ class Solution(object):
                         stack.extend([(i, False)
                                       for i in xrange(0, sz) if i not in seen])
         return res
+    def permuteUnique(self, nums):
+        sz = len(nums)
+        seen, res, options, current, stack = set(), [], {i for i in range(0, sz)}, [], [
+            (i, False) for i in range(0, sz)]
+        while stack:
+            index, visited = stack.pop()
+            if visited:
+                if len(current) == sz:
+                    res.append([int(i) for i in current])
+                current.pop()
+                options.add(index)
+            else:
+                stack.append((index, True))
+                current.append('{}'.format(nums[index]))
+                t = ''.join(current)
+                options.remove(index)
+                if t not in seen:
+                    seen.add(t)
+                    stack.extend([(i, False) for i in options])
+        return res
+
