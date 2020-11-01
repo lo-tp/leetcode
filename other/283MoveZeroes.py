@@ -54,3 +54,14 @@ class Solution(object):
                     nums[tmp], nums[i] = nums[i], nums[tmp]
             else:
                 hp.push(i)
+    def moveZeroes(self, nums):
+        l, sz = 0, len(nums)
+        while l < sz:
+            while l < sz and nums[l]:
+                l += 1
+            r = l+1
+            while r < sz and not nums[r]:
+                r += 1
+            if r < sz:
+                nums[l], nums[r] = nums[r], nums[l]
+            l += 1
