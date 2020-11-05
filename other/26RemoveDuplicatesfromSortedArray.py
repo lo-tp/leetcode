@@ -10,3 +10,12 @@ class Solution(object):
                     res += 1
                 r += 1
         return res
+    def removeDuplicates(self, nums):
+        sz, slow, fast = len(nums), 1, 1
+        while fast < sz:
+            if nums[fast] != nums[fast-1]:
+                nums[slow] = nums[fast]
+                slow += 1
+            fast += 1
+        return slow
+
