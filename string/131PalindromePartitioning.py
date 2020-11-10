@@ -104,3 +104,28 @@ class Solution(object):
                         if prefix == prefix[::-1]:
                             stack.append((i, False))
         return data[0]
+
+    def partition(self, s):
+        stack, sz, data = [(0, False)], len(s), [None for _ in s]
+        while stack:
+            index, visited = stack.pop()
+            if visited:
+                for m in range(index+1, sz):
+                    l = s[index:m]
+                    if isPalindrome(l):
+                        for t in data[m]:
+                            te = [l]
+                            te.extend(t)
+                            data[index].append(te)
+                t = s[index:]
+                if isPalindrome(t):
+                    data[index].append([t])
+            elif data[index] == None:
+                stack.append((index, True))
+                data[index] = []
+                for m in range(index+1, sz):
+                    l = s[index:m]
+                    if isPalindrome(l):
+                        stack.append((m, False))
+        return data[0]
+
