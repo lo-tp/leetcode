@@ -35,3 +35,15 @@ class Solution(object):
             s=w
             w=k
         return ret
+    def invertTree(self, root):
+        stack = []
+        if root:
+            stack.append(root)
+        while stack:
+            node = root
+            node.left, node.right = node.right, node.left
+            if node.left:
+                stack.append(node.left)
+            if node.right:
+                stack.append(node.right)
+        return root
