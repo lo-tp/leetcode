@@ -38,3 +38,32 @@ class Solution(object):
     def buildTree(self, preorder, inorder):
         self.inOrder, self.preOrder = inorder, preorder
         return self.build(0, 0, len(preorder)) if preorder else None
+
+    def buildTree(self, preorder, inorder):
+        prev_sz, cur, stack = 0, None, [(0, 0, len(inorder), None, 0)]
+        while stack:
+            print(stack)
+            pre_s, in_s, sz, node, flag = stack.pop()
+            if not sz:
+                cur = None
+            elif not flag:
+                cur = TreeNode(preorder[pre_s])
+                next_sz = 1
+                for m in range(0, sz):
+                    if inorder[in_s+m] == preorder[pre_s]:
+                        next_sz = m+1
+                        break
+                stack.append((pre_s, in_s, sz, cur, 1))
+                stack.append((pre_s+1, in_s, next_sz, cur, 0))
+            elif flag == 1:
+                node.left = cur
+                cur = node
+                stack.append((pre_s, in_s, sz, cur, 2))
+                stack.append((pre_s+1+prev_sz, in_s+1 +
+                              prev_sz, sz-1-prev_sz, cur, 0))
+            else:
+                node.right = cur
+                cur = node
+            prev_sz = sz
+        return cur
+
