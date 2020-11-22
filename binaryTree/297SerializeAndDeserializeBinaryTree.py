@@ -144,3 +144,37 @@ class Codec:
                 node.left = cur
                 cur = node
         return cur
+    def serialize(self, root):
+        res, tmp, stack = [], [], [root]
+        while stack:
+            for t in stack:
+                if not t:
+                    res.append('#')
+                else:
+                    res.append(str(t.val))
+                    tmp.append(t.left)
+                    tmp.append(t.right)
+            stack, tmp = tmp, []
+        return ','.join(res)
+
+    def deserialize(self, data):
+        data = data.split(',')
+        stack, sz = [], len(data)
+        res = None
+        if data:
+            index, i, res = 0, 1, TreeNode(data[0])
+            stack.append(res)
+            while i < sz:
+                prev_node = stack[index]
+                node = None if data[i] == '#' else TreeNode(data[i])
+                prev_node.left = node
+                i += 1
+                node = None if data[i] == '#' else TreeNode(data[i])
+                prev_node.right = node
+                i += 1
+                if prev.left:
+                    stack.append(prev.left)
+                if prev.right:
+                    stack.append(prev.right)
+                index += 1
+        return res
