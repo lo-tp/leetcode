@@ -130,3 +130,25 @@ class Solution(object):
             if end-start <= size:
                 res = str[start:end]
         return res
+    def minWindow(self, s, t):
+        sz_s, count = len(s), Counter(t)
+        sz_t, l, res, res_min = len(count.keys()), 0, '', maxsize
+        for r in range(0, sz_s):
+            if s[r] in count:
+                count[s[r]] -= 1
+                if not count[s[r]]:
+                    sz_t -= 1
+                if not sz_t:
+                    while True:
+                        if s[l] in count:
+                            if count[s[l]] == 0:
+                                break
+                            count[s[l]] += 1
+                        l += 1
+                    sz_t += 1
+                    te = r-l+1
+                    if te < res_min:
+                        res_min, res = te, s[l:r+1]
+                    count[s[l]] += 1
+                    l += 1
+        return res
