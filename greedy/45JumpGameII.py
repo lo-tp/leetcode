@@ -10,3 +10,13 @@ class Solution(object):
                 dp[i] = min(dp[i], dp[j])
             dp[i] += 1
         return dp[0]
+
+    def jump(self, nums):
+        cur, jump, next_bound, sz = 1, 0, nums[0], len(nums)
+        while cur < sz:
+            bound = next_bound
+            while cur <= bound and cur < sz:
+                next_bound = max(next_bound, cur+nums[cur])
+                cur += 1
+            jump += 1
+        return jump
