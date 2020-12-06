@@ -1,4 +1,4 @@
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 
 class Solution(object):
@@ -49,4 +49,26 @@ class Solution(object):
                                   (i, j+k-t, t, False), (i+t, j, k-t, False)])
         return dp[0][0][sz1]
 
-
+    def isScramble(self, s1, s2):
+        sz1, sz2 = len(s1), len(s2)
+        dp = [[[False for _ in range(0, sz1+1)]for _ in range(
+            0, sz1)] for _ in range(0, sz1)]
+        seen, stack = set(), [(0, 0, sz1, False)]
+        while stack:
+            i, j, k, flag = stack.pop()
+            if flag:
+                if k == 1:
+                    dp[i][j][k] = s1[i] == s2[j]
+                else:
+                    for t in range(1, k):
+                        if (dp[i][j][t] and dp[i+t][j+t][k-t]) or (dp[i][j+k-t][t] and dp[i+t][j][k-t]):
+                            dp[i][j][k] = True
+                            break
+                seen.add((i, j, k))
+            elif (i, j, k) not in seen:
+                stack.append((i, j, k, True))
+                if Counter(s1[i:i+k]) == Counter(s2[j:j+k]):
+                    for t in range(1, k):
+                        stack.extend([(i, j, t, False), (i+t, j+t, k-t, False),
+                                      (i, j+k-t, t, False), (i+t, j, k-t, False)])
+        return dp[0][0][sz1]
