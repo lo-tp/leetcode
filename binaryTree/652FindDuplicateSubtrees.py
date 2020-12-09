@@ -41,3 +41,22 @@ class Solution(object):
                 data[current] += 1
         return res
 
+    def findDuplicateSubtrees(self, root):
+        cur = None
+        res, data, stack = [], defaultdict(lambda: 0), [(root, None, 0)]
+        while stack:
+            node, string, flag = stack.pop()
+            if not node:
+                cur = '#'
+            elif not flag:
+                stack.append((node, None, 1))
+                stack.append((node.left, None, 0))
+            elif flag == 1:
+                stack.append((node, cur, 2))
+                stack.append((node.right, None, 0))
+            else:
+                cur = '{},{},{}'.format(node.val, string, cur)
+                data[cur] += 1
+                if data[cur] == 2:
+                    res.append(node)
+        return res
