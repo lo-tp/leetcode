@@ -20,3 +20,24 @@ class Solution(object):
                     current = ''
                     root = t.right
         return res
+    def findDuplicateSubtrees(self, root):
+        res, current, stack, data = [], '', [
+            (root, 0, '')], defaultdict(lambda: 0)
+        while stack:
+            root, flag, left_str = stack.pop()
+            if not root:
+                current += ' '
+            elif not flag:
+                stack.append((root, 1, ''))
+                stack.append((root.left, 0, ''))
+            elif flag == 1:
+                stack.append((root, 2, current))
+                stack.append((root.right, 0, ''))
+                current = ''
+            else:
+                current = 'l{}-{}-{}r'.format(left_str, root.val, current)
+                if data[current] == 1:
+                    res.append(root)
+                data[current] += 1
+        return res
+
