@@ -56,3 +56,25 @@ class Solution(object):
         self.data, self.str, self.pattern, self.str_size, self.pattern_size = {
         }, s, p, len(s), len(p)
         return self.dp(0, 0)
+     
+    def isMatch(self, s, p):
+        s_sz, p_sz = len(s), len(p)
+        dp = [False for _ in range(0, p_sz+1)]
+        dp[0] = True
+        for i in range(1, p_sz, 2):
+            if p[i] == '*':
+                dp[i+1] = True
+            else:
+                break
+        for i in range(0, s_sz):
+            tmp = [False]*(p_sz+1)
+            for j in range(0, p_sz):
+                if p[j] == '*':
+                    tmp[j+1] = tmp[j] or ((p[j-1] ==
+                                           '.' or p[j-1] == s[i]) and dp[j+1])
+                elif p[j] == '.':
+                    tmp[j+1] = dp[j]
+                else:
+                    tmp[j+1] = s[i] == p[j] and dp[j]
+            dp = tmp
+        return dp[-1]
