@@ -1,3 +1,22 @@
+def remove(nums, k):
+    sz, count, l = len(nums), 0, 0
+    while l < sz and count < k:
+        if nums[l] != nums[l-1]:
+            count = 0
+        l += 1
+        count += 1
+    r = l
+    while r < sz:
+        if nums[r] != nums[r-1]:
+            count = 0
+        if count < k:
+            nums[l] = nums[r]
+            l += 1
+        count += 1
+        r += 1
+    return l
+
+
 class Solution(object):
     def removeDuplicatesGeneralWay(self, nums, k):
         res = sz = len(nums)
@@ -49,3 +68,5 @@ class Solution(object):
 
     def removeDuplicates(self, nums):
         return self.removeDuplicatesGeneralWay(nums, 1)
+    def removeDuplicates(self, nums):
+        return remove(nums, 1)
