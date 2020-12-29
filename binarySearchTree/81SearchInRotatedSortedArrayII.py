@@ -19,3 +19,27 @@ class Solution(object):
                 else:
                     s = m+1
         return False
+    def search(self, nums, target):
+        l, r = 0, len(nums)-1
+        while l < r:
+            m = int(l+(r-l)/2)
+            if nums[m] > nums[r]:
+                l = m+1
+            elif nums[m] < nums[r]:
+                r = m
+            elif nums[r-1] > nums[r]:
+                l = r
+            else:
+                r -= 1
+        nums = nums[l:]+nums[:l]
+        l, r = 0, len(nums)-1
+        while l <= r:
+            m = int(l+(r-l)/2)
+            if nums[m] > target:
+                r = m-1
+            elif nums[m] < target:
+                l = m+1
+            else:
+                return True
+        return False
+
