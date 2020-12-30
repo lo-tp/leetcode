@@ -73,3 +73,32 @@ class Solution(object):
                 res = node
         return res
 
+    def deleteNode(self, root, key):
+        res = TreeNode((10**4)+1)
+        t, flag, res.left = res, True, root
+        while root and root.val != key:
+            if root.val > key:
+                t, flag, root = root, True, root.left
+            else:
+                t, flag, root = root, False, root.right
+        if root:
+            if root.left and root.right:
+                if root.left.right:
+                    te, tem = root.left, root.left.right
+                    while tem.right:
+                        te, tem = tem, tem.right
+                    te.right = tem.left
+                    tem.left, tem.right = root.left, root.right
+                    root = tem
+                else:
+                    root.left.right = root.right
+                    root = root.left
+            elif root.left:
+                root = root.left
+            else:
+                root = root.right
+            if flag:
+                t.left = root
+            else:
+                t.right = root
+        return res.left
