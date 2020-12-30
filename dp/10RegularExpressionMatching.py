@@ -59,22 +59,22 @@ class Solution(object):
      
     def isMatch(self, s, p):
         s_sz, p_sz = len(s), len(p)
-        dp = [False for _ in range(0, p_sz+1)]
+        dp = [False]*(p_sz+1)
         dp[0] = True
         for i in range(1, p_sz, 2):
-            if p[i] == '*':
-                dp[i+1] = True
-            else:
+            if p[i] != '*':
                 break
-        for i in range(0, s_sz):
+            dp[i+1] = True
+
+        for v in range(0, s_sz):
             tmp = [False]*(p_sz+1)
-            for j in range(0, p_sz):
-                if p[j] == '*':
-                    tmp[j+1] = tmp[j] or ((p[j-1] ==
-                                           '.' or p[j-1] == s[i]) and dp[j+1])
-                elif p[j] == '.':
-                    tmp[j+1] = dp[j]
+            for h in range(0, p_sz):
+                if p[h] == '.':
+                    tmp[h+1] = dp[h]
+                elif p[h] == '*':
+                    tmp[h+1] = tmp[h -
+                                   1] or (dp[h+1] and (s[v] == p[h-1] or p[h-1] == '.'))
                 else:
-                    tmp[j+1] = s[i] == p[j] and dp[j]
+                    tmp[h+1] = dp[h] and s[v] == p[h]
             dp = tmp
         return dp[-1]
