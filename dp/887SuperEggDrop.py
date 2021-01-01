@@ -49,3 +49,17 @@ class Solution(object):
             else:
                 calculated.add((i, j))
         return dp[K][N]
+
+    def superEggDrop(self, K, N):
+        m = 1
+        dp = [1]*(K+1)
+        while dp[K] < N:
+            m += 1
+            tmp = [m]*(K+1)
+            for k in range(2, K+1):
+                tmp[k] = dp[k-1]+dp[k]+1
+                if tmp[k] >= N:
+                    tmp[K] = tmp[k]
+                    break
+            dp = tmp
+        return m
