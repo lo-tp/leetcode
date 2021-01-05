@@ -63,3 +63,20 @@ class Solution(object):
                     break
             dp = tmp
         return m
+    def superEggDrop(self, K, N):
+        if N <= 1:
+            return 1
+        if K == 1:
+            return N
+        flag, res, dp, tmp = True, 1, [1]*(K+1), [0]*(K+1)
+        while flag:
+            res += 1
+            tmp[1] = res
+            for i in range(2, K+1):
+                tmp[i] = dp[i-1]+1+dp[i]
+                if tmp[i] >= N:
+                    flag = False
+                    break
+            tmp, dp = dp, tmp
+        return res
+
