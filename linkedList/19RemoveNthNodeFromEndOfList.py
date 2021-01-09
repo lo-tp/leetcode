@@ -21,3 +21,14 @@ class Solution(object):
         data[i] = None
         data[n-1].next = data[i+1]
         return head
+    def removeNthFromEnd(self, head, n):
+        te = prev = ListNode(0)
+        prev.next = head
+        t = head
+        for _ in range(0, n):
+            t = t.next
+        while t:
+            t = t.next
+            te = te.next
+        te.next = te.next.next
+        return prev.next
