@@ -19,3 +19,15 @@ class Solution(object):
             verticalIndex+=1
         return grid[verticalSize-1][horizontalIndex-1];
 
+    def minPathSum(self, grid):
+        v, h = len(grid), len(grid[0])
+        dp, tmp = [grid[0][0]]*h, [0]*h
+        for i in range(1, h):
+            dp[i] = dp[i-1]+grid[0][i]
+
+        for i in range(1, v):
+            tmp[0] = grid[i][0]+dp[0]
+            for j in range(1, h):
+                tmp[j] = min(dp[j], tmp[j-1])+grid[i][j]
+            tmp, dp = dp, tmp
+        return dp[-1]
