@@ -1,3 +1,18 @@
+def help(head, k):
+    t = head
+    for _ in range(0, k-1):
+        if t:
+            t = t.next
+    if t:
+        te, tem = head, head.next
+        head.next = t.next
+        while te != t:
+            temp = tem.next
+            tem.next = te
+            te, tem = tem, temp
+        head = t
+    return head
+
 def helper(start, k):
     t = start
     for _ in range(0, k):
@@ -81,3 +96,12 @@ class Solution(object):
             prev = r
         return ret.next
 
+    def reverseKGroup(self, head, k):
+        res = p = ListNode(0)
+        p.next = head
+        while True:
+            t, te = p.next, help(p.next, k)
+            if te == t:
+                break
+            p, p.next = t, te
+        return res.next
