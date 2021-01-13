@@ -52,3 +52,32 @@ class LRUCache(object):
         node.next, node.prev = self.head.next, self.head.next.prev
         self.head.next.prev = node
         self.head.next = node
+    def get(self, key):
+        node = self.hash[key]
+        if node:
+            node.prev.next, node.next.prev = node.next, node.prev
+            # self.head.next, self.head.next.prev, node.next, node.prev = node, node, self.head.next, self.head
+            node.next, node.prev = self.head.next, self.head.next.prev
+            self.head.next.prev = node
+            self.head.next = node
+            return node.val
+        return -1
+
+    def put(self, key, value):
+        node = self.hash[key]
+        if node:
+            node.val = value
+            node.prev.next, node.next.prev = node.next, node.prev
+        else:
+            node = DLinkedList(value, key)
+            self.hash[key] = node
+            if not self.ration:
+                last_node = self.tail.prev
+                self.tail.prev = last_node.prev
+                last_node.prev.next = self.tail
+                self.hash[last_node.key] = None
+            else:
+                self.ration -= 1
+        node.next, node.prev = self.head.next, self.head.next.prev
+        self.head.next.prev = node
+        self.head.next = node
