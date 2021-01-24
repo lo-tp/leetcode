@@ -1,3 +1,10 @@
+def getHeight(root):
+    if not root:
+        return 0
+    l_h, r_h = getHeight(root.left), getHeight(root.right)
+    if l_h != -1 and r_h != -1 and abs(l_h-r_h) < 2:
+        return max(l_h, r_h)+1
+    return -1
 class Solution(object):
     def isBalanced(self, root):
         h, stack = 0, [[root, -1]]
@@ -19,3 +26,8 @@ class Solution(object):
                 h = 0
                 stack.pop()
         return True
+
+    def isBalanced(self, root):
+        if not root:
+            return True
+        l_h, r_h = getHeight(root.left), getHeight(root.right)
