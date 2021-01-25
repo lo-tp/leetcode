@@ -1,4 +1,32 @@
 from heapq import heappush, heappop, heapify
+from random import randrange
+
+def shuffle(arr):
+    sz = len(arr)
+    for i in range(0, sz):
+        t = randrange(i, sz)
+        arr[i], arr[t] = arr[t], arr[i]
+
+
+def partition(arr, lo, hi):
+    if lo == hi:
+        return lo
+    i, j, m = lo, hi+1, arr[lo]
+    while True:
+        while True:
+            i += 1
+            if arr[i] >= m or i == hi:
+                break
+        while True:
+            j -= 1
+            if arr[j] <= m or j == lo:
+                break
+        if i >= j:
+            break
+        arr[i], arr[j] = arr[j], arr[i]
+    arr[j], arr[lo] = arr[lo], arr[j]
+    return j
+
 
 
 def heapify(arr):
@@ -38,6 +66,16 @@ class Solution(object):
                 heappop(data)
                 heappush(data, -nums[j])
         return -data[0]
-
-
-s = Solution()
+    def findKthLargest(self, nums, k):
+        l, r = 0, len(nums)-1
+        target = len(nums)-k
+        shuffle(nums)
+        while l <= r:
+            t = partition(nums, l, r)
+            if t == target:
+                return nums[t]
+            elif t < target:
+                l = t+1
+            else:
+                r = t-1
+        return -1
