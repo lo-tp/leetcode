@@ -29,3 +29,16 @@ class Solution(object):
                     tmp.right = stack.pop()
                 else:
                     break
+    def flatten(self, root):
+        stack = []
+        if root:
+            stack.append(root.right)
+            stack.append(root.left)
+        while stack:
+            node = stack.pop()
+            if node:
+                root.right = node
+                root.left = None
+                root = node
+                stack.append(node.right)
+                stack.append(node.left)
