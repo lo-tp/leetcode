@@ -26,3 +26,4 @@ class Solution(object):
         while head:
             data.append(head.val)
             head = head.next
+        return sortedArrayToBST(data)
