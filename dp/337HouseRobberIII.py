@@ -11,3 +11,21 @@ class Solution(object):
         :rtype: int
         """
         return max(self.dfs(root))
+    def rob(self, root):
+        stack, t, te = [(root, 0, 0, 0)], 0, 0
+        while stack:
+            node, include, exclude, flag = stack.pop()
+            if node:
+                if not flag:
+                    stack.append((node, node.val, exclude, 1))
+                    stack.append((node.left, 0, 0, 0))
+                elif flag == 1:
+                    include += te
+                    exclude += max(t, te)
+                    stack.append((node, include, exclude, 2))
+                    stack.append((node.right, 0, 0, 0))
+                else:
+                    include += te
+                    exclude += max(t, te)
+            t, te = include, exclude
+        return max(t, te)
