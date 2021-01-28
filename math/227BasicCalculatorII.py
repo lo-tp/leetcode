@@ -82,3 +82,29 @@ class Solution(object):
                 elif t == '/':
                     stack.append(int(l/r))
         return stack[0]
+
+    def calculate(self, s):
+        sz, re_num, re_operator = len(s), compile('\d'), compile('[+/*-]')
+        stack, cur, operator = [('+', [])], 0, '+'
+        for index in range(0, sz+1):
+            if index == sz or re_operator.match(s[index]) or s[index] == ')':
+                if operator == '*':
+                    cur = stack[-1][1].pop()*cur
+                elif operator == '/':
+                    cur = int(stack[-1][1].pop()/cur)
+                elif operator == '-':
+                    cur *= -1
+                stack[-1][1].append(cur)
+                cur = 0
+                if index != sz and s[index] == ')':
+                    operator, t = stack.pop()
+                    cur = sum(t)
+                elif index != sz:
+                    operator = s[index]
+            elif s[index] == '(':
+                stack.append((operator, []))
+                operator = '+'
+            elif re_num.match(s[index]):
+                cur *= 10
+                cur += ord(s[index])-ord('0')
+        return sum(stack[-1][1])
