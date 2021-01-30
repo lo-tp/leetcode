@@ -39,3 +39,54 @@ class Solution(object):
             pre = pre.left
         return root
 
+    def connect(self, root):
+        stack = []
+        if root:
+            stack.append(root)
+        reverse = False
+        while stack:
+            tmp = []
+            while stack:
+                node = stack.pop()
+                if node.left:
+                    tmp.append(node.left)
+                if node.right:
+                    tmp.append(node.right)
+                if stack:
+                    node.next = stack[-1]
+            stack, tmp = tmp, stack
+            while stack:
+                if node.right:
+                    tmp.append(node.right)
+                if node.left:
+                    tmp.append(node.left)
+                if stack:
+                    stack[-1].next = node
+            stack = tmp
+        return root
+
+
+    def connect(self, root):
+        stack, tmp = [], []
+        if root:
+            stack.append(root)
+        while stack:
+            while stack:
+                node = stack.pop()
+                if node.left:
+                    tmp.append(node.left)
+                if node.right:
+                    tmp.append(node.right)
+                if stack:
+                    node.next = stack[-1]
+            stack, tmp = tmp, stack
+            while stack:
+                node = stack.pop()
+                if node.right:
+                    tmp.append(node.right)
+                if node.left:
+                    tmp.append(node.left)
+                if stack:
+                    stack[-1].next = node
+            stack, tmp = tmp, stack
+        return root
