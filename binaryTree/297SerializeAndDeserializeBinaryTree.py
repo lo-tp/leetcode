@@ -24,7 +24,6 @@ class Codec:
                 tmp2 = []
             else:
                 tmp1 = None
-        print res
         return json.dumps(res)
 
     def deserialize(self, data):
@@ -195,4 +194,45 @@ class Codec:
                     node.left = stack.pop()
                     stack.append(node)
             return stack[0]
+        return None
+
+    def serialize(self, root):
+        data = []
+        if root:
+            stack = []
+            while root or stack:
+                if root:
+                    data.append(str(root.val))
+                    stack.append(root)
+                    root = root.left
+                else:
+                    data.append('#')
+                    root = stack.pop().right
+            data.append('#')
+        return ','.join(data)
+
+    def deserialize(self, data):
+        data = data.split(',')
+        sz = len(data)
+        if sz:
+            cur, stack = None, []
+            for i in data:
+                node = None if i == '#' else TreeNode(i)
+                if node:
+                    stack.append((node, False))
+                else:
+                    cur, flag = stack.pop()
+                    if flag:
+                        t = cur
+                        while stack and stack[-1][1]:
+                            cur, _ = stack.pop()
+                            cur.right = t
+                            t = cur
+                        if stack:
+                            cur, _ = stack.pop()
+                            cur.left = t
+                            stack.append((cur, True))
+                    else:
+                        stack.append((cur, True))
+            return cur
         return None
