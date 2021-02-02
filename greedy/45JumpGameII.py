@@ -20,3 +20,12 @@ class Solution(object):
                 cur += 1
             jump += 1
         return jump
+
+    def jump(self, nums):
+        step, right_bound, next_right = 0, 0, nums[0]
+        for i in range(0, len(nums)):
+            if i > right_bound:
+                step += 1
+                right_bound = next_right
+            next_right = max(next_right, i+nums[i])
+        return step
