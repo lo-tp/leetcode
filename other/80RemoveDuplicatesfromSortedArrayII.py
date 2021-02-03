@@ -1,3 +1,26 @@
+def remove(nums, k):
+    l, sz, count = 0, len(nums), 1
+    if sz <= k:
+        return sz
+    while l+1 < sz and count <= k:
+        l += 1
+        if nums[l] != nums[l-1]:
+            count = 0
+        count += 1
+    r = l+1
+    if l+1 == sz:
+        return l+1 if count <= k else l
+    while r < sz:
+        if nums[r] != nums[r-1]:
+            count = 0
+        count += 1
+        if count <= k:
+            nums[l] = nums[r]
+            l += 1
+        r += 1
+    return l
+
+
 class Solution(object):
     def removeDuplicates(self, nums):
         res = sz = len(nums)
@@ -24,7 +47,7 @@ class Solution(object):
                     te += 1
                     res += 1
                     t += 1
-        # print(nums)
         return res
 
-
+    def removeDuplicates(self, nums):
+        return remove(nums, 2)
