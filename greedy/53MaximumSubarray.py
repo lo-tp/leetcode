@@ -5,3 +5,10 @@ class Solution(object):
             m = max(i, m+i)
             res = max(res, m)
         return res
+    def maxSubArray(self, nums):
+        res, min_sum, total = nums[0], 0, 0
+        for num in nums:
+            total += num
+            res = max(res, total-min_sum)
+            min_sum = min(total, min_sum)
+        return res
