@@ -236,3 +236,23 @@ class Codec:
                         stack.append((cur, True))
             return cur
         return None
+    def deserializePreOrder(self, data):
+        data = compile(',').split(data)
+        stack = []
+        if len(data) > 1:
+            for t in data:
+                if t != '#':
+                    stack.append((TreeNode(t), 0))
+                else:
+                    k = None
+                    while stack and stack[-1][1] == 1:
+                        te, _ = stack.pop()
+                        te.right = k
+                        k = te
+                    if stack:
+                        te, _ = stack.pop()
+                        te.left = k
+                        stack.append((te, 1))
+                    else:
+                        return k
+        return None
