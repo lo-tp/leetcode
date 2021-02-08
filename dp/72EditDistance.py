@@ -36,3 +36,16 @@ class Solution(object):
                 else:
                     dp[i][k] = min(dp[i-1][k-1], dp[i-1][k], dp[i][k-1])+1
         return dp[sz1][sz2]
+    def minDistance(self, word1, word2):
+        sz1, sz2 = len(word1), len(word2)
+        dp = [i for i in range(0, sz2+1)]
+        for i in range(0, sz1):
+            tmp = [maxsize]*(sz2+1)
+            tmp[0] = i+1
+            for j in range(0, sz2):
+                if word1[i] == word2[j]:
+                    tmp[j+1] = dp[j]
+                else:
+                    tmp[j+1] = min(dp[j], dp[j+1], tmp[j])+1
+            dp = tmp
+        return dp[-1]
