@@ -80,3 +80,28 @@ class Solution(object):
             tmp, dp = dp, tmp
         return res
 
+    def superEggDrop(self, K, N):
+        dp = [[maxsize for _ in range(0, K+1)] for _ in range(0, N+1)]
+        seen, stack = set(), [(K, N, 1, N, False)]
+        while stack:
+            k, n, l, r, flag = stack.pop()
+            m = int(l+(r-l)/2)
+            if flag:
+                non_broken, broken = dp[n-m][k], dp[m-1][k-1]
+                seen.add((k, n, l, r))
+                if non_broken > broken:
+                    dp[n][k] = min(dp[n][k], non_broken+1)
+                    l = m+1
+                else:
+                    dp[n][k] = min(dp[n][k], broken+1)
+                    r = m-1
+                stack.append((k, n, l, r, False))
+            elif n == 0:
+                dp[n][k] = 0
+            elif k == 1:
+                dp[n][k] = n
+            elif (k, n, l, r) not in seen and l <= r:
+                stack.extend(
+                    [(k, n, l, r, True), (k, n-m, 1, n-m, False), (k-1, m-1, 1, m-1, False)])
+
+        return dp[N][K]
