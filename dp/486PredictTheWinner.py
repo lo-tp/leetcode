@@ -36,3 +36,11 @@ class Solution(object):
                 endPos=startPos+interval
                 dp[startPos]=max(nums[endPos]-dp[startPos], nums[startPos]-dp[startPos+1])
         return dp[0]>=0 if sz >0 else True
+    o
+    def PredictTheWinner(self, nums):
+        dp, sz = nums[0:], len(nums)
+        for interval in xrange(1, sz):
+            for startIndex in xrange(0, sz-interval):
+                dp[startIndex] = max(
+                    nums[startIndex]-dp[startIndex+1], nums[startIndex+interval]-dp[startIndex])
+        return dp[0]>=0
