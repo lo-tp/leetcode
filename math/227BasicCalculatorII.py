@@ -1,5 +1,25 @@
 from re import compile
 
+def calculate(args):
+    input, operators, is_positive = args
+    t = []
+    input.extend(operators[::-1])
+    for token in input:
+        if type(token) == int:
+            t.append(token)
+        else:
+            a, b = t.pop(), t.pop()
+            if token == '-':
+                t.append(b-a)
+            elif token == '/':
+                t.append(int(b/a))
+            elif token == '+':
+                t.append(a+b)
+            else:
+                t.append(a*b)
+    return t[-1] if is_positive else -t[-1]
+
+
 
 class Solution(object):
     def calculate(self, s):
@@ -108,3 +128,35 @@ class Solution(object):
                 cur *= 10
                 cur += ord(s[index])-ord('0')
         return sum(stack[-1][1])
+    def calculate(self, s: str) -> int:
+        reg_operator, reg_to_sep = compile('[+*/-]'), compile('[+*/()-]|\d+')
+        is_num_positive, is_prev_operator, stack = True, True, []
+        priorities = {
+            '+': 1,
+            '-': 1,
+            '/': 2,
+            '*': 2
+        }
+        for token in reg_to_sep.findall('({}'.format(s)):
+            if token == '(':
+                stack.append(([], [], is_num_positive))
+            elif token == ')':
+                num = calculate(stack.pop())
+                stack[-1][0].append(num)
+                is_num_positive, is_prev_operator = True, False
+            elif reg_operator.match(token):
+                if is_prev_operator and (token == '-' or token == '+'):
+                    is_num_positive = token == '+'
+                else:
+                    output, operators, _ = stack[-1]
+                    while operators and priorities[token] <= priorities[operators[-1]]:
+                        output.append(operators.pop())
+                    operators.append(token)
+                    is_prev_operator = True
+            else:
+                stack[-1][0].append(int(token))
+                if not is_num_positive:
+                    stack[-1][0][-1] *= -1
+                    is_num_positive = True
+                is_prev_operator = False
+        return calculate(stack.pop())
