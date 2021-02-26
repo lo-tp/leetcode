@@ -4,6 +4,14 @@ from collections import defaultdict
 class DLinkedList():
     def __init__(self, val, key):
         self.prev, self.next, self.val, self.key = None, None, val, key
+def deleteNode(node):
+    node.next.prev, node.prev.next = node.prev, node.next
+
+
+def insertNode(head, node):
+    node.prev, node.next = head, head.next
+    head.next.prev = node
+    head.next = node
 
 
 class LRUCache(object):
@@ -81,3 +89,26 @@ class LRUCache(object):
         node.next, node.prev = self.head.next, self.head.next.prev
         self.head.next.prev = node
         self.head.next = node
+
+    def get(self, key):
+        node = self.hash[key]
+        if node:
+            deleteNode(node)
+            insertNode(self.head, node)
+            return node.val
+        return -1
+
+    def put(self, key, value):
+        node = self.hash[key]
+        if node:
+            deleteNode(node)
+            node.val = value
+        else:
+            node = DLinkedList(value, key)
+            if self.sz:
+                self.sz -= 1
+            else:
+                self.hash[self.tail.prev.key] = None
+                deleteNode(self.tail.prev)
+            self.hash[key] = node
+        insertNode(self.head, node)
