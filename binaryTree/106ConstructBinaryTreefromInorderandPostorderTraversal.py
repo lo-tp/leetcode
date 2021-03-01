@@ -7,7 +7,7 @@ class Solution(object):
                 cur = None
             elif not flag:
                 next_sz = 0
-                for i in range(0,sz):
+                for i in range(0, sz):
                     if inorder[in_s+i] == postorder[post_s+sz-1]:
                         next_sz = i
                         break
@@ -26,3 +26,28 @@ class Solution(object):
                 cur = node
             prev_sz = sz
         return cur
+
+    def buildTree(self, inorder, postorder):
+        prev_sz, prev_node, sz = 0, None, len(inorder)
+        stack = [(0, 0, sz, prev_node, 0)]
+        while stack:
+            in_start, post_start, size, node, flag = stack.pop()
+            if not size:
+                node = None
+            elif not flag:
+                post_index = post_start+size-1
+                node = TreeNode(postorder[post_index])
+                stack.append((in_start, post_start, size, node, 1))
+                i = 0
+                while inorder[in_start+i] != node.val:
+                    i += 1
+                stack.append((in_start, post_start, i, None, 0))
+            elif flag == 1:
+                node.left = prev_node
+                stack.append((in_start, post_start, size, node, 2))
+                stack.append((in_start+prev_sz+1, post_start +
+                              prev_sz, size-1-prev_sz, None, 0))
+            else:
+                node.right = prev_node
+            prev_sz, prev_node = size, node
+        return prev_node
