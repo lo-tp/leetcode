@@ -12,3 +12,13 @@ class Solution(object):
             stack = tmp
         return res
 
+    def countNodes(self, root: TreeNode) -> int:
+        res, stack = 0, []
+        while root or stack:
+            if stack:
+                stack.append(root)
+                root = root.left
+            else:
+                res += 1
+                root = stack.pop().right
+        return res
