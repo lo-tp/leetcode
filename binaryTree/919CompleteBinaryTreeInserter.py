@@ -1,4 +1,3 @@
-
 class CBTInserter:
 
     def __init__(self, root: TreeNode):
@@ -13,6 +12,7 @@ class CBTInserter:
                     self.index = index
                     if t.left:
                         self.next.append(t.left)
+                    break
             if flag:
                 break
             self.cur, self.next = self.next, []
@@ -35,4 +35,3 @@ class CBTInserter:
 
     def get_root(self) -> TreeNode:
         return self.root
-
