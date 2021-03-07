@@ -17,3 +17,18 @@ class Solution(object):
             else:
                 return False
         return not stack
+    def isValid(self, s):
+        stack = []
+        for i in s:
+            if i == ')':
+                if not stack or stack.pop() != '(':
+                    return False
+            elif i == ']':
+                if not stack or stack.pop() != '[':
+                    return False
+            elif i == '}':
+                if not stack or stack.pop() != '{':
+                    return False
+            else:
+                stack.append(i)
+        return not stack
