@@ -1,3 +1,5 @@
+from math import ceil
+
 def qs(arr, start, end):
     m, s, e = arr[start+(end-start)/2], start, end
     while s <= e:
@@ -35,3 +37,17 @@ class Solution(object):
         return res
 
 
+    def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        l, r = 1, max(piles)
+        while l <= r:
+            m = int(l+(r-l)/2)
+            t = 0
+            for p in piles:
+                t += ceil(p/m)
+            if t > h:
+                l = m+1
+            elif t < h:
+                r = m-1
+            else:
+                r = m-1
+        return l
