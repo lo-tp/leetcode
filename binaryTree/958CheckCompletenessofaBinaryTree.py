@@ -22,3 +22,15 @@ class Solution:
             if t.left or t.right:
                 return False
         return True
+
+    def isCompleteTree(self, root: TreeNode) -> bool:
+        stack = [root]
+        while stack:
+            tmp = []
+            for i, t in enumerate(stack):
+                if t:
+                    tmp.extend([t.left, t.right])
+                else:
+                    return not (any(stack[i+1:]) or any(tmp))
+            stack = tmp
+        return True
