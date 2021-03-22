@@ -1,3 +1,11 @@
+def getHeight(node: TreeNode) -> int:
+    res = 0
+    while node:
+        res += 1
+        node = node.left
+    return res
+
+
 class Solution(object):
     def countNodes(self, root):
         res, stack = 0, [root]
@@ -21,4 +29,16 @@ class Solution(object):
             else:
                 res += 1
                 root = stack.pop().right
+        return res
+    def countNodes(self, root: TreeNode) -> int:
+        res = 0
+        while root:
+            l_height, r_height = getHeight(root.left), getHeight(root.right)
+            res += 1
+            if l_height == r_height:
+                res += (1 << l_height)-1
+                root = root.right
+            else:
+                res += (1 << r_height)-1
+                root = root.left
         return res
