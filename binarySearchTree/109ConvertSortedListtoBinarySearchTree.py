@@ -28,28 +28,25 @@ class Solution(object):
             head = head.next
         return sortedArrayToBST(data)
 
-    def sortedListToBST(self, head):
-        res, h, sz = None, head, -1
-        while head:
-            head = head.next
+    def sortedListToBST(self, head: ListNode) -> TreeNode:
+        t, sz = head, -1
+        while t:
             sz += 1
-        if sz:
-            stack = [(0, sz, None, 0)]
-            while stack:
-                l, r, node, flag = stack.pop()
-                if r >= l:
-                    m = int(l+(r-l)/2)
-                    if not flag:
-                        stack.append((l, r, node, 1))
-                        stack.append((l, m-1, None, 0))
-                    elif flag == 1:
-                        node = TreeNode(h.val)
-                        h = h.next
-                        node.left = res
-                        stack.append((l, r, node, 2))
-                        stack.append((m+1, r, None, 0))
-                    else:
-                        node.right = res
-                res = node
-        return res
-
+            t = t.next
+        stack, prev_node = [(0, sz, 0, None)], None
+        while stack:
+            start, end, flag, node = stack.pop()
+            m = int(start+(end-start)/2)
+            if end >= start:
+                if not flag:
+                    stack.extend(
+                        [(start, end, 1, None), (start, m-1, 0, None)])
+                elif flag == 1:
+                    node = TreeNode(head.val)
+                    node.left = prev_node
+                    head = head.next
+                    stack.extend([(start, end, 2, node), (m+1, end, 0, None)])
+                else:
+                    node.right = prev_node
+            prev_node = node
+        return prev_node
