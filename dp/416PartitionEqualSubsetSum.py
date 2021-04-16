@@ -31,3 +31,16 @@ class Solution(object):
                 tmp, dp = dp, tmp
             return dp[-1]
         return False
+    def canPartition(self, nums: List[int]) -> bool:
+        total = sum(nums)
+        if not total % 2:
+            target, data = total/2, set()
+            data.add(0)
+            for num in nums:
+                te = set()
+                for t in data:
+                    te.add(num+t)
+                data |= te
+                if target in data:
+                    return True
+        return False
