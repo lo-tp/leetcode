@@ -29,3 +29,13 @@ class Solution:
                     tmp[j] += tmp[j-coins[i-1]]
         dp, tmp = tmp, dp
         return dp[amount]
+
+    def change(self, amount: int, coins: List[int]) -> int:
+        dp = [0]*(amount+1)
+        dp[0] = 1
+        for j in range(0, len(coins)):
+            for i in range(1, amount+1):
+                t = i-coins[j]
+                if t >= 0:
+                    dp[i] += dp[t]
+        return dp[amount]
