@@ -21,3 +21,17 @@ class Solution(object):
                     tmp.append(dp[j+1])
             dp = tmp
         return sum([ord(i) for i in text1])+sum([ord(i) for i in text2]) - 2*sum([ord(i) for i in dp[-1]])
+
+    def minimumDeleteSum(self, text1, text2):
+        sz1, sz2 = len(text1), len(text2)
+        dp, tmp = [0]*(sz2+1), [0]*(sz2+1)
+        for i in range(0, sz1):
+            for j in range(0, sz2):
+                tmp[j+1] = dp[j] + \
+                    ord(text1[i]) if text1[i] == text2[j] else max(
+                        tmp[j], dp[j+1])
+            dp, tmp = tmp, dp
+        ASCII_SUM1 = sum([ord(i) for i in text1])
+        ASCII_SUM2 = sum([ord(i) for i in text2])
+        return ASCII_SUM1+ASCII_SUM2-2*dp[-1]
+
