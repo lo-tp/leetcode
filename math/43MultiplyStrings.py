@@ -1,3 +1,5 @@
+from re import compile
+
 def addStrings(a: str, b: str) -> str:
     if len(a) > len(b):
         a, b = b, a
@@ -49,4 +51,4 @@ class Solution(object):
             else:
                 res = addStrings(res, '{}{}'.format(
                     ''.join(t[1:]), '0'*(sz1-1-i)))
-        return res
+        return '0' if reg_0.match(res) else res
