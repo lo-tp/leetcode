@@ -23,6 +23,4 @@ class Solution:
             residue = x % 10
             t = t*10+residue
             x = int((x-residue)/10)
-        if x == t:
-            return True
-        return x == int(t/10)
+        return x==t or x == int(t/10)
