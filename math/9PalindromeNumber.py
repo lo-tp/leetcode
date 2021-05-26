@@ -16,7 +16,7 @@ class Solution:
             return True
         return x == int(t/10)
     def isPalindrome(self, x: int) -> bool:
-        if x and (not x % 10):
+        if x<0 or (x and (not x % 10)):
             return False
         t = 0
         while x > t:
