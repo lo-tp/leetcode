@@ -58,6 +58,30 @@ def qc(arr):
     quick(arr, 0, sz-1)
     return arr
 
+def heapify(arr, i, sz):
+    stack = [i]
+    while stack:
+        t = max_i = stack.pop()
+        r, l = t*2+2, t*2+1
+        if r < sz and arr[r][1] > arr[max_i][1]:
+            max_i = r
+        if l < sz and arr[l][1] > arr[max_i][1]:
+            max_i = l
+        if max_i != t:
+            arr[max_i], arr[t] = arr[t], arr[max_i]
+            stack.append(max_i)
+
+
+def heapSort(arr):
+    sz = len(arr)
+    for i in range(int((sz-2)/2), -1, -1):
+        heapify(arr, i, sz)
+
+    for i in range(sz-1, 0, -1):
+        arr[i], arr[0] = arr[0], arr[i]
+        heapify(arr, 0, i)
+    return arr
+
 
 
 class Solution(object):
@@ -84,6 +108,19 @@ class Solution(object):
 
     def advantageCount(self, nums1: List[int], nums2: List[int]) -> List[int]:
         arr1, arr2 = qc([(i, t) for i, t in enumerate(nums1)]), qc([(i, t)
+                                                                    for i, t in enumerate(nums2)])
+        l, r = 0, len(nums1)-1
+        for _, t in arr1:
+            if t > arr2[l][1]:
+                nums1[arr2[l][0]] = t
+                l += 1
+            else:
+                nums1[arr2[r][0]] = t
+                r -= 1
+        return nums1
+
+    def advantageCount(self, nums1: List[int], nums2: List[int]) -> List[int]:
+        arr1, arr2 = heapSort([(i, t) for i, t in enumerate(nums1)]), heapSort([(i, t)
                                                                     for i, t in enumerate(nums2)])
         l, r = 0, len(nums1)-1
         for _, t in arr1:
