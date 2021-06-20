@@ -46,3 +46,24 @@ class Solution:
             else:
                 break
         return count if te >= time else -1
+
+    def videoStitching(self, clips: List[List[int]], time: int) -> int:
+        heapSort(clips)
+        te = t = 0
+        count = 1
+        for start, end in clips:
+            # print(t, te, start, end, count)
+            if t >= time:
+                return count
+            if not start:
+                t = end
+            else:
+                if start <= t:
+                    te = max(end, te)
+                elif start <= te:
+                    t = te
+                    te = max(end, te)
+                    count += 1
+                else:
+                    return -1
+        return count if t >= time else (count+1 if te >= time else -1)
