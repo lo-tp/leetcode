@@ -43,7 +43,7 @@ class Heap:
             siftDown(self.arr, i, self.sz)
 
 
-class SeatManager:
+class SeatManagerTle:
     def __init__(self, n: int):
         self.heap = Heap([i for i in range(1, n + 1)])
 
@@ -51,3 +51,14 @@ class SeatManager:
         return self.heap.pop()
 
     def unreserve(self, seatNumber: int) -> None:
+
+
+class SeatManager:
+    def __init__(self, n: int):
+        self.heap = [i for i in range(1, n + 1)]
+
+    def reserve(self) -> int:
+        return heappop(self.heap)
+
+    def unreserve(self, seatNumber: int) -> None:
+        heappush(self.heap, seatNumber)
