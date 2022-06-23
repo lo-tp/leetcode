@@ -1,41 +1,53 @@
-class Heap():
-    def __init__(t, data):
-        t.data = data
-        t.size = len(t.data)
-        t.sort()
-
-    def add(t, element):
-        t.data[t.size] = element
-        t.size += 1
-        t.sort()
-
-    def pop(t):
-        res = t.data[0]
-        t.size -= 1
-        t.data[0] = t.data[t.size]
-        t.sort()
-        return res
-
-    def sort(t):
-        if t.size > 1:
-            index = (t.size-2)/2
-            while index >= 0:
-                l_index = index*2+1
-                r_index = l_index+1
-                if r_index < t.size and t.data[r_index] > t.data[l_index]:
-                    l_index = r_index
-                if t.data[l_index] > t.data[index]:
-                    t.data[l_index], t.data[index] = t.data[index], t.data[l_index]
-                index -= 1
+from typing import List
+from math import floor
 
 
-class Solution(object):
-    def lastStoneWeight(self, stones):
-        heap = Heap(stones)
-        while heap.size >= 2:
-            tmp = heap.pop() - heap.pop()
-            if tmp:
-                heap.add(tmp)
-        return heap.pop() if heap.size else 0
+def siftDown(arr: List[int], index: int, sz: int):
+    stack = [index]
+    while stack:
+        i = t = stack.pop()
+        l = t * 2 + 1
+        r = l + 1
+        if l < sz and arr[l] > arr[t]:
+            t = l
+        if r < sz and arr[r] > arr[t]:
+            t = r
+        if t != i:
+            arr[t], arr[i] = arr[i], arr[t]
+            stack.append(t)
 
 
+def heapify(arr: List[int]):
+    sz = len(arr)
+    for i in range(floor((sz - 1) / 2), -1, -1):
+        siftDown(arr, i, sz)
+
+
+def pop(arr: List[int]):
+    arr[0], arr[-1] = arr[-1], arr[0]
+    res = arr.pop()
+    siftDown(arr, 0, len(arr))
+    return res
+
+
+def push(arr: List[int], target: int):
+    arr.append(target)
+    sz = len(arr)
+    index = floor((sz - 1) / 2)
+    while index != -1:
+        t = arr[index]
+        siftDown(arr, index, sz)
+        if t == arr[index]:
+            index = -1
+        else:
+            index = floor((index - 1) / 2)
+
+
+class Solution:
+    def lastStoneWeight(self, stones: List[int]) -> int:
+        heapify(stones)
+        while len(stones) > 1:
+            x, r = pop(stones), pop(stones)
+            if x != r:
+                push(stones, abs(x - r))
+        return stones[0] if stones else 0
