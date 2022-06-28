@@ -1,7 +1,18 @@
-from math import floor
+from sys import maxsize
+from math import floor, ceil
+
+def dp(n: int):
+    if n == 1:
+        return 0
+    elif n%2:
+        return min(dp(ceil(n/2)), dp(floor(n/2))) + 2
+    return dp(floor(n/2))+1
+
+
+
 
 class Solution(object):
-    def nextGreaterElement(self, n):
+    def nextGreaterElementMLE(self, n):
         ord_0, seen, data = ord('0'), [0]*10, list(str(n))
         sz = len(data)
 
@@ -27,3 +38,6 @@ class Solution(object):
                         return res
                     return -1
         return -1
+
+    def integerReplacement(self, n: int) -> int:
+        return dp(n)
