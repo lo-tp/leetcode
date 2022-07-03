@@ -39,11 +39,47 @@ def qc(arr: List[int], left: int, right: int):
     return arr
 
 
+def threeWayPartition(arr: List[int], val: int):
+    i, j, k = 0, 0, len(arr) - 1
+    while j <= k:
+        if arr[j] < val:
+            arr[j], arr[i] = arr[i], arr[j]
+            i += 1
+            j += 1
+        elif arr[j] > val:
+            arr[k], arr[j] = arr[j], arr[k]
+            k -= 1
+        else:
+            j += 1
+        
 class Solution:
     def wiggleSort(self, nums: List[int]) -> None:
         shuffle(nums)
         qc(nums, 0, len(nums) - 1)
         t = floor(len(nums) / 2)
+        w = ceil(len(nums) / 2)
+        index, tmp = 0, nums[:]
+        for i in range(0, t):
+            nums[index] = tmp[w - 1 - i]
+            index += 1
+            nums[index] = tmp[-1 - i]
+            index += 1
+        if len(nums) % 2:
+            nums[-1] = tmp[0]
+
+    def wiggleSortWithThreeWayPritition(self, nums: List[int]) -> None:
+        shuffle(nums)
+        t = floor(len(nums) / 2)
+        l, r = 0, len(nums) - 1
+        while True:
+            j = partition(nums, l, r)
+            if j < t:
+                l = j + 1
+            elif j > t:
+                r = j - 1
+            else:
+                break
+        threeWayPartition(nums, nums[t])
         w = ceil(len(nums) / 2)
         index, tmp = 0, nums[:]
         for i in range(0, t):
