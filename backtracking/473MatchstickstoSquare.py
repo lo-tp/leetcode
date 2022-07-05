@@ -1,9 +1,31 @@
 from typing import List
 from math import floor
 
+def canDividedIntoK(nums: List[int], k: int):
+    total = sum(nums)
+    if not total % k:
+        nums.sort()
+        target = total / k
+        if nums[-1] > target:
+            return False
+        sz = len(nums)
+        maxState, bitMask = 1 << sz, [1 << i for i in range(0, sz)]
+        dp = [-1] * maxState
+        dp[0] = 0
+        for state in range(0, maxState):
+            if dp[state] >= 0:
+                for index in range(0, sz):
+                    if dp[state] % target + nums[index] > target:
+                        break
+                    nextState = state | bitMask[index]
+                    if nextState == maxState - 1:
+                        return True
+                    if dp[nextState] < 0:
+                        dp[nextState] = dp[state] + nums[index]
+    return False
 
 class Solution:
-    def makesquare(self, matchsticks: List[int]) -> bool:
+    def makesquareTLEWithBacktracking(self, matchsticks: List[int]) -> bool:
         sz = sum(matchsticks)
         if sz % 4 or matchsticks[0] * 4 > sz:
             return False
@@ -35,3 +57,6 @@ class Solution:
                         stack.append((index, e, False))
                         break
         return False
+
+    def makesquare(self, matchsticks: List[int]) -> bool:
+        return canDividedIntoK(matchsticks, 4)
