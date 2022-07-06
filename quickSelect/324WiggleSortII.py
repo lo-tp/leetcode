@@ -67,24 +67,31 @@ class Solution:
         if len(nums) % 2:
             nums[-1] = tmp[0]
 
-    def wiggleSortWithThreeWayPritition(self, nums: List[int]) -> None:
+    def wiggleSortThreePartition(self, nums: List[int]) -> None:
         shuffle(nums)
-        t = floor(len(nums) / 2)
-        l, r = 0, len(nums) - 1
+        sz = len(nums)
+        left, right, m_index = 0, sz - 1, floor(sz / 2)
         while True:
-            j = partition(nums, l, r)
-            if j < t:
-                l = j + 1
-            elif j > t:
-                r = j - 1
+            j = partition(nums, left, right)
+            if j > m_index:
+                right = j - 1
+            elif j < m_index:
+                left = j + 1
             else:
                 break
-        threeWayPartition(nums, nums[t])
-        w = ceil(len(nums) / 2)
-        index, tmp = 0, nums[:]
-        for i in range(0, t):
-            nums[index] = tmp[w - 1 - i]
-            index += 1
-            nums[index] = tmp[-1 - i]
-            index += 1
-        if len(nums) % 2:
+        i, j, k, m = 0, 0, sz - 1, nums[m_index]
+        while j <= k:
+            mapped_i, mapped_j, mapped_k = (
+                getMappedIndex(i, sz),
+                getMappedIndex(j, sz),
+                getMappedIndex(k, sz),
+            )
+            if nums[mapped_j] > m:
+                nums[mapped_j], nums[mapped_i] = nums[mapped_i], nums[mapped_j]
+                j += 1
+                i += 1
+            elif nums[mapped_j] < m:
+                nums[mapped_j], nums[mapped_k] = nums[mapped_k], nums[mapped_j]
+                k -= 1
+            else:
+                j += 1
