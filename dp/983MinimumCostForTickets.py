@@ -3,7 +3,7 @@ from math import floor
 from copy import copy
 from functools import reduce
 from sys import maxsize
-from bisect import bisect_right
+from bisect import bisect_left, bisect_right
 
 
 class Solution:
@@ -24,3 +24,17 @@ class Solution:
                 if days[j] + 29 >= days[i]:
                     dp[i] = min(dp[i], dp[j - 1] + costs[2])
         return dp[-1]
+
+    def mincostTicketsBetter(self, days: List[int], costs: List[int]) -> int:
+        sz = len(days)
+        if sz == 1:
+            return min(costs)
+        days.append(days[-1] + 31)
+        dp = [maxsize for _ in days]
+        interval=[1,7,30]
+        dp[-1] = 0
+        for i in range(sz - 1, -1, -1):
+            for j in range(0,3):
+                index = bisect_left(days, days[i] + interval[j])
+                dp[i] = min(dp[i], dp[index] + costs[j])
+        return dp[0]
