@@ -12,7 +12,7 @@ def shuffle(arr: List[int]):
 
 def partition(arr: List[int], left: int, right: int):
     if left >= right:
-        return right
+        return left
 
     i, j, m = left, right + 1, arr[left]
     while True:
