@@ -27,14 +27,12 @@ class Solution:
 
     def mincostTicketsBetter(self, days: List[int], costs: List[int]) -> int:
         sz = len(days)
+        dp = [0] * (sz + 1)
         days.append(days[-1] + 31)
-        dp = [maxsize] * (sz + 1)
-        dp[-1] = 0
-        intervals = [1, 7, 30]
         for i in range(sz - 1, -1, -1):
-            for index in range(0, 3):
-                dp[i] = min(
-                    dp[i],
-                    dp[bisect_left(days, days[i] + intervals[index])] + costs[index],
-                )
+            dp[i] = min(
+                dp[bisect_left(days, days[i] + 1)] + costs[0],
+                dp[bisect_left(days, days[i] + 7)] + costs[1],
+                dp[bisect_left(days, days[i] + 30)] + costs[2],
+            )
         return dp[0]
