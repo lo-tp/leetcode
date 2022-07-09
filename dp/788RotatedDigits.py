@@ -31,5 +31,17 @@ class Solution:
                 print(i)
         return res
 
-s = Solution()
-print(s.rotatedDigits(200))
+    def rotatedDigitsBetter(self, n: int) -> int:
+        vd = set([0, 1, 8])
+        gd = set([2, 5, 6, 9])
+        res = 0
+        for i in range(1, n + 1):
+            pre = floor(i / 10)
+            sur = i % 10
+            if (pre in vd or pre in gd) and (sur in vd or sur in gd):
+                if pre in vd and sur in vd:
+                    vd.add(i)
+                else:
+                    res += 1
+                    gd.add(i)
+        return res
