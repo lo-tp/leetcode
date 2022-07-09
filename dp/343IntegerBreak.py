@@ -25,3 +25,14 @@ class Solution:
                         [(num - k, t, False) for k in range(2, num + 2 - divider)]
                     )
         return max(dp[num])
+    def integerBreakBetter(self, n: int) -> int:
+        if n < 4:
+            return n - 1
+        elif n == 4:
+            return 4
+        if n % 3 == 1:
+            return 3 ** (floor(n / 3) - 1) * 4
+        elif n % 3 == 2:
+            return 3 ** floor(n / 3) * 2
+        else:
+            return 3 ** floor(n / 3)
