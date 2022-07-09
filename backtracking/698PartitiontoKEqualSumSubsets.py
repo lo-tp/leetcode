@@ -36,25 +36,21 @@ class Solution:
     def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
         total = sum(nums)
         if not total % k:
-            sz = len(nums)
-            target = floor(total / k)
             nums.sort()
-            if nums[-1] > target:
-                return False
-            maxState = 1 << sz
-            dp = [-1] * (maxState)
-            dp[0] = 0
-            bitMask = [1 << i for i in range(0, sz)]
-            total, stack = 0, [0, 0]
-            for state in range(0, maxState):
-                if dp[state] >= 0:
-                    for index in range(0, sz):
-                        if dp[state] % target + nums[index] <= target:
-                            nextState = state | bitMask[index]
-                            if nextState == maxState - 1:
-                                return True
-                            if dp[nextState] == -1:
-                                dp[nextState] = dp[state] + nums[index]
-                        else:
-                            break
+            target = floor(total / k)
+            if nums[-1] <= target:
+                sz = len(nums)
+                maxState, bitMask = (1 << sz) - 1, [1 << i for i in range(0, sz)]
+                dp = [-1] * (maxState + 1)
+                dp[0] = 0
+                for state in range(0, maxState + 1):
+                    if dp[state] != -1:
+                        for j in range(0, sz):
+                            if not (bitMask[j] & state):
+                                t = dp[state] + nums[j]
+                                if t > target:
+                                    continue
+                                dp[state | bitMask[j]] = t % target
+                return not dp[maxState]
         return False
+
