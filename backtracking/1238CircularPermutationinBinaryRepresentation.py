@@ -28,3 +28,7 @@ class Solution:
                             stack.append((t, False))
 
         return []
+    def circularPermutationWithGrayCode(self, n: int, start: int) -> List[int]:
+        t = [i ^ (i >> 1) for i in range(0, 1 << n)]
+        index = t.index(start)
+        return t[index:] + t[:index]
