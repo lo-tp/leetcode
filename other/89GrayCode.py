@@ -11,6 +11,6 @@ class Solution(object):
             to_add *= 2
             end_index = right_index
         return res
-
-
-S = Solution()
+    def grayCodeBetter(self, n: int) -> List[int]:
+        te=[i for i in range(0,1<<n)]
+        return [t^t>>1 for t in te]
