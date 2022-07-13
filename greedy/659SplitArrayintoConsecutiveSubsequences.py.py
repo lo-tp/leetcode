@@ -10,12 +10,10 @@ class Solution:
         keys = list(remaining.keys())
         keys.sort()
         previous = defaultdict(lambda: 0)
-        # print(remaining)
-        # print(previous)
         for key in keys:
             if remaining[key]:
                 # appending to existing sequence
-                previous[key] += previous[key - 1]
+                previous[key] += min(previous[key - 1], remaining[key])
                 remaining[key] -= min(remaining[key], previous[key - 1])
                 if remaining[key]:
                     if key + 2 <= keys[-1]:
@@ -24,14 +22,8 @@ class Solution:
                             if remaining[k] >= remaining[key]:
                                 remaining[k] -= remaining[key]
                             else:
-                                # print(key, "f1")
                                 return False
                         remaining[key] = 0
                     else:
-                        # print(key, "f2")
                         return False
-            # print(key)
-            # print(remaining)
-            # print(previous)
         return True
-
