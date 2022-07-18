@@ -1,17 +1,14 @@
-class Solution(object):
-    def twoSum(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        records=dict()
-        i=0
-        while i<len(nums):
-            another=target-nums[i]
-            if another in records:
-                anotherIndex=records[another]
-                return [i,anotherIndex]
+from typing import List
+
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        nums = [(nums[i], i) for i in range(0, len(sz))]
+        nums.sort()
+        l, r = 0, len(nums) - 1
+        while nums[l][0] + nums[r][0] != target:
+            if nums[l][0] + nums[r][0] < target:
+                l += 1
             else:
-                records[nums[i]]=i
-            i+=1
+                r -= 1
+        return [nums[l][1], nums[r][1]]
