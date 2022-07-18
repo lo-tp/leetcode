@@ -1,4 +1,5 @@
 from typing import List, Optional
+from functools import cache
 
 class Solution(object):
     def solveNQueens(self, sz):
@@ -42,6 +43,7 @@ class Solution(object):
 
 
 
+@cache
 def calculateRelevantPoints(v: int, h: int, sz: int):
     res = set()
     for i in range(0, sz):
