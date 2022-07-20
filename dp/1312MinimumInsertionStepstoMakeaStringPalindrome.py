@@ -10,3 +10,15 @@ class Solution(object):
                     tmp[j+1] = max(dp[j+1], tmp[j])
             dp, tmp = tmp, dp
         return sz-dp[-1]
+    def minInsertionsBetter(self, s: str) -> int:
+        sz = len(s)
+        dp, tmp = [0] * sz, [0] * sz
+        for i in range(sz - 1, -1, -1):
+            tmp[i] = 1
+            for j in range(i + 1, sz):
+                if s[i] == s[j]:
+                    tmp[j] = dp[j - 1] + 2
+                else:
+                    tmp[j] = max(dp[j], tmp[j - 1])
+            dp, tmp = tmp, dp
+        return sz - dp[-1]
