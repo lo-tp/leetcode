@@ -17,3 +17,10 @@ class Solution:
                     res += 1
                     i = floor(i / 5)
         return res
+
+    def trailingZeroesBetter(self, n: int) -> int:
+        res = 0
+        while n:
+            n = floor(n / 5)
+            res += n
+        return res
