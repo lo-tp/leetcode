@@ -4,5 +4,6 @@ class Solution:
             for f in [2, 3, 5]:
                 while not n % f:
                     n /= f
-            return n == 1 or n == -1
+                    print(n)
+            return n == 1
         return True
