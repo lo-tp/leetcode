@@ -2,29 +2,33 @@ from typing import List, Optional
 from collections import defaultdict
 from math import ceil, floor
 
+def findMajorityElement(nums: List[int], sz: int) -> List[int]:
+    sz = 2
+    counts = [0] * sz
+    data = [0] * sz
+    for num in nums:
+        flag = True
+        for i in range(0, sz):
+            if data[i] == num:
+                counts[i] += 1
+                flag = False
+                break
+        if flag:
+            for i in range(0, sz):
+                if not counts[i]:
+                    data[i] = num
+                    counts[i] = 1
+                    flag = False
+                    break
+        if flag:
+            counts = [c - 1 for c in counts]
+    minCount = floor(len(nums) / (sz + 1))
+    return [
+        data[i] for i in range(0, sz) if counts[i] and nums.count(data[i]) > minCount
+    ]
+
+
 class Solution:
     def majorityElement(self, nums: List[int]) -> List[int]:
-        counter = defaultdict(lambda: 0)
-        res, sz = [], ceil(len(nums) / 3)
-        for num in nums:
-            counter[num] += 1
-            if counter[num] == sz:
-                res.append(num)
-        return res
+        return findMajorityElement(nums, 2)
 
-    def majorityElement(self, nums: List[int]) -> List[int]:
-        sz = floor(len(nums) / 3)
-        candidate1, candidate2, count1, count2 = 0, 1, 0, 0
-        for num in nums:
-            if num == candidate1:
-                count1 += 1
-            elif num == candidate2:
-                count2 += 1
-            elif not count1:
-                candidate1, count1 = num, 1
-            elif not count2:
-                candidate2, count2 = num, 1
-            else:
-                count1 -= 1
-                count2 -= 1
-        return [n for n in [candidate1, candidate2] if nums.count(n) > sz]
