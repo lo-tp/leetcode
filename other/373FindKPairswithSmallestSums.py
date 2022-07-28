@@ -12,7 +12,7 @@ class Solution:
             sz1, sz2, nums1, nums2 = sz2, sz1, nums2, nums1
             switched = True
         index = [0] * sz1
-        heap = [(nums1[i] * nums2[0], i) for i in range(0, sz1)]
+        heap = [(nums1[i] + nums2[0], i) for i in range(0, sz1)]
         res = []
         while heap and k:
             k -= 1
@@ -22,5 +22,5 @@ class Solution:
             )
             index[i] += 1
             if index[i] < sz2:
-                heappush(heap, (nums1[i] * nums2[index[i]], i))
+                heappush(heap, (nums1[i] + nums2[index[i]], i))
         return res
