@@ -18,6 +18,8 @@ class Solution:
                         seen.remove(index)
                     elif index in seen:
                         res[index] = 0
+                        partialResult = 0
+                        break
                     elif res[index] == -1:
                         seen.add(index)
                         stack.append((index, True))
