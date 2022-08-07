@@ -9,21 +9,21 @@ class Solution:
                 partialResult = 1
                 while stack:
                     index, flag = stack.pop()
-                    # print(index, seen)
                     if flag:
-                        for j in graph[index]:
-                            if res[j] == 0:
-                                res[i] = 0
-                                partialResult = 0
-                        seen.remove(index)
+                        if reduce(lambda accu, x: accu and res[x], graph[index], True):
+                            res[index] = 1
+                            seen.remove(index)
+                        else:
+                            partialResult = 0
+                            break
                     elif index in seen:
-                        res[index] = 0
                         partialResult = 0
                         break
                     elif res[index] == -1:
                         seen.add(index)
                         stack.append((index, True))
-                        stack.extend((j, False) for j in graph[index])
+                        stack.extend([(i, False) for i in graph[index]])
                 res[i] = partialResult
+                for i in seen:
+                    res[i] = partialResult
         return [i for i in range(0, sz) if res[i]]
-
