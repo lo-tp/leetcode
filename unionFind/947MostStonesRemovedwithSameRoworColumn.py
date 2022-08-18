@@ -1,6 +1,5 @@
 from typing import List
 
-
 class Union:
     def __init__(self, sz: int):
         self.sz = sz
@@ -30,7 +29,7 @@ class Solution:
     def removeStones(self, stones: List[List[int]]) -> int:
         sz = len(stones)
         u = Union(sz)
-        data = [[] for _ in range(0, sz)]
+        data = [[] for _ in range(0, 10001)]
         for i in range(0, sz):
             v, h = stones[i]
             data[v].append(i)
@@ -38,7 +37,7 @@ class Solution:
             if len(d) > 1:
                 for i in range(1, len(d)):
                     u.union(d[0], d[i])
-        data = [[] for _ in range(0, sz)]
+        data = [[] for _ in range(0, 10001)]
         for i in range(0, sz):
             v, h = stones[i]
             data[h].append(i)
