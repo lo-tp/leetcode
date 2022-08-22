@@ -6,7 +6,7 @@ from random import randrange
 class Solution:
     def __init__(self, rects: List[List[int]]):
         self.outterIndex, self.index = randrange(0, len(rects)), 0
-        self.data = [(x1, y2, x2 - x1, y2 - y1) for x1, y1, x2, y2 in rects]
+        self.data = [(x1, y2, x2 - x1 + 1, y2 - y1 + 1) for x1, y1, x2, y2 in rects]
 
     def pick(self) -> List[int]:
         x, y, w, h = self.data[self.outterIndex]
@@ -20,3 +20,4 @@ class Solution:
             x, y, w, h = self.data[self.outterIndex]
             self.index = w * h - 1
         return res
+
