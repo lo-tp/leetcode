@@ -4,28 +4,25 @@ from math import floor
 
 class Solution:
     def containsNearbyAlmostDuplicate(self, nums: List[int], k: int, t: int) -> bool:
-        sz = len(nums)
-        seen = {}
+        index = {}
         t += 1
-        k += 1
-        for i in range(0, min(k, sz)):
-            j = floor(nums[i] / t)
-            if j in seen:
+        for i in range(0, len(nums)):
+            tmp = floor(nums[i] / t)
+            if tmp in index and i - index[tmp] <= k:
                 return True
-            elif j + 1 in seen and abs(seen[j + 1] - nums[i]) < t:
+            index[tmp] = i
+            tmp -= 1
+            if (
+                tmp in index
+                and i - index[tmp] <= k
+                and abs(nums[i] - nums[index[tmp]]) < t
+            ):
                 return True
-            elif j - 1 in seen and abs(seen[j - 1] - nums[i]) < t:
+            tmp += 2
+            if (
+                tmp in index
+                and i - index[tmp] <= k
+                and abs(nums[i] - nums[index[tmp]]) < t
+            ):
                 return True
-            seen[j] = nums[i]
-        for i in range(k, sz):
-            j = floor(nums[i - k] / t)
-            del seen[j]
-            j = floor(nums[i] / t)
-            if j in seen:
-                return True
-            elif j + 1 in seen and abs(seen[j + 1] - nums[i]) < t:
-                return True
-            elif j - 1 in seen and abs(seen[j - 1] - nums[i]) < t:
-                return True
-            seen[j] = nums[i]
         return False
