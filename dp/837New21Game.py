@@ -21,12 +21,13 @@ class Solution:
                 else:
                     stack.extend([(i, False) for i in range(1, maxPts)])
     def new21Game(self, n: int, k: int, maxPts: int) -> float:
-        dp = [1] * (n + 1)
+        sz = max(maxPts, n - k) + 1
+        dp = [1] * (sz)
         totalProb = 0
         for i in range(1, n + 1):
             if i <= k:
-                totalProb += dp[i - 1]
+                totalProb += dp[(i - 1) % sz]
             if k + maxPts >= i > maxPts:
-                totalProb -= dp[i - maxPts - 1]
-            dp[i] = totalProb / (maxPts)
-        return sum(dp[k:])
+                totalProb -= dp[(i - maxPts - 1) % sz]
+            dp[i % sz] = totalProb / (maxPts)
+        return sum([dp[i % sz] for i in range(k, n + 1)])
