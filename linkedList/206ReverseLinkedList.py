@@ -25,3 +25,14 @@ class Solution(object):
             res = reverseList(head)[0]
             head.next = None
             return res
+
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head:
+            next,cur=head.next,head
+            head.next=None
+            while next:
+                t=next.next
+                next.next=cur
+                next,cur=t,next
+            return cur
+        return None
