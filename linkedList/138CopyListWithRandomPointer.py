@@ -34,4 +34,32 @@ class Solution(object):
                     t, k = t.next, k.next
                 tmp.random = k
             tem, tmp = tem.next, tmp.next
-        return temp.next
+       return temp.next
+    def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
+        if head:
+            t=head
+            while t:
+                te=t.next
+                t.next=Node(next=te, x=t.val)
+                t=te
+            t=head
+            while t:
+                if t.random:
+                    t.next.random=t.random.next
+                if t.next:
+                    t=t.next.next
+            res=head.next
+            original, copied, index=Node(x=0),Node(x=0),0
+            while head:
+                if index%2:
+                    copied.next=head
+                    copied=copied.next
+                else:
+                    original.next=head
+                    original=original.next
+                t=head.next
+                head.next=None
+                head=t
+                index+=1
+            return res
+        return None
