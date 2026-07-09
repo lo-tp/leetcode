@@ -27,3 +27,16 @@ class Solution(object):
                         if offset == partial_length:
                             stack.append(start_index+offset)
         return False
+
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        sz=len(s)
+        dp=[False]*(sz+1)
+        dp[sz]=True
+        word_dict=set(wordDict)
+        max_word_length=max(len(d) for d in wordDict)
+        for l in range(sz-1,-1,-1):
+            for r in range(l+1,1+min(l+max_word_length,sz)):
+                if s[l:r] in word_dict and dp[r]:
+                    dp[l]=True
+                    break
+        return dp[0]
