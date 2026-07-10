@@ -49,3 +49,17 @@ class Solution(object):
                     tmp[j+1] = min(dp[j], dp[j+1], tmp[j])+1
             dp = tmp
         return dp[-1]
+
+    def minDistance(self, word1: str, word2: str) -> int:
+        sz1,sz2=len(word1),len(word2)
+        if sz1<sz2:
+            sz1,sz2,word1,word2=sz2,sz1,word2,word1
+        prev, dp=-1, [i for i in range(0,sz2+1)]
+        for idx1 in range(1, sz1+1):
+            prev=dp[0]
+            dp[0]=idx1
+            for idx2 in range(1, sz2+1):
+                tmp=dp[idx2]
+                dp[idx2]=min(dp[idx2-1]+1, dp[idx2]+1, (1 if word1[idx1-1]!=word2[idx2-1] else 0)+prev)
+                prev=tmp
+        return dp[sz2]
