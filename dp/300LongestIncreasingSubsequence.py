@@ -65,3 +65,21 @@ class Solution(object):
                 j = bisect_left(dp, i)
                 dp[j] = i
         return len(dp) - 1
+
+    def lengthOfLISBest(self, nums: List[int]) -> int:
+        sub_idx, parent, sub_sequence=[], [-1 for i in nums], []
+        for n_idx,n in enumerate(nums):
+            idx=bisect_left(sub_sequence, n)
+            if idx==len(sub_sequence):
+                sub_sequence.append(n)
+                sub_idx.append(n_idx)
+            else:
+                sub_sequence[idx]=n
+                sub_idx[idx]=n_idx
+            if idx:
+                parent[n_idx]=sub_idx[idx-1]
+        lis,cur=[],sub_idx[-1]
+        while cur!=-1:
+            lis.append(nums[cur])
+            cur=parent[cur]
+        return len(lis)
