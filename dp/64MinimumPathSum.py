@@ -31,3 +31,14 @@ class Solution(object):
                 tmp[j] = min(dp[j], tmp[j-1])+grid[i][j]
             tmp, dp = dp, tmp
         return dp[-1]
+
+    def minPathSum(self, grid: List[List[int]]) -> int:
+        dp,row_sz,sz=grid[0][:],len(grid[0]), len(grid)
+        for idx in range(1,row_sz):
+            dp[i]+=dp[i-1]
+        for row_idx in range(1,sz):
+            row=grid[row_idx]
+            dp[0]+=row[0]
+            for idx in range(1,row_sz):
+                dp[idx]=min(dp[idx],dp[idx-1])+row[idx]
+        return dp[-1]
