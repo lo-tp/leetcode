@@ -41,3 +41,17 @@ class Solution:
         
         # Calculate the average for each level by dividing total sum by node count
         return [t / c for t, c in zip(totals, counts)]
+
+    def __init__(self):
+        self.res=[]
+    def dfs(root, depth):
+        if root:
+            if len(self.res)==depth:
+                self.res.append([])
+            self.res[depth].append(root.val)
+            self.dfs(root.left, depth+1)
+            self.dfs(root.right, depth+1)
+    def averageOfLevels(self, root: Optional[TreeNode]) -> List[float]:
+        self.dfs(root,0)
+        return [(sum(t)/len(t) for t in res]
+
