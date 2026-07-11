@@ -42,3 +42,22 @@ class Solution(object):
                     stack.append((node.left, False))
                     stack.append((node.right, False))
         return None
+
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        stack, parent=[root], {}
+        while stack:
+            t=stack.pop()
+            if t.left:
+                parent[t.left]=t
+                stack.append(t.left)
+            if t.right:
+                parent[t.right]=t
+                stack.append(t.right)
+        p_parent_path=set([root])
+        while p in parent:
+            p_parent_path.add(p)
+            p=parent[p]
+        while not q in p_parent_path:
+            q=parent[q]
+        return q
+
