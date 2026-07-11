@@ -23,3 +23,20 @@ class Solution(object):
                 tmp = tmp.next
             tmp = tmp.left if tmp.left else tmp.right
         return root
+
+    def connect(self, root: 'Node') -> 'Node':
+        head=root
+        dummy=Node(0)
+        while head:
+            tail=dummy
+            cur=head
+            while cur:
+                if cur.left:
+                    tail.next=cur.left
+                    tail=tail.next
+                if cur.right:
+                    tail.next=cur.right
+                    tail=tail.next
+                cur=cur.next
+            head=dummy.next
+        return root
