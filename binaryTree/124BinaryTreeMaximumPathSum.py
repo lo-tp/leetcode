@@ -1,5 +1,14 @@
 from sys import maxint
 
+def calculate(root):
+    if not root:
+        return (-float('inf'),-float('inf'))
+    a,b=calculate(root.left)
+    c,d=calculate(root.right)
+    e=max(a,c,0)+root.val
+    return (e, max(b,d,max(a,0)+max(c,0)+root.val))
+
+
 
 class Solution(object):
     def maxSubTree(self, root):
@@ -77,5 +86,6 @@ class Solution(object):
                 tmp = temp
                 stack.pop()
         return res
+    def maxPathSum(self, root: Optional[TreeNode]) -> int:
+        return calculate(root)[1]
 
-        return te
