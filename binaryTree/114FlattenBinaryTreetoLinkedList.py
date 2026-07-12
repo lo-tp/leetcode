@@ -42,3 +42,15 @@ class Solution(object):
                 root = node
                 stack.append(node.right)
                 stack.append(node.left)
+
+    def flatten(self, root: Optional[TreeNode]) -> None:
+        cur=root
+        while cur:
+            if cur.left:
+                t=cur.left
+                while t.right:
+                    t=t.right
+                t.right=cur.right
+                cur.right=cur.left
+                cur.left=None
+            cur=cur.right
