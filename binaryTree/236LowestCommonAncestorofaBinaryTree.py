@@ -24,3 +24,21 @@ class Solution(object):
                 stack.pop()
         return None
 
+    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        cache={}
+        cache[None]=0
+        stack=[(root, False)]
+        while stack:
+            node, visited=stack.pop()
+            if node:
+                if visited:
+                    cache[node]=cache[node.left]+cache[node.right]
+                    if node==p or node==q:
+                        cache[node]+=1
+                    if cache[node]==2:
+                        return node
+                else:
+                    stack.append((node, True))
+                    stack.append((node.left, False))
+                    stack.append((node.right, False))
+        return None
