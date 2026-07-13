@@ -37,3 +37,26 @@ class Solution(object):
                     return False
                 low, hi = t, root.val if hi == -maxsize else hi
         return True
+
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        prev=-float('inf')
+        while root:
+            if root.left:
+                cur=root.left
+                while cur.right and cur.next!=root:
+                    cur=cur.right
+                if cur.right:
+                    if root.val<=prev:
+                        return False
+                    cur.right=None
+                    prev=root.val
+                    root=root.right
+                else:
+                    cur.right=root
+                    root=root.left
+            else:
+                if root.val<=prev:
+                    return False
+                prev=root.val
+                root=root.right
+        return True
