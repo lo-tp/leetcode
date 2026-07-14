@@ -1,3 +1,14 @@
+def dfs(root, stack, depth):
+    if not root:
+        return
+    if len(stack)==depth:
+        stack.append(root)
+    else:
+        stack[depth].next=root
+        stack[depth]=root
+    dfs(root.left, stack, depth+1)
+    dfs(root.right, stack, depth+1)
+
 class Solution(object):
     def connect(self, root):
         tmp = root
@@ -40,3 +51,6 @@ class Solution(object):
                 cur=cur.next
             head=dummy.next
         return root
+
+    def connect(self, root: 'Node') -> 'Node':
+        dfs(root,[],0)
