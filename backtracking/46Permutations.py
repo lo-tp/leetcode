@@ -33,5 +33,22 @@ class Solution(object):
             stack.extend([(i, False)
                           for i in xrange(0, sz) if i not in seen])
         return res
+
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        sz=len(nums)
+        res=[]
+        def dfs(used, prev):
+            if len(used)==sz:
+                res.append(prev)
+                return
+            for num in nums:
+                if not num in used:
+                    new_res=prev+[num]
+                    used.add(num)
+                    dfs(used, new_res)
+                    used.remove(num)
+        dfs(set(),[])
+        return res
+
 s=Solution()
 print s.permute([1,2,3])
