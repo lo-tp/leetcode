@@ -45,3 +45,17 @@ class Solution(object):
                             index += 1
                         res = max(tmp, res)
         return res**2
+
+    def maximalSquare(self, matrix: List[List[str]]) -> int:
+        v_sz, h_sz=len(matrix), len(matrix[0])
+        dp=[0]*(h_sz+1)
+        res=0
+        for v_idx in range(1, v_sz+1):
+            prev=0
+            for r_idx in range(1, h_sz+1):
+                tmp=dp[r_idx]
+                dp[r_idx]=min(prev, dp[r_idx-1], dp[r_idx])+1 if matrix[v_idx-1][r_idx-1]=='1' else 00
+                res=max(res, dp[r_idx])
+                prev=tmp
+        return res
+
