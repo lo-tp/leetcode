@@ -1,4 +1,5 @@
 from Queue import PriorityQueue
+from collections import deque
 
 
 def heapify(lists):
@@ -42,3 +43,22 @@ class Solution(object):
             if tmp.next:
                 pq.put((tmp.next.val, tmp.next))
         return prev.next
+
+    def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
+        lists=deque(lists)
+        while len(lists)>1:
+            t1,t2=lists.popleft(),lists.popleft()
+            new_list=tmp=ListNode(0)
+            while t1 and t2:
+                if t1.val>t2.val:
+                    tmp.next=t2
+                    t2=t2.next
+                    tmp=tmp.next
+                else:
+                    tmp.next=t1
+                    t1=t1.next
+                    tmp=tmp.next
+            if t1 or t2:
+                tmp.next=t1 if t1 else t2
+            lists.append(new_list.next)
+        return lists[0] if lists else None
