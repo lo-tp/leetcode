@@ -17,3 +17,22 @@ class Solution(object):
                     c_set.add(t)
                     h_set.add(t)
         return True
+
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        v_used=[0]*9
+        h_used=[0]*9
+        s_used=[0]*9
+        for v in range(0,9):
+            for h in range(0,9):
+                if board[v][h]!='.':
+                    bit_consumed=1<<(int(board[v][h]))
+                    v_seen=v_used[v]
+                    h_seen=h_used[h]
+                    s_seen=s_used[(v//3)*3+(h//3)]
+                    if (v_seen&bit_consumed) or (h_seen&bit_consumed) or (s_seen&bit_consumed):
+                        return False
+                    v_used[v]=v_seen|bit_consumed
+                    h_used[h]=h_seen|bit_consumed
+                    s_used[(v//3)*3+(h//3)]=s_seen|bit_consumed
+        return True
+
