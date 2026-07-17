@@ -17,3 +17,11 @@ class Solution(object):
                 matrix[cs[2][0]][cs[2][1]],matrix[cs[3][0]][cs[3][1]]=matrix[cs[3][0]][cs[3][1]],matrix[cs[2][0]][cs[2][1]]
             startPos+=1
             operationNum-=2
+
+    def rotate(self, matrix: List[List[int]]) -> None:
+        sz=len(matrix)
+        for v_idx in range(0,sz):
+            for h_idx in range(v_idx+1,sz):
+                matrix[v_idx][h_idx], matrix[h_idx][v_idx]=matrix[h_idx][v_idx], matrix[v_idx][h_idx]
+        for row in matrix:
+            row.reverse()
