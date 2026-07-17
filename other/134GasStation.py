@@ -25,3 +25,14 @@ class Solution(object):
             if te == sz:
                 return i
         return -1
+
+    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:
+        res=-1
+        if sum(gas)>sum(cost):
+            res,fuel,idx=0,0
+            for idx in range(0, len(gas)):
+                fuel+=(gas[idx]-cost[idx])
+                if fuel<0:
+                    fuel=0
+                    res=idx+1
+        return res
