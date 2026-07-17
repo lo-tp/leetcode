@@ -40,3 +40,16 @@ class Solution:
                     idx=nxt_idx
                 if count==sz:
                     break
+    def rotate(self, nums: List[int], k: int) -> None:
+        sz=len(nums)
+        k%=sz
+        def reverse(l,r):
+            while l<r:
+                nums[l],nums[r]=nums[r],nums[l]
+                l+=1
+                r-=1
+        if k:
+            reverse(0,sz-1)
+            reverse(0,k-1)
+            reverse(k,sz-1)
+
