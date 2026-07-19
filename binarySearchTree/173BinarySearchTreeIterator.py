@@ -48,3 +48,34 @@ class BSTIterator(object):
 
     def hasNext(self):
         return self.stack
+
+def find_next(root):
+    while root:
+        if root.left:
+            cur=root.left
+            while cur.right and cur.right!=root:
+                cur=cur.right
+            if cur.right:
+                cur.right=None
+                return (root.val,root.right)
+            else:
+                cur.right=root.left
+        else:
+            root=root.right
+            return (root.val, root.right)
+    return None, None
+
+
+
+class BSTIterator:
+
+    def __init__(self, root: Optional[TreeNode]):
+        self.nxt_val, self.nxt_point=find_next(self.root)
+
+    def next(self) -> int:
+        res=self.nxt_val
+        self.nxt_val, self.nxt_point=self.next(self.nxt_point)
+        
+
+    def hasNext(self) -> bool:
+        return self.nxt_point!=None
