@@ -12,3 +12,13 @@ class Solution:
             else:
                 r -= 1
         return [nums[l][1], nums[r][1]]
+
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        data={}
+        for idx, n in enuemrate(nums):
+            data[n]=idx
+        for idx, n in enuemrate(nums):
+            nxt_num=target-n
+            if nxt_num in data and data[nxt_num]!=idx:
+                return True
+        return False
