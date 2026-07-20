@@ -28,3 +28,30 @@ class Solution(object):
                     if hash not in data or not data[hash]:
                         board[column_index][row_index] = 'X'
 
+
+    def solve(self, board: List[List[str]]) -> None:
+        v_sz, h_sz=len(board), len(board[0])
+
+        def mark(v, h):
+            stack=[(v,h)]
+            while stack:
+                v_idx, h_idx=stack.pop()
+                if v_idx >= 0 and v_idx < v_sz and h_idx >= 0 and h_idx < h_sz:
+                    if board[v_idx][h_idx]=='O':
+                        board[v_idx][h_idx]='o'
+                        stack.extend([(v_idx,h_idx-1), (v_idx, h_idx+1), (v_idx-1, h_idx), (v_idx+1, h_idx)])
+
+        for h_idx in range(0, h_sz):
+            mark(0,h_idx)
+            mark(v_sz-1,h_idx)
+
+        for v_idx in range(0, v_sz):
+            mark(v_idx, 0)
+            mark(v_idx,h_sz-1)
+
+        for v_idx in range(0, v_sz):
+            for h_idx in range(0, h_sz):
+                if board[v_idx][h_idx]=='o':
+                    board[v_idx][h_idx]='O'
+                elif board[v_idx][h_idx]=='O':
+                    board[v_idx][h_idx]='X'
