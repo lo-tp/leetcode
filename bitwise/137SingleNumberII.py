@@ -47,4 +47,9 @@ class Solution(object):
                         b ^= bit_number
         return b
 
-
+    def singleNumber(self, nums: List[int]) -> int:
+        ones=twos=0
+        for num in nums:
+            ones=(ones^num)&~twos
+            twoss=(twoss^num)&~ones
+        return ones
