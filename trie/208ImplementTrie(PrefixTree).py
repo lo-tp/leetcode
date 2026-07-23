@@ -1,7 +1,7 @@
 class TrieNode:
     def __init__(self):
         self.end = False
-        self.children = [None] * 26
+        self.children = {}
 
 
 class Trie:
@@ -12,27 +12,28 @@ class Trie:
     def insert(self, word: str) -> None:
         node = self.node
         for char in word:
-            idx = ord(char)-ord('a')
-            if not node.children[idx]:
-                node.children[idx] = TrieNode()
-            node = node.children[idx]
+            if not char in node.children:
+                node.children[char] = TrieNode()
+            node = node.children[char]
         node.end = True
 
-    def search(self, word: str) -> bool:
+    def _traversal(self, word):
         node = self.node
         for char in word:
-            idx = ord(char)-ord('a')
-            if not node.children[idx]:
-                return False
-            node = node.children[idx]
-        return node.end
+            if char not in node.children:
+                return None
+            node = node.children[char]
+        return node
+
+    def search(self, word: str) -> bool:
+        node = self._traversal(word)
+        return node is not None and node.end
 
     def startsWith(self, prefix: str) -> bool:
-        node = self.node
-        for char in prefix:
-            idx = ord(char)-ord('a')
-            if not node.children[idx]:
-                return False
-            node = node.children[idx]
-        return True
+        node = self._traversal(prefix)
+        return node is not None
+
+
+# Your Trie object will be instantiated and called as such:
+# obj = Trie()
 
