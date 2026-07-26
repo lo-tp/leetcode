@@ -42,3 +42,17 @@ class Solution(object):
                 res.append('I')
                 num -= 1
         return ''.join(res)
+    def intToRoman(self, num: int) -> str:
+        mapping = [
+            ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"],
+            ["", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"],
+            ["", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "DM"],
+            ["", "M", "MM", "MMM"],
+        ]
+        v_idx = 0
+        res = []
+        for char in f"{num}"[::-1]:
+            digit = int(char)
+            res.append(mapping[v_idx][digit])
+        return "".join(res[::-1])
+
