@@ -42,3 +42,14 @@ class Solution(object):
                 i += cycle_sz
             return ''.join(res)
         return s
+    def convert(self, s: str, numRows: int) -> str:
+        data = [[] for _ in range(0, numRows)]
+        index = [idx for idx in range(0, numRows)]
+        for idx in range(numRows - 2, 0, -1):
+            index.append(idx)
+        # print(index)
+        for idx in range(0, len(s)):
+            data[index[idx % len(index)]].append(s[idx])
+        # print(data)
+        return "".join(["".join(r) for r in data])
+
