@@ -36,3 +36,14 @@ class Solution:
                     res += 5 * base
                     s = s.replace(mapping[v_idx][5], "")
         return res
+
+    def romanToInt(self, s: str) -> int:
+        mapping = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
+        sz = len(s)
+        res = 0
+        for idx, char in enumerate(s):
+            res += mapping[char]
+            if idx and mapping[s[idx - 1]] < mapping[char]:
+                res -= mapping[s[idx - 1]]
+        return res
+
