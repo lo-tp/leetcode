@@ -152,3 +152,27 @@ class Solution(object):
                     count[s[l]] += 1
                     l += 1
         return res
+    def minWindow(self, s: str, t: str) -> str:
+        min_sz = float("inf")
+        count = Counter(t)
+        start, l = 0, 0
+        sz = len(t)
+        s_sz = len(s)
+        for idx, char in enumerate(s):
+            count[char] -= 1
+            if count[char] >= 0:
+                sz -= 1
+                while not sz and l < s_sz:
+                    char = s[l]
+                    if not count[char]:
+                        sz += 1
+                        window_sz = idx - l + 1
+                        if window_sz < min_sz:
+                            min_sz, start = window_sz, l
+                    count[char] += 1
+                    l += 1
+        if min_sz != float("inf"):
+            return s[start : start + min_sz]
+        return ""
+
+
